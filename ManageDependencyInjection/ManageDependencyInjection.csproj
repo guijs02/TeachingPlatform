@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TeachingPlatform.Api\TeachingPlatform.Api.csproj" />
+    <ProjectReference Include="..\TeachingPlatform.Application\TeachingPlatform.Application.csproj" />
+    <ProjectReference Include="..\TeachingPlatform.Domain\TeachingPlatform.Domain.csproj" />
+    <ProjectReference Include="..\TeachingPlatform.Infra\TeachingPlatform.Infra.csproj" />
+  </ItemGroup>
+
+</Project>
