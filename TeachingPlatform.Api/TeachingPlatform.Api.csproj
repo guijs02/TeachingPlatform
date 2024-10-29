@@ -11,11 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
+    <ProjectReference Include="..\TeachingPlatform.Application\TeachingPlatform.Application.csproj" />
+    
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TeachingPlatform.Application\TeachingPlatform.Application.csproj" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>
