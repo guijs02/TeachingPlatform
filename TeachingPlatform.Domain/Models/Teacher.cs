@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeachingPlatform.Domain.Models
 {
-    public class Teacher : User
+    public class Teacher 
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;

@@ -1,25 +1,34 @@
+using ManageDependencyInjection.Api;
+using TeachingPlatform.Api.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the conta
 
 builder.Services.AddControllers();
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication();
+
+builder.Services.AddContext(builder.Configuration);
+builder.Services.AddDependencies();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerDocumentation();
+
+builder.Services.ConfigJwtBearer();
+builder.Services.ConfigIdentityOptions();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.AddSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
