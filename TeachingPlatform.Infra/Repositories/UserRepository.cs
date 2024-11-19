@@ -48,7 +48,7 @@ namespace TeachingPlatform.Infra.Repositories
 
 
             var user = _signInManager.UserManager.Users.FirstOrDefault(
-                user => user.NormalizedUserName.Equals(user.UserName, StringComparison.CurrentCultureIgnoreCase)
+                user => user.NormalizedUserName == loginUser.UserName.ToUpper()
             );
 
             if (!result.Succeeded)

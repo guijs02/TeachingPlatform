@@ -1,9 +1,12 @@
 using ManageDependencyInjection.Api;
+using Microsoft.AspNetCore.Identity;
 using TeachingPlatform.Api.Common;
+using TeachingPlatform.Domain.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the conta
+builder.Services.AddIdentityRole();
 
 builder.Services.AddControllers();
 builder.Services.AddAuthorization();
