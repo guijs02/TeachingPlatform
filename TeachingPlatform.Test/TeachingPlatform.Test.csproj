@@ -17,6 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TeachingPlatform.Api\TeachingPlatform.Api.csproj" />
+    <ProjectReference Include="..\TeachingPlatform.Application\TeachingPlatform.Application.csproj" />
+    <ProjectReference Include="..\TeachingPlatform.Domain\TeachingPlatform.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 

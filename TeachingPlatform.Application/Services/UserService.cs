@@ -12,16 +12,18 @@ namespace TeachingPlatform.Application.Services
         {
             _userRepository = userRepository;
         }
-        public Task<bool> Create(UserCreateViewModel userCreateViewModel)
+        public async Task<bool> Create(UserCreateViewModel userCreateViewModel)
         {
+            if (userCreateViewModel == null) return false;
             User user = userCreateViewModel.ToModel();
-            return _userRepository.Create(user);
+            return await _userRepository.Create(user);
         }
 
-        public Task<string> Login(UserLoginViewModel userLoginViewModel)
+        public async Task<string> Login(UserLoginViewModel userLoginViewModel)
         {
+            if (userLoginViewModel == null) return string.Empty;
             User user = userLoginViewModel.ToModel();
-            return _userRepository.Login(user);
+            return await _userRepository.Login(user);
         }
     }
 }
