@@ -7,10 +7,10 @@ namespace TeachingPlatform.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class UserController : ControllerBase
+    public class CourseController : ControllerBase
     {
         public IUserService _userService;
-        public UserController(IUserService userService)
+        public CourseController(IUserService userService)
         {
             _userService = userService;
         }

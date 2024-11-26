@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Application.Services
@@ -27,7 +28,7 @@ namespace TeachingPlatform.Application.Services
                     [
                         new Claim(ClaimTypes.Name, user.UserName),
                         new Claim("id", user.Id),
-                        //new Claim(ClaimTypes.Role, usuario.TipoCargo.ToString()),
+                        new Claim(ClaimTypes.Role, user.TypeOfUser.ToString()),
                     ]
                 ),
                 Expires = DateTime.UtcNow.AddHours(2),

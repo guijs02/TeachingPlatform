@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TeachingPlatform.Domain.Models;
 
-namespace TeachingPlatform.Application.Services
+namespace TeachingPlatform.Application.Services.Interfaces
 {
     public interface ITokenService
     {

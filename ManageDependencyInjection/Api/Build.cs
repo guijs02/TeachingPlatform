@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TeachingPlatform.Application.Services;
+using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Domain.Interfaces;
 using TeachingPlatform.Domain.Models;
 using TeachingPlatform.Infra.Context;
