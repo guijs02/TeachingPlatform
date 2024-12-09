@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TeachingPlatform.Application.ViewModels;
 
 namespace TeachingPlatform.Application.Services.Interfaces
 {
-    internal interface ICourseService
+    public interface ICourseService
     {
+        public Task<CourseViewModel> Create(CourseViewModel courseViewModel);
     }
 }

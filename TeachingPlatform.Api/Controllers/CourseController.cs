@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TeachingPlatform.Api.Common;
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Application.ViewModels;
+using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Api.Controllers
 {
@@ -10,18 +12,21 @@ namespace TeachingPlatform.Api.Controllers
     public class CourseController : ControllerBase
     {
         public IUserService _userService;
-        public CourseController(IUserService userService)
+        public readonly ICourseService _courseService;
+        public CourseController(IUserService userService, ICourseService courseService)
         {
             _userService = userService;
+            _courseService = courseService;
         }
 
-        [HttpPost(Endpoints.CreateUser)]
-        public async Task<IActionResult> CreateUser(UserCreateViewModel userCreateViewModel)
+        [HttpPost(Endpoints.CreateCourse)]
+        [Authorize(Roles = "Instrutor")]
+        public async Task<IActionResult> Create(CourseViewModel courseViewModel)
         {
             try
             {
-                await _userService.Create(userCreateViewModel);
-                return Ok("Cadastrado com sucesso");
+                var result = await _courseService.Create(courseViewModel);
+                return Ok(result);
             }
             catch (Exception e)
             {

@@ -12,6 +12,7 @@ namespace TeachingPlatform.Application.ViewModels
         [Required]
         [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; } = null!;
+        [Required]
         public ETypeOfUser TypeOfUser { get; set; }
     }
 }

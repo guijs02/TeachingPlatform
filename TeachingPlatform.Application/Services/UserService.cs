@@ -16,6 +16,9 @@ namespace TeachingPlatform.Application.Services
         public async Task<bool> Create(UserCreateViewModel userCreateViewModel)
         {
             if (userCreateViewModel == null) return false;
+
+            if(!Enum.IsDefined(userCreateViewModel.TypeOfUser)) return false;
+
             User user = userCreateViewModel.ToModel();
             return await _userRepository.Create(user);
         }

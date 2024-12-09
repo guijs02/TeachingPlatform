@@ -20,8 +20,8 @@ namespace TeachingPlatform.Api.Controllers
         {
             try
             {
-                await _userService.Create(userCreateViewModel);
-                return Ok("Cadastrado com sucesso");
+                var result = await _userService.Create(userCreateViewModel);
+                return Ok(result);
             }
             catch (Exception e)
             {

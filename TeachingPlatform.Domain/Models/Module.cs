@@ -2,10 +2,10 @@
 {
     public class Module
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; } = null!;
-        public int LessonId { get; set; }
-        public int CourseId { get; set; }
+        public Guid LessonId { get; set; }
+        public Guid CourseId { get; set; }
         public List<Lesson> Lessons { get; set; } = null!;
         public virtual Course Course { get; set; } = null!;
     }

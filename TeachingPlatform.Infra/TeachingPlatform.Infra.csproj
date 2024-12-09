@@ -31,4 +31,8 @@
     <ProjectReference Include="..\TeachingPlatform.Domain\TeachingPlatform.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

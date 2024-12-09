@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using TeachingPlatform.Domain.Models;
 
-namespace TeachingPlatform.Domain.Models
+namespace TeachingPlatform.Application.ViewModels
 {
-    public class Course
+    public class CourseViewModel
     {
-        public Guid Id { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public Guid TeacherId { get; set; }
