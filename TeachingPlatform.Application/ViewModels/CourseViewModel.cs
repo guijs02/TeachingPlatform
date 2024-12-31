@@ -7,7 +7,6 @@ namespace TeachingPlatform.Application.ViewModels
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public Guid TeacherId { get; set; }
-        public List<Module> Mudeles { get; set; } = null!;
-        public Teacher Teacher { get; set; } = null!;
+        public List<ModuleViewModel> Mudeles { get; set; } = null!;
     }
 }

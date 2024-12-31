@@ -20,7 +20,7 @@ namespace TeachingPlatform.Api.Controllers
         }
 
         [HttpPost(Endpoints.CreateCourse)]
-        [Authorize(Roles = "Instrutor")]
+        [Authorize(Roles = "INSTRUTOR")]
         public async Task<IActionResult> Create(CourseViewModel courseViewModel)
         {
             try
@@ -31,20 +31,6 @@ namespace TeachingPlatform.Api.Controllers
             catch (Exception e)
             {
                 return StatusCode(500, e.Message.ToString());
-            }
-        }
-
-        [HttpPost(Endpoints.LoginUser)]
-        public async Task<IActionResult> Login(UserLoginViewModel userLoginViewModel)
-        {
-            try
-            {
-                string token = await _userService.Login(userLoginViewModel);
-                return Ok(token);
-            }
-            catch (Exception e)
-            {
-                return BadRequest("Usuario não encontrado");
             }
         }
 

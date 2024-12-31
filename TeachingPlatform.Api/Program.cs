@@ -9,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddIdentityRole();
 
 builder.Services.AddControllers();
-builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
 
 builder.Services.AddContext(builder.Configuration);
 builder.Services.AddDependencies();

@@ -18,7 +18,7 @@ namespace TeachingPlatform.Application.Services
         {
             _courseRepository = courseRepository;
         }
-        public async Task<CourseViewModel> Create(CourseViewModel courseViewModel)
+        public async Task<Course> Create(CourseViewModel courseViewModel)
         {
             Course course = courseViewModel.ToModel();
             return await _courseRepository.Create(course);

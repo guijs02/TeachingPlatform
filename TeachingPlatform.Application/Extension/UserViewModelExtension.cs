@@ -10,14 +10,25 @@ namespace TeachingPlatform.Application.Extension
 {
     public static class ViewModelExtension
     {
-        public static Course ToModel(this CourseViewModel viewModel) =>
-            new()
+        public static Course ToModel(this CourseViewModel viewModel)
+        {
+            Course course = new();
+
+            foreach (var item in viewModel.Mudeles)
             {
-                Description = viewModel.Description,
-                Mudeles = viewModel.Mudeles,
-                Name = viewModel.Name,
-                TeacherId = viewModel.TeacherId,
-            };
+                course.Mudeles = new List<Module> 
+                { 
+                    new Module() { Name = item.Name } 
+                };
+
+            }
+                course.Description = viewModel.Description;
+                course.Name = viewModel.Name;
+                course.TeacherId = viewModel.TeacherId;
+
+                return course;
+        }
+
         public static User ToModel(this UserCreateViewModel viewModel) =>
             new()
             {
@@ -25,7 +36,7 @@ namespace TeachingPlatform.Application.Extension
                 Password = viewModel.Password,
                 TypeOfUser = viewModel.TypeOfUser,
             };
-        
+
         public static User ToModel(this UserLoginViewModel viewModel) =>
             new()
             {
