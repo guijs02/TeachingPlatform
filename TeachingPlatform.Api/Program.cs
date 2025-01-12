@@ -10,7 +10,11 @@ builder.Services.AddIdentityRole();
 
 builder.Services.AddControllers();
 builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("user",
+          policy => policy.RequireRole("INSTRUTOR"));
+});
 
 builder.Services.AddContext(builder.Configuration);
 builder.Services.AddDependencies();

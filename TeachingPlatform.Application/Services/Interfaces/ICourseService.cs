@@ -10,6 +10,6 @@ namespace TeachingPlatform.Application.Services.Interfaces
 {
     public interface ICourseService
     {
-        public Task<Course> Create(CourseViewModel courseViewModel);
+        public Task<Course> Create(CourseViewModel courseViewModel, Guid userId);
     }
 }

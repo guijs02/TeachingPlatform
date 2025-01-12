@@ -23,6 +23,8 @@ namespace ManageDependencyInjection.Api
             service.AddScoped<IUserService, UserService>();
             service.AddScoped<IUserRepository, UserRepository>();
             service.AddScoped<ITokenService, TokenService>();
+            service.AddScoped<ICourseService, CourseService>();
+            service.AddScoped<ICourseRepository, CourseRepository>();
             return service;
         }
         public static IdentityBuilder AddIdentityRole(this IServiceCollection service)

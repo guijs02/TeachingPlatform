@@ -16,19 +16,37 @@ namespace TeachingPlatform.Application.Extension
 
             foreach (var item in viewModel.Mudeles)
             {
-                course.Mudeles = new List<Module> 
-                { 
-                    new Module() { Name = item.Name } 
+                course.Mudeles = new List<Module>
+                {
+                    new Module()
+                    {
+                        Name = item.Name,
+                       Lessons = ToModel(item.Lessons)
+                    }
+
                 };
 
             }
-                course.Description = viewModel.Description;
-                course.Name = viewModel.Name;
-                course.TeacherId = viewModel.TeacherId;
 
-                return course;
+            course.Description = viewModel.Description;
+            course.Name = viewModel.Name;
+            course.TeacherId = viewModel.TeacherId;
+
+            return course;
         }
+        public static List<Lesson> ToModel(List<LessonViewModel> lessons)
+        {
+            List<Lesson> lessonsEntity = new List<Lesson>();
+            foreach (var item in lessons)
+            {
+               lessonsEntity = new List<Lesson>()
+               {
+                   new Lesson() { Name = item.Description }
+               };
+            }
 
+            return lessonsEntity;
+        }
         public static User ToModel(this UserCreateViewModel viewModel) =>
             new()
             {

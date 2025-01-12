@@ -19,14 +19,23 @@ namespace TeachingPlatform.Infra.Repositories
 
         public async Task<Course> Create(Course course)
         {
-            if(course == null)
-                throw new ArgumentException(nameof(course));
+            try
+            {
 
-            _context.Course.Add(course);
+                if (course == null)
+                    throw new ArgumentException(nameof(course));
 
-            await _context.SaveChangesAsync();
+                _context.Course.Add(course);
 
-            return course;
+                await _context.SaveChangesAsync();
+
+                return course;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
 
         }
     }

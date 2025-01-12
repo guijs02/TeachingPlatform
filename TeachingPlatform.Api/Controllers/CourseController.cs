@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TeachingPlatform.Api.Common;
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Application.ViewModels;
@@ -11,11 +12,9 @@ namespace TeachingPlatform.Api.Controllers
     [Route("api/v1/[controller]")]
     public class CourseController : ControllerBase
     {
-        public IUserService _userService;
         public readonly ICourseService _courseService;
-        public CourseController(IUserService userService, ICourseService courseService)
+        public CourseController(ICourseService courseService)
         {
-            _userService = userService;
             _courseService = courseService;
         }
 
@@ -25,7 +24,8 @@ namespace TeachingPlatform.Api.Controllers
         {
             try
             {
-                var result = await _courseService.Create(courseViewModel);
+                var userId = User.FindFirstValue("id");
+                var result = await _courseService.Create(courseViewModel, Guid.Parse(userId));
                 return Ok(result);
             }
             catch (Exception e)

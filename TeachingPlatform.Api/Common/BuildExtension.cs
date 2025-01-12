@@ -41,7 +41,11 @@ namespace TeachingPlatform.Api.Common
         public static AuthenticationBuilder ConfigJwtBearer(this IServiceCollection services)
         {
             return services
-                .AddAuthentication("Bearer")
+                .AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -52,11 +56,10 @@ namespace TeachingPlatform.Api.Common
                                 "fjdik4343493ADFJFAK933432FDxxs&$#33444fsjdbabaii(9%22"
                             )
                         ),
-                        ValidateAudience = true,
-                        ValidateIssuer = true,
+                        ValidateAudience = false,
+                        ValidateIssuer = false,
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.Zero,
-                        RoleClaimType = "role"
                     };
                 });
         }
