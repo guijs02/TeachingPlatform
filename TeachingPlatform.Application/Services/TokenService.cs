@@ -27,7 +27,7 @@ namespace TeachingPlatform.Application.Services
                 Subject = new ClaimsIdentity(
                     [
                         new Claim(ClaimTypes.Name, user.UserName),
-                        new Claim("id", user.Id),
+                        new Claim("id", user.Id.ToString()),
                         new Claim(ClaimTypes.Role, user.TypeOfUser.ToString()),
                     ]
                 ),

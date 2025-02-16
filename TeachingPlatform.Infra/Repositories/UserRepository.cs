@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Domain.Interfaces;
 using TeachingPlatform.Domain.Models;
@@ -13,11 +8,11 @@ namespace TeachingPlatform.Infra.Repositories
     public class UserRepository : IUserRepository
     {
         private UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private SignInManager<User> _signInManager;
         private readonly ITokenService _tokenService;
         public UserRepository(UserManager<User> userManager,
-                             RoleManager<IdentityRole> roleManager,
+                             RoleManager<IdentityRole<Guid>> roleManager,
                              SignInManager<User> signInManager,
                              ITokenService tokenService)
         {
@@ -29,7 +24,7 @@ namespace TeachingPlatform.Infra.Repositories
 
         public async Task<bool> Create(User createUser)
         {
-            IdentityResult result = await _userManager.CreateAsync(createUser, createUser.Password);
+            var result = await _userManager.CreateAsync(createUser, createUser.Password);
 
             if (!result.Succeeded)
                 throw new ApplicationException("Falha ao cadastrar o usúario");
@@ -46,10 +41,10 @@ namespace TeachingPlatform.Infra.Repositories
               false
             );
 
-
             var user = _signInManager.UserManager.Users.FirstOrDefault(
                 user => user.NormalizedUserName == loginUser.UserName.ToUpper()
             );
+
 
             if (!result.Succeeded)
             {
@@ -62,3 +57,4 @@ namespace TeachingPlatform.Infra.Repositories
         }
     }
 }
+

@@ -16,7 +16,7 @@ namespace TeachingPlatform.Application.Extension
 
             foreach (var item in viewModel.Mudeles)
             {
-                course.Mudeles = new List<Module>
+                course.Mudules = new List<Module>
                 {
                     new Module()
                     {
@@ -30,7 +30,7 @@ namespace TeachingPlatform.Application.Extension
 
             course.Description = viewModel.Description;
             course.Name = viewModel.Name;
-            course.TeacherId = viewModel.TeacherId;
+            //course.TeacherId = viewModel.TeacherId;
 
             return course;
         }

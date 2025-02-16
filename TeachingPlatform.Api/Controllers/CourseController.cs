@@ -19,7 +19,7 @@ namespace TeachingPlatform.Api.Controllers
         }
 
         [HttpPost(Endpoints.CreateCourse)]
-        [Authorize(Roles = "INSTRUTOR")]
+        [Authorize(Roles = "TEACHER")]
         public async Task<IActionResult> Create(CourseViewModel courseViewModel)
         {
             try

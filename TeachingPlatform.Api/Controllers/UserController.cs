@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TeachingPlatform.Api.Common;
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Application.ViewModels;
+using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Api.Controllers
 {
@@ -20,6 +22,7 @@ namespace TeachingPlatform.Api.Controllers
         {
             try
             {
+                
                 var result = await _userService.Create(userCreateViewModel);
                 return Ok(result);
             }

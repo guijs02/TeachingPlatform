@@ -6,6 +6,6 @@ namespace TeachingPlatform.Application.ViewModels
     {
         public string UserName { get; set; } = null!;
         public string Password { get; set; } = null!;
-        public ETypeOfUser TypeOfUser { get; set; }
+        public EUserRole TypeOfUser { get; set; }
     }
 }

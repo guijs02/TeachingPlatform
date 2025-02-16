@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using TeachingPlatform.Application.Services;
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Domain.Interfaces;
@@ -30,10 +31,9 @@ namespace ManageDependencyInjection.Api
         public static IdentityBuilder AddIdentityRole(this IServiceCollection service)
         {
             return service
-                .AddIdentity<User, IdentityRole>()
+                .AddIdentity<User, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<TeachingContext>()
                 .AddDefaultTokenProviders();
         }
-
     }
 }

@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace TeachingPlatform.Domain.Models
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<Guid>
     {
         public string Password { get; set; } = null!;
-        public ETypeOfUser TypeOfUser { get; set; }
+        public EUserRole TypeOfUser { get; set; }
+        public List<Enrollment> Enrollments { get; set; } = new();
+        
     }
-    public enum ETypeOfUser
+    public enum EUserRole
     {
-        ADMIN = 0,
-        INSTRUTOR = 1,
-        ALUNO = 2,
+        TEACHER = 1,
+        STUDENT = 2,
     }
 }
