@@ -14,8 +14,4 @@
     <ProjectReference Include="..\TeachingPlatform.Domain\TeachingPlatform.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ResponseApi\" />
-  </ItemGroup>
-
 </Project>

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TeachingPlatform.Domain.Models;
 
-namespace TeachingPlatform.Application.ViewModels
+namespace TeachingPlatform.Application.InputModels
 {
-    public class UserCreateViewModel
+    public class UserCreateInputModel
     {
         [Required]
         public string UserName { get; set; } = null!;

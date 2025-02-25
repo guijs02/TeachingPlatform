@@ -1,11 +1,12 @@
-﻿using TeachingPlatform.Application.ViewModels;
+﻿using TeachingPlatform.Application.InputModels;
+using TeachingPlatform.Application.Responses;
 
 namespace TeachingPlatform.Application.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<string> Login(UserLoginViewModel userLoginViewModel);
-        Task<bool> Create(UserCreateViewModel userCreateViewModel);
+        Task<UserLoginResponse> Login(UserLoginInputModel userLoginViewModel);
+        Task<UserCreateResponse> Create(UserCreateInputModel userCreateViewModel);
 
     }
 }

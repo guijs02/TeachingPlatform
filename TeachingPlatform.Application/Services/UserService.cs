@@ -1,6 +1,7 @@
 ﻿using TeachingPlatform.Application.Extension;
+using TeachingPlatform.Application.InputModels;
+using TeachingPlatform.Application.Responses;
 using TeachingPlatform.Application.Services.Interfaces;
-using TeachingPlatform.Application.ViewModels;
 using TeachingPlatform.Domain.Interfaces;
 using TeachingPlatform.Domain.Models;
 
@@ -13,21 +14,23 @@ namespace TeachingPlatform.Application.Services
         {
             _userRepository = userRepository;
         }
-        public async Task<bool> Create(UserCreateViewModel userCreateViewModel)
+        public async Task<UserCreateResponse> Create(UserCreateInputModel userCreateViewModel)
         {
-            if (userCreateViewModel == null) return false;
+            if (userCreateViewModel == null) return new UserCreateResponse();
 
-            if(!Enum.IsDefined(userCreateViewModel.TypeOfUser)) return false;
+            if (!Enum.IsDefined(userCreateViewModel.TypeOfUser)) return new UserCreateResponse();
 
-            User user = userCreateViewModel.ToModel();
-            return await _userRepository.Create(user);
+            var result = await _userRepository.Create(userCreateViewModel.ToModel());
+
+            return new UserCreateResponse(userCreateViewModel.UserName, result, userCreateViewModel.TypeOfUser);
         }
 
-        public async Task<string> Login(UserLoginViewModel userLoginViewModel)
+        public async Task<UserLoginResponse> Login(UserLoginInputModel userLoginViewModel)
         {
-            if (userLoginViewModel == null) return string.Empty;
+            if (userLoginViewModel == null) return new(string.Empty);
             User user = userLoginViewModel.ToModel();
-            return await _userRepository.Login(user);
+            var token = await _userRepository.Login(user);
+            return new UserLoginResponse(token);
         }
     }
 }

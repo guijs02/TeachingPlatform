@@ -1,8 +1,8 @@
 ﻿using TeachingPlatform.Domain.Models;
 
-namespace TeachingPlatform.Application.ViewModels
+namespace TeachingPlatform.Application.Responses
 {
-    public class UserLoginViewModel
+    public class UserLoginInputModel
     {
         public string UserName { get; set; } = null!;
         public string Password { get; set; } = null!;

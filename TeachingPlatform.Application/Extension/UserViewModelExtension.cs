@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeachingPlatform.Application.ViewModels;
+﻿using TeachingPlatform.Application.InputModels;
+using TeachingPlatform.Application.Responses;
 using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Application.Extension
 {
     public static class ViewModelExtension
     {
-        public static Course ToModel(this CourseViewModel viewModel)
+        public static Course ToModel(this CourseInputModel viewModel)
         {
             Course course = new();
 
@@ -23,23 +19,20 @@ namespace TeachingPlatform.Application.Extension
                         Name = item.Name,
                        Lessons = ToModel(item.Lessons)
                     }
-
                 };
-
             }
 
             course.Description = viewModel.Description;
             course.Name = viewModel.Name;
-            //course.TeacherId = viewModel.TeacherId;
 
             return course;
         }
-        public static List<Lesson> ToModel(List<LessonViewModel> lessons)
+        public static List<Lesson> ToModel(List<LessonInputModel> lessons)
         {
             List<Lesson> lessonsEntity = new List<Lesson>();
             foreach (var item in lessons)
             {
-               lessonsEntity = new List<Lesson>()
+                lessonsEntity = new List<Lesson>()
                {
                    new Lesson() { Name = item.Description }
                };
@@ -47,7 +40,7 @@ namespace TeachingPlatform.Application.Extension
 
             return lessonsEntity;
         }
-        public static User ToModel(this UserCreateViewModel viewModel) =>
+        public static User ToModel(this UserCreateInputModel viewModel) =>
             new()
             {
                 UserName = viewModel.UserName,
@@ -55,7 +48,7 @@ namespace TeachingPlatform.Application.Extension
                 TypeOfUser = viewModel.TypeOfUser,
             };
 
-        public static User ToModel(this UserLoginViewModel viewModel) =>
+        public static User ToModel(this UserLoginInputModel viewModel) =>
             new()
             {
                 UserName = viewModel.UserName,

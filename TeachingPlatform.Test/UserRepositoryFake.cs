@@ -22,7 +22,7 @@ namespace TeachingPlatform.Test
                 new() { Password = "sp123", UserName = "guilherme" },
             };
 
-            bool result = users.Any(a => a.Password == loginUser.Password && 
+            bool result = users.Any(a => a.Password == loginUser.Password &&
                                     a.UserName == loginUser.UserName);
 
             await Task.Delay(2000);

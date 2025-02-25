@@ -1,8 +1,4 @@
-﻿using TeachingPlatform.Application.Services;
-using TeachingPlatform.Domain.Interfaces;
-using TeachingPlatform.Infra.Repositories;
-
-namespace TeachingPlatform.Api.Common
+﻿namespace TeachingPlatform.Api.Common
 {
     public static class AppExtension
     {

@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using TeachingPlatform.Api.Common;
+using TeachingPlatform.Application.InputModels;
+using TeachingPlatform.Application.Responses;
 using TeachingPlatform.Application.Services.Interfaces;
-using TeachingPlatform.Application.ViewModels;
-using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Api.Controllers
 {
@@ -18,11 +17,11 @@ namespace TeachingPlatform.Api.Controllers
         }
 
         [HttpPost(Endpoints.CreateUser)]
-        public async Task<IActionResult> CreateUser(UserCreateViewModel userCreateViewModel)
+        public async Task<IActionResult> CreateUser(UserCreateInputModel userCreateViewModel)
         {
             try
             {
-                
+
                 var result = await _userService.Create(userCreateViewModel);
                 return Ok(result);
             }
@@ -33,16 +32,16 @@ namespace TeachingPlatform.Api.Controllers
         }
 
         [HttpPost(Endpoints.LoginUser)]
-        public async Task<IActionResult> Login(UserLoginViewModel userLoginViewModel)
+        public async Task<IActionResult> Login(UserLoginInputModel userLoginViewModel)
         {
             try
             {
-                string token = await _userService.Login(userLoginViewModel);
+                var token = await _userService.Login(userLoginViewModel);
                 return Ok(token);
             }
             catch (Exception e)
             {
-                return BadRequest("Usuario não encontrado");
+                return StatusCode(500, e.Message.ToString());
             }
         }
 

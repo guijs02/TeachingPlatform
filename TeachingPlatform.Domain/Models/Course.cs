@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace TeachingPlatform.Domain.Models
+﻿namespace TeachingPlatform.Domain.Models
 {
     public class Course
     {

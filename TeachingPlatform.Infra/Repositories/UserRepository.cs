@@ -26,9 +26,6 @@ namespace TeachingPlatform.Infra.Repositories
         {
             var result = await _userManager.CreateAsync(createUser, createUser.Password);
 
-            if (!result.Succeeded)
-                throw new ApplicationException("Falha ao cadastrar o usúario");
-
             return result.Succeeded;
         }
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 
 namespace TeachingPlatform.Domain.Models
 {
@@ -8,7 +7,7 @@ namespace TeachingPlatform.Domain.Models
         public string Password { get; set; } = null!;
         public EUserRole TypeOfUser { get; set; }
         public List<Enrollment> Enrollments { get; set; } = new();
-        
+
     }
     public enum EUserRole
     {

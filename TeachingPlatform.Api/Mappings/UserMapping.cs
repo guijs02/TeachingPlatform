@@ -12,7 +12,7 @@ namespace TeachingPlatform.Api.Mappings
                 .WithOne(s => s.Student)
                 .HasForeignKey(s => s.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             builder.Property(u => u.Id)
                    .ValueGeneratedOnAdd();
         }

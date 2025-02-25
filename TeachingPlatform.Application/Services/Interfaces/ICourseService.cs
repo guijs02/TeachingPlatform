@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeachingPlatform.Application.ViewModels;
-using TeachingPlatform.Domain.Models;
+﻿using TeachingPlatform.Application.InputModels;
+using TeachingPlatform.Application.Responses;
 
 namespace TeachingPlatform.Application.Services.Interfaces
 {
     public interface ICourseService
     {
-        public Task<Course> Create(CourseViewModel courseViewModel, Guid userId);
+        public Task<CourseResponse> Create(CourseInputModel courseViewModel, Guid userId);
     }
 }

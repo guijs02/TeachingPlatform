@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeachingPlatform.Application.Extension;
+﻿using TeachingPlatform.Application.Extension;
+using TeachingPlatform.Application.InputModels;
+using TeachingPlatform.Application.Responses;
 using TeachingPlatform.Application.Services.Interfaces;
-using TeachingPlatform.Application.ViewModels;
 using TeachingPlatform.Domain.Interfaces;
 using TeachingPlatform.Domain.Models;
 
@@ -18,13 +14,15 @@ namespace TeachingPlatform.Application.Services
         {
             _courseRepository = courseRepository;
         }
-        public async Task<Course> Create(CourseViewModel courseViewModel, Guid userId)
+        public async Task<CourseResponse> Create(CourseInputModel courseViewModel, Guid userId)
         {
-            
+
             Course course = courseViewModel.ToModel();
             course.TeacherId = userId;
 
-            return await _courseRepository.Create(course);
+            await _courseRepository.Create(course);
+
+            return new CourseResponse(course.Name, course.Description);
         }
     }
 }

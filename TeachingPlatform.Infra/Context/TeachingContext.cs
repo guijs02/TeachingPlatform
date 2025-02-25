@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 using System.Reflection;
 using TeachingPlatform.Domain.Models;
 
@@ -16,7 +15,7 @@ namespace TeachingPlatform.Infra.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-             builder.ApplyConfigurationsFromAssembly(Assembly.GetCallingAssembly());
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetCallingAssembly());
             base.OnModelCreating(builder);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

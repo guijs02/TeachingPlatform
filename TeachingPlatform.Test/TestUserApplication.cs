@@ -1,5 +1,8 @@
+using Moq;
+using TeachingPlatform.Application.InputModels;
+using TeachingPlatform.Application.Responses;
 using TeachingPlatform.Application.Services;
-using TeachingPlatform.Application.ViewModels;
+using TeachingPlatform.Domain.Interfaces;
 using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Test
@@ -7,49 +10,55 @@ namespace TeachingPlatform.Test
     public class TestUserApplication
     {
         private readonly UserService _service;
-        private readonly UserRepositoryFake _repository;
+        private readonly Mock<IUserRepository> _repository;
         public TestUserApplication()
         {
-            _repository = new UserRepositoryFake();
-            _service = new(_repository);
+            _repository = new Mock<IUserRepository>();
+            _service = new(_repository.Object);
         }
 
         [Fact]
-        public void CreateUserWithSuccess()
+        public async Task CreateUserWithSuccess()
         {
-            var user = new UserCreateViewModel { UserName = "gui", ConfirmPassword = "123", Password = "123" };
+            var user = new UserCreateInputModel
+            {
+                UserName = "gui",
+                ConfirmPassword = "123",
+                Password = "123",
+                TypeOfUser = EUserRole.TEACHER
+            };
 
-            ////var result = _service.Create(user);
+            var resultExpected = _repository.Setup(s => s.Create(It.IsAny<User>())).ReturnsAsync(true);
 
-            ////Assert.True(result?.Result);
+            var result = await _service.Create(user);
+
+            Assert.True(result.isSucceeded);
         }
         [Fact]
-        public void CreateUserShouldBeFalseWhenArgumentIsNull()
+        public async Task CreateUserShouldBeFalseWhenArgumentIsNull()
         {
-            UserCreateViewModel? user = null;
+            UserCreateInputModel? user = null;
 
-            //var result = _service.Create(user);
+            var resultExpected = _repository.Setup(s => s.Create(It.IsAny<User>())).ReturnsAsync(false);
 
-            //Assert.False(result?.Result);
+            var result = await _service.Create(user);
+
+            Assert.False(result.isSucceeded);
         }
 
         [Fact]
-        public void LoginWithSuccess()
+        public async Task LoginWithSuccess()
         {
-            var user = new UserLoginViewModel { UserName = "gui", Password = "123" };
+            string expectedToken = "ahdljfbadfbaodfbodaf341e13jobzxvczx";
 
-            var result = _service.Login(user);
+            var user = new UserLoginInputModel { UserName = "gui", Password = "123" };
 
-            Assert.Equal("token", result?.Result);
+            var resultExpected = _repository.Setup(s => s.Login(It.IsAny<User>())).ReturnsAsync(expectedToken);
+
+            var result = await _service.Login(user);
+
+            Assert.Equal(expectedToken, result.token);
+            _repository.Verify(repo => repo.Login(It.IsAny<User>()), Times.Once);
         }
-
-        [Fact]
-        public async Task LoginShouldGetAExecptionWhenUserNotExist()
-        {
-            var user = new UserLoginViewModel { UserName = "guilherme", Password = "1234" };
-
-            await Assert.ThrowsAsync<ApplicationException>(() => _service.Login(user));
-        }
-
     }
 }

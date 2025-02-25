@@ -2,9 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TeachingPlatform.Api.Common;
+using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Services.Interfaces;
-using TeachingPlatform.Application.ViewModels;
-using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Api.Controllers
 {
@@ -20,7 +19,7 @@ namespace TeachingPlatform.Api.Controllers
 
         [HttpPost(Endpoints.CreateCourse)]
         [Authorize(Roles = "TEACHER")]
-        public async Task<IActionResult> Create(CourseViewModel courseViewModel)
+        public async Task<IActionResult> Create(CourseInputModel courseViewModel)
         {
             try
             {
