@@ -1,4 +1,4 @@
-﻿using TeachingPlatform.Domain.Models;
+﻿using TeachingPlatform.Domain.Entities;
 
 namespace TeachingPlatform.Domain.Interfaces
 {

@@ -4,9 +4,9 @@ using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Api.Mappings
 {
-    public class UserMapping : IEntityTypeConfiguration<User>
+    public class UserMapping : IEntityTypeConfiguration<UserModel>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<UserModel> builder)
         {
             builder.HasMany(s => s.Enrollments)
                 .WithOne(s => s.Student)

@@ -1,6 +1,8 @@
-﻿using TeachingPlatform.Domain.Interfaces;
+﻿using TeachingPlatform.Domain.Entities;
+using TeachingPlatform.Domain.Interfaces;
 using TeachingPlatform.Domain.Models;
 using TeachingPlatform.Infra.Context;
+using TeachingPlatform.Infra.Mapping;
 
 namespace TeachingPlatform.Infra.Repositories
 {
@@ -17,10 +19,9 @@ namespace TeachingPlatform.Infra.Repositories
             try
             {
 
-                if (course == null)
-                    throw new ArgumentException(nameof(course));
+                var model = course.ToModel();
 
-                _context.Course.Add(course);
+                _context.Course.Add(model);
 
                 await _context.SaveChangesAsync();
 

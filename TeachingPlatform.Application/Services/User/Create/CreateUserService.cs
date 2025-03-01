@@ -3,17 +3,13 @@ using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Responses;
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Domain.Interfaces;
-using TeachingPlatform.Domain.Models;
 
-namespace TeachingPlatform.Application.Services
+namespace TeachingPlatform.Application.Services.User.Create
 {
-    public class UserService : IUserService
+    public class CreateUserService(IUserRepository userRepository) : IUserCreateService
     {
-        private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
+
         public async Task<UserCreateResponse> Create(UserCreateInputModel userCreateViewModel)
         {
             if (userCreateViewModel == null) return new UserCreateResponse();
@@ -23,14 +19,6 @@ namespace TeachingPlatform.Application.Services
             var result = await _userRepository.Create(userCreateViewModel.ToModel());
 
             return new UserCreateResponse(userCreateViewModel.UserName, result, userCreateViewModel.TypeOfUser);
-        }
-
-        public async Task<UserLoginResponse> Login(UserLoginInputModel userLoginViewModel)
-        {
-            if (userLoginViewModel == null) return new(string.Empty);
-            User user = userLoginViewModel.ToModel();
-            var token = await _userRepository.Login(user);
-            return new UserLoginResponse(token);
         }
     }
 }

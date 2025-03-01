@@ -3,21 +3,20 @@ using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Responses;
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Domain.Interfaces;
-using TeachingPlatform.Domain.Models;
 
-namespace TeachingPlatform.Application.Services
+namespace TeachingPlatform.Application.Services.Course
 {
-    public class CourseService : ICourseService
+    public class CreateCourseService : ICreateCourseService
     {
         private readonly ICourseRepository _courseRepository;
-        public CourseService(ICourseRepository courseRepository)
+        public CreateCourseService(ICourseRepository courseRepository)
         {
             _courseRepository = courseRepository;
         }
         public async Task<CourseResponse> Create(CourseInputModel courseViewModel, Guid userId)
         {
 
-            Course course = courseViewModel.ToModel();
+            var course = courseViewModel.ToModel();
             course.TeacherId = userId;
 
             await _courseRepository.Create(course);

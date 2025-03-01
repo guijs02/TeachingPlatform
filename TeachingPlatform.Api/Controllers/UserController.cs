@@ -10,10 +10,12 @@ namespace TeachingPlatform.Api.Controllers
     [Route("api/v1/[controller]")]
     public class UserController : ControllerBase
     {
-        public IUserService _userService;
-        public UserController(IUserService userService)
+        public IUserCreateService _userCreateService;
+        public IUserLoginService _userLoginService;
+        public UserController(IUserCreateService userCreateService, IUserLoginService userLoginService)
         {
-            _userService = userService;
+            _userCreateService = userCreateService;
+            _userLoginService = userLoginService;
         }
 
         [HttpPost(Endpoints.CreateUser)]
@@ -22,7 +24,7 @@ namespace TeachingPlatform.Api.Controllers
             try
             {
 
-                var result = await _userService.Create(userCreateViewModel);
+                var result = await _userCreateService.Create(userCreateViewModel);
                 return Ok(result);
             }
             catch (Exception e)
@@ -36,7 +38,7 @@ namespace TeachingPlatform.Api.Controllers
         {
             try
             {
-                var token = await _userService.Login(userLoginViewModel);
+                var token = await _userLoginService.Login(userLoginViewModel);
                 return Ok(token);
             }
             catch (Exception e)

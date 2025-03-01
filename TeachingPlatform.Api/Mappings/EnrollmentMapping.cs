@@ -4,9 +4,9 @@ using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Api.Mappings
 {
-    public class EnrollmentMapping : IEntityTypeConfiguration<Enrollment>
+    public class EnrollmentMapping : IEntityTypeConfiguration<EnrollmentModel>
     {
-        public void Configure(EntityTypeBuilder<Enrollment> builder)
+        public void Configure(EntityTypeBuilder<EnrollmentModel> builder)
         {
             builder.HasOne(s => s.Course)
                 .WithMany(s => s.Enrollments)

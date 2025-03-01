@@ -1,6 +1,6 @@
 ﻿using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Responses;
-using TeachingPlatform.Domain.Models;
+using TeachingPlatform.Domain.Entities;
 
 namespace TeachingPlatform.Application.Extension
 {

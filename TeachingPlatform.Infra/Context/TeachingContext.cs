@@ -6,12 +6,12 @@ using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Infra.Context
 {
-    public class TeachingContext(DbContextOptions<TeachingContext> options) : IdentityDbContext<User, IdentityRole<Guid>, Guid>(options)
+    public class TeachingContext(DbContextOptions<TeachingContext> options) : IdentityDbContext<UserModel, IdentityRole<Guid>, Guid>(options)
     {
-        public DbSet<Lesson> Lesson { get; set; } = null!;
-        public DbSet<Domain.Models.Module> Module { get; set; } = null!;
-        public DbSet<Course> Course { get; set; } = null!;
-        public DbSet<Enrollment> Enrollment { get; set; } = null!;
+        public DbSet<LessonModel> Lesson { get; set; } = null!;
+        public DbSet<Domain.Models.ModuleModel> Module { get; set; } = null!;
+        public DbSet<CourseModel> Course { get; set; } = null!;
+        public DbSet<EnrollmentModel> Enrollment { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

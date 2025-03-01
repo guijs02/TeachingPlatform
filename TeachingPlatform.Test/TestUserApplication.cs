@@ -60,5 +60,17 @@ namespace TeachingPlatform.Test
             Assert.Equal(expectedToken, result.token);
             _repository.Verify(repo => repo.Login(It.IsAny<User>()), Times.Once);
         }
+
+        [Fact]
+        public async Task LoginReturnAnError()
+        {
+            var user = new UserLoginInputModel { UserName = "gui", Password = "123" };
+
+            var resultExpected = _repository.Setup(s => s.Login(It.IsAny<User>())).Throws<ApplicationException>();
+
+            await Assert.ThrowsAsync<ApplicationException>(async () => await _service.Login(user));
+
+            _repository.Verify(repo => repo.Login(It.IsAny<User>()), Times.Once);
+        }
     }
 }

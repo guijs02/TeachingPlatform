@@ -1,4 +1,4 @@
-﻿namespace TeachingPlatform.Domain.Models
+﻿namespace TeachingPlatform.Domain.Entities
 {
     public class Course
     {

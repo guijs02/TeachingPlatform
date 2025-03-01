@@ -1,9 +1,7 @@
-﻿using TeachingPlatform.Domain.Models;
-
-namespace TeachingPlatform.Application.Services.Interfaces
+﻿namespace TeachingPlatform.Application.Services.Interfaces
 {
     public interface ITokenService
     {
-        string GenerateToken(User user);
+        string GenerateToken(Domain.Entities.User user);
     }
 }

@@ -11,8 +11,8 @@ namespace TeachingPlatform.Api.Controllers
     [Route("api/v1/[controller]")]
     public class CourseController : ControllerBase
     {
-        public readonly ICourseService _courseService;
-        public CourseController(ICourseService courseService)
+        public readonly ICreateCourseService _courseService;
+        public CourseController(ICreateCourseService courseService)
         {
             _courseService = courseService;
         }

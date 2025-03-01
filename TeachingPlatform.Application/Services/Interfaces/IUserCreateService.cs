@@ -3,8 +3,8 @@ using TeachingPlatform.Application.Responses;
 
 namespace TeachingPlatform.Application.Services.Interfaces
 {
-    public interface ICourseService
+    public interface IUserCreateService
     {
-        public Task<CourseResponse> Create(CourseInputModel courseViewModel, Guid userId);
+        Task<UserCreateResponse> Create(UserCreateInputModel userCreateViewModel);
     }
 }

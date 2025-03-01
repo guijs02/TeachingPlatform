@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TeachingPlatform.Domain.Models;
+using TeachingPlatform.Domain.Entities;
 
 namespace TeachingPlatform.Application.InputModels
 {

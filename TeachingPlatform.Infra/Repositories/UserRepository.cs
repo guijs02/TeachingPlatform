@@ -1,35 +1,36 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using TeachingPlatform.Application.Services.Interfaces;
+using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
 using TeachingPlatform.Domain.Models;
+using TeachingPlatform.Infra.Mapping;
 
 namespace TeachingPlatform.Infra.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private UserManager<User> _userManager;
+        private UserManager<UserModel> _userManager;
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
-        private SignInManager<User> _signInManager;
-        private readonly ITokenService _tokenService;
-        public UserRepository(UserManager<User> userManager,
+        private SignInManager<UserModel> _signInManager;
+        public UserRepository(UserManager<UserModel> userManager,
                              RoleManager<IdentityRole<Guid>> roleManager,
-                             SignInManager<User> signInManager,
+                             SignInManager<UserModel> signInManager,
                              ITokenService tokenService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
-            _tokenService = tokenService;
         }
 
-        public async Task<bool> Create(User createUser)
+        public async Task<bool> Create(User user)
         {
-            var result = await _userManager.CreateAsync(createUser, createUser.Password);
+            var model = user.ToModel();
+            var result = await _userManager.CreateAsync(model, model.Password);
 
             return result.Succeeded;
         }
 
-        public async Task<string> Login(User loginUser)
+        public async Task<bool> Login(User loginUser)
         {
             var result = await _signInManager.PasswordSignInAsync(
               loginUser.UserName,
@@ -42,15 +43,7 @@ namespace TeachingPlatform.Infra.Repositories
                 user => user.NormalizedUserName == loginUser.UserName.ToUpper()
             );
 
-
-            if (!result.Succeeded)
-            {
-                throw new ApplicationException("Usuario não autenticado");
-            }
-
-            var token = _tokenService.GenerateToken(user);
-
-            return token;
+            return result.Succeeded;
         }
     }
 }

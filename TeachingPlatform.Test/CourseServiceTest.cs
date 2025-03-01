@@ -1,9 +1,7 @@
 ﻿using Moq;
 using TeachingPlatform.Application.Extension;
 using TeachingPlatform.Application.InputModels;
-using TeachingPlatform.Application.Services;
 using TeachingPlatform.Domain.Interfaces;
-using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Test
 {

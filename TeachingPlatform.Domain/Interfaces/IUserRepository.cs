@@ -1,10 +1,10 @@
-﻿using TeachingPlatform.Domain.Models;
+﻿using TeachingPlatform.Domain.Entities;
 
 namespace TeachingPlatform.Domain.Interfaces
 {
     public interface IUserRepository
     {
-        Task<string> Login(User createUser);
+        Task<bool> Login(User createUser);
         Task<bool> Create(User loginUser);
     }
 }

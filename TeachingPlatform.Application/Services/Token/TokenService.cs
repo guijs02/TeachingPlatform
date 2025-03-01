@@ -3,13 +3,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using TeachingPlatform.Application.Services.Interfaces;
-using TeachingPlatform.Domain.Models;
 
-namespace TeachingPlatform.Application.Services
+namespace TeachingPlatform.Application.Services.Token
 {
     public class TokenService : ITokenService
     {
-        public string GenerateToken(User user)
+        public string GenerateToken(Domain.Entities.User user)
 
         {
             var tokenHandler = new JwtSecurityTokenHandler();

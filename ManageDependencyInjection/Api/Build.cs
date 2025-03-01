@@ -3,7 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TeachingPlatform.Application.Services;
+using TeachingPlatform.Application.Services.Course;
 using TeachingPlatform.Application.Services.Interfaces;
+using TeachingPlatform.Application.Services.Token;
+using TeachingPlatform.Application.Services.User.Create;
+using TeachingPlatform.Application.Services.User.Login;
 using TeachingPlatform.Domain.Interfaces;
 using TeachingPlatform.Domain.Models;
 using TeachingPlatform.Infra.Context;
@@ -20,17 +24,18 @@ namespace ManageDependencyInjection.Api
         }
         public static IServiceCollection AddDependencies(this IServiceCollection service)
         {
-            service.AddScoped<IUserService, UserService>();
-            service.AddScoped<IUserRepository, UserRepository>();
+            service.AddScoped<IUserCreateService, CreateUserService>();
+            service.AddScoped<IUserLoginService, LoginUserService>();
             service.AddScoped<ITokenService, TokenService>();
-            service.AddScoped<ICourseService, CourseService>();
+            service.AddScoped<ICreateCourseService, CreateCourseService>();
+            service.AddScoped<IUserRepository, UserRepository>();
             service.AddScoped<ICourseRepository, CourseRepository>();
             return service;
         }
         public static IdentityBuilder AddIdentityRole(this IServiceCollection service)
         {
             return service
-                .AddIdentity<User, IdentityRole<Guid>>()
+                .AddIdentity<UserModel, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<TeachingContext>()
                 .AddDefaultTokenProviders();
         }
