@@ -9,6 +9,6 @@ namespace TeachingPlatform.Application.Services.Interfaces
 {
     public interface IUserLoginService
     {
-        Task<UserLoginResponse> Login(UserLoginInputModel userLoginViewModel);
+        Task<Response<string>> Login(UserLoginInputModel userLoginViewModel);
     }
 }

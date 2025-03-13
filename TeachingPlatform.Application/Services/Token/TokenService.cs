@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -8,13 +9,20 @@ namespace TeachingPlatform.Application.Services.Token
 {
     public class TokenService : ITokenService
     {
+        private readonly IConfiguration _config;
+        public TokenService(IConfiguration config)
+        {
+            _config = config;
+        }
         public string GenerateToken(Domain.Entities.User user)
 
         {
+            var secretKey = _config["JwtSettings:SecretKey"];
+
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("fjdik4343493ADFJFAK933432FDxxs&$#33444fsjdbabaii(9%22")
+                Encoding.UTF8.GetBytes(secretKey)
             );
 
             var tokenDescriptor = new SecurityTokenDescriptor

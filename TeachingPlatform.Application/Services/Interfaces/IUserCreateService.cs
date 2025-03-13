@@ -5,6 +5,6 @@ namespace TeachingPlatform.Application.Services.Interfaces
 {
     public interface IUserCreateService
     {
-        Task<UserCreateResponse> Create(UserCreateInputModel userCreateViewModel);
+        Task<Response<UserCreateResponse>> Create(UserCreateInputModel userCreateViewModel);
     }
 }

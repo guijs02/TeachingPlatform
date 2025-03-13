@@ -5,6 +5,7 @@ namespace TeachingPlatform.Application.Services.Interfaces
 {
     public interface ICreateCourseService
     {
-        public Task<CourseResponse> Create(CourseInputModel courseViewModel, Guid userId);
+        public Task<Response<CourseResponse>>
+            Create(CourseInputModel courseViewModel, Guid userId);
     }
 }

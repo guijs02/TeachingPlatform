@@ -41,19 +41,13 @@ namespace TeachingPlatform.Application.Extension
             return lessonsEntity;
         }
         public static User ToModel(this UserCreateInputModel viewModel) =>
-            new()
-            {
-                UserName = viewModel.UserName,
-                Password = viewModel.Password,
-                TypeOfUser = viewModel.TypeOfUser,
-            };
+            new(viewModel.UserName, 
+                viewModel.Password, 
+                viewModel.TypeOfUser);
 
         public static User ToModel(this UserLoginInputModel viewModel) =>
-            new()
-            {
-                UserName = viewModel.UserName,
-                Password = viewModel.Password,
-                TypeOfUser = viewModel.TypeOfUser,
-            };
+             new(viewModel.UserName,
+                viewModel.Password,
+                viewModel.TypeOfUser);
     }
 }

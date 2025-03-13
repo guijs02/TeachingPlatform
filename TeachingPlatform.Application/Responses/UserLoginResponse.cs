@@ -1,7 +1,8 @@
-﻿namespace TeachingPlatform.Application.Responses
+﻿using System.Text.Json.Serialization;
+
+namespace TeachingPlatform.Application.Responses
 {
-    public record UserLoginResponse(string token, bool result)
+    public record UserLoginResponse(string token)
     {
-        public string Reponse => result ? token : "Usuário ou senha invalidos";
     }
 }
