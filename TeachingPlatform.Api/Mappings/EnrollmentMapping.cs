@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TeachingPlatform.Domain.Models;
+using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Api.Mappings
 {

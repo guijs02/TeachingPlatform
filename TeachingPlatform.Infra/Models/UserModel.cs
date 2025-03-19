@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TeachingPlatform.Domain.Models
+namespace TeachingPlatform.Infra.Models
 {
     [Table("User")]
     public class UserModel : IdentityUser<Guid>

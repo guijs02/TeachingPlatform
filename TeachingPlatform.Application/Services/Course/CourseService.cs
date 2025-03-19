@@ -15,9 +15,9 @@ namespace TeachingPlatform.Application.Services.Course
         }
         public async Task<Response<CourseResponse>> Create(CourseInputModel courseViewModel, Guid userId)
         {
+            courseViewModel.TeacherId = userId;
 
-            var course = courseViewModel.ToModel();
-            course.TeacherId = userId;
+            var course = courseViewModel.ToEntity();
 
             await _courseRepository.Create(course);
 

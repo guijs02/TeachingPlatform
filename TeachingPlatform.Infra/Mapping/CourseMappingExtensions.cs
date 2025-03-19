@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeachingPlatform.Domain.Entities;
-using TeachingPlatform.Domain.Models;
+﻿using TeachingPlatform.Domain.Entities;
+using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Infra.Mapping
 {
@@ -12,14 +7,11 @@ namespace TeachingPlatform.Infra.Mapping
     {
         public static Course ToEntity(this CourseModel model)
         {
-            return new Course
-            {
-                Description = model.Description,
-                Name = model.Name,
-                Mudules = model.Mudules.ToEntity(),
-                TeacherId = model.TeacherId,
-                Enrollments = [],
-            };
+            return new Course(
+                model.Name,
+                model.Description,
+                model.TeacherId,
+                model.Mudules.ToEntity());
         }
 
         public static CourseModel ToModel(this Course model)

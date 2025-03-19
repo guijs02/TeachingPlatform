@@ -13,16 +13,16 @@ namespace TeachingPlatform.Application.Services.User.Create
 
         public async Task<Response<UserCreateResponse>> Create(UserCreateInputModel userCreateViewModel)
         {
-            if (userCreateViewModel == null) 
+            if (userCreateViewModel == null)
                 return new Response<UserCreateResponse>(null, (int)HttpStatusCode.BadRequest);
 
-            var result = await _userRepository.Create(userCreateViewModel.ToModel());
+            var result = await _userRepository.Create(userCreateViewModel.ToEntity());
 
-            var response = 
+            var response =
                 new UserCreateResponse(
                     userCreateViewModel.UserName, userCreateViewModel.TypeOfUser);
 
-            return result 
+            return result
                 ? new Response<UserCreateResponse>(response)
                 : new Response<UserCreateResponse>(
                     null, (int)HttpStatusCode.InternalServerError, "Opa, ocorreu um erro inesperado!");

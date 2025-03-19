@@ -1,8 +1,6 @@
 ﻿namespace TeachingPlatform.Domain.Interfaces
 {
-    public interface ITeacherRepository
+    public interface IEnrollCreateService
     {
-
     }
 }
-

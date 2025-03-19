@@ -1,56 +1,53 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Moq;
 using TeachingPlatform.Application.InputModels;
-using TeachingPlatform.Application.Services.User.Create;
 using TeachingPlatform.Domain.Interfaces;
 
 namespace TeachingPlatform.Test.ServicesTest.Enrollment
 {
-    public class EnrollStudent
+    public class CreateEnrollTest
     {
-        //private readonly EnrolStudentService _service;
-        //private readonly Mock<IStudentRepository> _repository;
-        //public EnrollStudent()
-        //{
-        //    _repository = new Mock<IStudentRepository>();
-        //    _service = new(_repository.Object);
-        //}
+        private readonly CreateEnrollService _service;
+        private readonly Mock<IEnrollmentRepository> _repository;
+        public CreateEnrollTest()
+        {
+            _repository = new Mock<IEnrollmentRepository>();
+            _service = new(_repository.Object);
+        }
 
-        //[Fact]
-        //public async Task EnrollStudentWithSuccess()
-        //{
-        //    var user = new EnrollmentViewModel
-        //    {
-        //        StudentId = Guid.NewGuid(),
-        //        CourseId = Guid.NewGuid(),
-        //        CreateAt = DateTime.Now,
+        [Fact]
+        public async Task EnrollStudentWithSuccess()
+        {
+            var enroll = new EnrollmentInputModel
+            {
+                StudentId = Guid.NewGuid(),
+                CourseId = Guid.NewGuid(),
+            };
 
-        //    };
+            var entity = new Domain.Entities.Enrollment(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                new Domain.Entities.User("Gui", "Senha", Domain.Entities.EUserRole.TEACHER),
+                new Domain.Entities.Course("API REST", "http", Guid.NewGuid(), []));
 
 
-        //    var resultExpected = _repository.Setup(s => s.Enroll(It.IsAny<Domain.Entities.Enrollment>())).ReturnsAsync(true);
+            var resultExpected = _repository.Setup(s => s.Create(It.IsAny<Domain.Entities.Enrollment>()))
+                                            .ReturnsAsync(entity);
 
-        //    var result = await _service.Enroll(user);
+            var result = await _service.Create(enroll);
 
-        //    Assert.True(result?.IsSuccess);
-        //}
+            Assert.Equal(entity.Student.UserName, result?.Data?.studentName);
+            Assert.Equal(entity.Course.Name, result?.Data?.course);
+        }
 
-        //[Fact]
-        //public async Task CreateUserShouldBeFalse()
-        //{
-        //    UserCreateInputModel? user = null;
+        [Fact]
+        public async Task CreateUserShouldBeFalse()
+        {
+            EnrollmentInputModel? input = null;
 
-        //    var resultExpected = _repository.Setup(s => s.Create(It.IsAny<Domain.Entities.User>())).ReturnsAsync(false);
+            var result = await _service.Create(input);
 
-        //    var result = await _service.Create(user);
-
-        //    Assert.False(result?.IsSuccess);
-        //}
+            Assert.False(result?.IsSuccess);
+        }
 
     }
 }

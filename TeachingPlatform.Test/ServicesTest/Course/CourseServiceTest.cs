@@ -2,7 +2,6 @@
 using TeachingPlatform.Application.Extension;
 using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Services.Course;
-using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
 
 namespace TeachingPlatform.Test.ServicesTest.Course
@@ -37,7 +36,7 @@ namespace TeachingPlatform.Test.ServicesTest.Course
                 },
             };
 
-            var courseExpected = courseInput.ToModel();
+            var courseExpected = courseInput.ToEntity();
             var resultExpected = _repository.Setup(s => s.Create(It.IsAny<Domain.Entities.Course>())).ReturnsAsync(courseExpected);
 
             var result = await _service.Create(courseInput, Guid.NewGuid());

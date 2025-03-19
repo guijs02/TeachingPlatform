@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using TeachingPlatform.Domain.Models;
+using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Infra.Context
 {
     public class TeachingContext(DbContextOptions<TeachingContext> options) : IdentityDbContext<UserModel, IdentityRole<Guid>, Guid>(options)
     {
         public DbSet<LessonModel> Lesson { get; set; } = null!;
-        public DbSet<Domain.Models.ModuleModel> Module { get; set; } = null!;
+        public DbSet<ModuleModel> Module { get; set; } = null!;
         public DbSet<CourseModel> Course { get; set; } = null!;
         public DbSet<EnrollmentModel> Enrollment { get; set; } = null!;
 

@@ -6,48 +6,43 @@ namespace TeachingPlatform.Application.Extension
 {
     public static class ViewModelExtension
     {
-        public static Course ToModel(this CourseInputModel viewModel)
+        public static Course ToEntity(this CourseInputModel viewModel)
         {
-            Course course = new();
+            var modules = new List<Module>();
 
             foreach (var item in viewModel.Mudeles)
             {
-                course.Mudules = new List<Module>
-                {
-                    new Module()
-                    {
-                        Name = item.Name,
-                       Lessons = ToModel(item.Lessons)
-                    }
-                };
+                modules.Add(new Module(item.Name, ToEntity(item.Lessons)));
             }
 
-            course.Description = viewModel.Description;
-            course.Name = viewModel.Name;
-
-            return course;
+            return new Course(viewModel.Name, viewModel.Description, viewModel.TeacherId, modules);
         }
-        public static List<Lesson> ToModel(List<LessonInputModel> lessons)
+        public static List<Lesson> ToEntity(List<LessonInputModel> lessons)
         {
             List<Lesson> lessonsEntity = new List<Lesson>();
             foreach (var item in lessons)
             {
                 lessonsEntity = new List<Lesson>()
-               {
-                   new Lesson() { Name = item.Description }
-               };
+                {
+                   new (item.Description)
+                };
             }
 
             return lessonsEntity;
         }
-        public static User ToModel(this UserCreateInputModel viewModel) =>
-            new(viewModel.UserName, 
-                viewModel.Password, 
+        public static User ToEntity(this UserCreateInputModel viewModel) =>
+            new(viewModel.UserName,
+                viewModel.Password,
                 viewModel.TypeOfUser);
 
-        public static User ToModel(this UserLoginInputModel viewModel) =>
+        public static User ToEntity(this UserLoginInputModel viewModel) =>
              new(viewModel.UserName,
                 viewModel.Password,
                 viewModel.TypeOfUser);
+
+        public static Enrollment ToEntity(this EnrollmentInputModel viewModel)
+        {
+            return new Enrollment(viewModel.StudentId, viewModel.CourseId);
+        }
     }
 }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeachingPlatform.Domain.Entities;
-using TeachingPlatform.Domain.Models;
+﻿using TeachingPlatform.Domain.Entities;
+using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Infra.Mapping
 {
@@ -12,13 +7,11 @@ namespace TeachingPlatform.Infra.Mapping
     {
         public static User ToEntity(this UserModel model)
         {
-            return new User
-            {
-                UserName = model?.UserName,
-                Enrollments = model.Enrollments.ToEntity(),
-                Password = model?.Password,
-                TypeOfUser = (Domain.Entities.EUserRole)model.TypeOfUser,
-            };
+            return new User(
+                model?.UserName,
+                model.Password,
+                model.Enrollments.ToEntity(),
+                (Domain.Entities.EUserRole)model.TypeOfUser);
         }
 
         public static UserModel ToModel(this User model)
@@ -28,7 +21,7 @@ namespace TeachingPlatform.Infra.Mapping
                 UserName = model?.UserName,
                 Enrollments = model.Enrollments.ToModel(),
                 Password = model?.Password,
-                TypeOfUser = (Domain.Models.EUserRole)model.TypeOfUser,
+                TypeOfUser = (Models.EUserRole)model.TypeOfUser,
             };
         }
     }

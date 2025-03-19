@@ -1,9 +1,14 @@
-﻿namespace TeachingPlatform.Application.InputModels
+﻿
+using System.Text.Json.Serialization;
+
+namespace TeachingPlatform.Application.InputModels
 {
     public class CourseInputModel
     {
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
+        [JsonIgnore]
+        public Guid TeacherId { get; set; }
         public List<ModuleInputModel> Mudeles { get; set; } = null!;
     }
 }

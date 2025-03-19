@@ -1,27 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeachingPlatform.Domain.Entities;
-using TeachingPlatform.Domain.Models;
+﻿using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Infra.Mapping
 {
     internal static class ModuleMappingExtension
     {
-        public static Module ToEntity(this ModuleModel model)
+        public static Domain.Entities.Module ToEntity(this ModuleModel model)
         {
-            return new Module
-            {
-                Course = model.Course.ToEntity(),
-                CourseId = model.Course.Id,
-                Lessons = model.Lessons.ToEntity(),
-            };
+            return new Domain.Entities.Module
+                 (
+                    model.Course.ToEntity(),
+                    model.CourseId,
+                    model.Lessons.ToEntity());
         }
 
-        public static ModuleModel ToModel(this Module model)
+        public static ModuleModel ToModel(this Domain.Entities.Module model)
         {
             return new ModuleModel
             {

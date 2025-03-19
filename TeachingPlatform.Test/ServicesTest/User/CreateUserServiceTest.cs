@@ -1,11 +1,7 @@
 using Moq;
 using TeachingPlatform.Application.InputModels;
-using TeachingPlatform.Application.Responses;
-using TeachingPlatform.Application.Services;
 using TeachingPlatform.Application.Services.User.Create;
-using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
-using TeachingPlatform.Domain.Models;
 
 namespace TeachingPlatform.Test.ServicesTest.User
 {

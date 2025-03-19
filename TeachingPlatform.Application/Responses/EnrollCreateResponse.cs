@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TeachingPlatform.Application.Responses
+﻿namespace TeachingPlatform.Application.Responses
 {
-    public class EnrollCreateResponse
+    public record EnrollCreateResponse(string course, string studentName, DateTime CreatedAt)
     {
     }
 }

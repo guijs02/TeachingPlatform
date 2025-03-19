@@ -1,19 +1,13 @@
 ﻿using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
-using TeachingPlatform.Domain.Models;
 using TeachingPlatform.Infra.Context;
 using TeachingPlatform.Infra.Mapping;
 
 namespace TeachingPlatform.Infra.Repositories
 {
-    public class CourseRepository : ICourseRepository
+    public class CourseRepository(TeachingContext context) : ICourseRepository
     {
-        private readonly TeachingContext _context;
-        public CourseRepository(TeachingContext context)
-        {
-            _context = context;
-        }
-
+        private readonly TeachingContext _context = context;
         public async Task<Course> Create(Course course)
         {
             try

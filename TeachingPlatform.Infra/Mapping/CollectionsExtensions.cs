@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using TeachingPlatform.Domain.Entities;
-using TeachingPlatform.Domain.Models;
+﻿using TeachingPlatform.Domain.Entities;
+using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Infra.Mapping
 {
@@ -9,17 +8,18 @@ namespace TeachingPlatform.Infra.Mapping
         #region Enrollment
         public static List<Enrollment> ToEntity(this List<EnrollmentModel> model)
         {
+
+
             var enrollments = new List<Enrollment>();
 
             foreach (var entity in model)
             {
-                enrollments.Add(new Enrollment
-                {
-                    CourseId = entity.CourseId,
-                    Course = entity.Course.ToEntity(),
-                    CreatedAt = entity.CreatedAt,
-                    StudentId = entity.StudentId,
-                });
+                enrollments.Add(new Enrollment(
+                    entity.StudentId,
+                    entity.CourseId,
+                    entity.Student.ToEntity(),
+                    entity.Course.ToEntity())
+                );
             }
             return enrollments;
         }
@@ -49,14 +49,10 @@ namespace TeachingPlatform.Infra.Mapping
 
             foreach (var entity in model)
             {
-                lessons.Add(new Lesson
-                {
-                    Module = entity.Module.ToEntity(),
-                    Name = entity.Name,
-                });
+                lessons.Add(new Lesson(entity.Name, entity.Module.ToEntity()));
             }
-            return lessons;
 
+            return lessons;
         }
 
         public static List<LessonModel> ToModel(this List<Lesson> model)
@@ -82,12 +78,10 @@ namespace TeachingPlatform.Infra.Mapping
 
             foreach (var entity in model)
             {
-                modules.Add(new Module
-                {
-                    Course = entity.Course.ToEntity(),
-                    CourseId = entity.Course.Id,
-                    Lessons = entity.Lessons.ToEntity()
-                });
+                modules.Add(new Module(
+                    entity.Course.ToEntity(),
+                    entity.CourseId,
+                    entity.Lessons.ToEntity()));
             }
             return modules;
 

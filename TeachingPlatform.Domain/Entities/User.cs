@@ -2,12 +2,20 @@
 {
     public class User
     {
-        public User() { }
         public User(string userName, string password, EUserRole role)
         {
             UserName = userName;
             Password = password;
             TypeOfUser = role;
+
+            Validate();
+        }
+        public User(string userName, string password, List<Enrollment> enrollments, EUserRole role)
+        {
+            UserName = userName;
+            Password = password;
+            TypeOfUser = role;
+            Enrollments = enrollments;
 
             Validate();
         }
@@ -21,6 +29,7 @@
 
         private void Validate()
         {
+            //TODO - Aplicar Notification Pattern em breve
             if (!Enum.IsDefined(TypeOfUser))
             {
                 throw new InvalidOperationException();

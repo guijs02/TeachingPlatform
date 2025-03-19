@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TeachingPlatform.Domain.Models
+namespace TeachingPlatform.Infra.Models
 {
     [Table("Module")]
     public class ModuleModel

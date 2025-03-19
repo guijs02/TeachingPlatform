@@ -1,13 +1,26 @@
 ﻿namespace TeachingPlatform.Domain.Entities
 {
-    public class Enrollment
+    public class Enrollment : Entity
     {
-        public Guid Id { get; set; }
-        public Guid StudentId { get; set; }
-        public User Student { get; set; } = null!;
-        public Guid CourseId { get; set; }
-        public Course Course { get; set; } = null!;
-        public DateTime CreatedAt { get; set; }
+        public Enrollment(Guid studentId, Guid courseId, User student, Course course)
+        {
+            Course = course;
+            Student = student;
+            StudentId = studentId;
+            CourseId = courseId;
+            CreatedAt = DateTime.UtcNow;
+        }
+        public Enrollment(Guid studentId, Guid courseId)
+        {
+            StudentId = studentId;
+            CourseId = courseId;
+            CreatedAt = DateTime.UtcNow;
+        }
+        public Guid StudentId { get; private set; }
+        public User Student { get; private set; } = null!;
+        public Guid CourseId { get; private set; }
+        public Course Course { get; private set; } = null!;
+        public DateTime CreatedAt { get; private set; }
 
     }
 }

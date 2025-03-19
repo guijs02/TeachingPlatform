@@ -11,19 +11,19 @@ namespace TeachingPlatform.Application.Services.User.Login
         private readonly ITokenService _tokenService = tokenService;
         private readonly IUserRepository _userRepository = userRepository;
 
-        public async Task<Response<string>>  Login(UserLoginInputModel userLoginViewModel)
+        public async Task<Response<string>> Login(UserLoginInputModel userLoginViewModel)
         {
             if (userLoginViewModel == null) return new Response<string>(null, code: (int)HttpStatusCode.BadRequest);
-            var user = userLoginViewModel.ToModel();
+            var user = userLoginViewModel.ToEntity();
 
             var result = await _userRepository.Login(user);
 
             var token = _tokenService.GenerateToken(user);
 
-            
-            return result 
+
+            return result
                 ? new Response<string>(token)
-                : new Response<string>(null, message:"Dados inválidos ou incorretos!");
+                : new Response<string>(null, message: "Dados inválidos ou incorretos!");
         }
     }
 }

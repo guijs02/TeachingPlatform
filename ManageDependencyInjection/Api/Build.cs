@@ -2,15 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TeachingPlatform.Application.Services;
 using TeachingPlatform.Application.Services.Course;
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Application.Services.Token;
 using TeachingPlatform.Application.Services.User.Create;
 using TeachingPlatform.Application.Services.User.Login;
 using TeachingPlatform.Domain.Interfaces;
-using TeachingPlatform.Domain.Models;
 using TeachingPlatform.Infra.Context;
+using TeachingPlatform.Infra.Models;
 using TeachingPlatform.Infra.Repositories;
 
 namespace ManageDependencyInjection.Api
