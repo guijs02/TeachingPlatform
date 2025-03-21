@@ -1,5 +1,6 @@
 ﻿using Moq;
 using TeachingPlatform.Application.InputModels;
+using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
 
 namespace TeachingPlatform.Test.ServicesTest.Enrollment
@@ -30,13 +31,16 @@ namespace TeachingPlatform.Test.ServicesTest.Enrollment
                 new Domain.Entities.Course("API REST", "http", Guid.NewGuid(), []));
 
 
-            var resultExpected = _repository.Setup(s => s.Create(It.IsAny<Domain.Entities.Enrollment>()))
-                                            .ReturnsAsync(entity);
+            _repository.Setup(s => s.Create(It.IsAny<Domain.Entities.Enrollment>()))
+                                            .ReturnsAsync(enroll.CourseId);
+            
+            _repository.Setup(s => s.GetNameByCourseStudentAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
+                                            .ReturnsAsync(entity.Course.Name);
 
             var result = await _service.Create(enroll);
 
-            Assert.Equal(entity.Student.UserName, result?.Data?.studentName);
             Assert.Equal(entity.Course.Name, result?.Data?.course);
+            
         }
 
         [Fact]

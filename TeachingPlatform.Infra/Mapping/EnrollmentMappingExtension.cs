@@ -10,9 +10,7 @@ namespace TeachingPlatform.Infra.Mapping
         {
             return new Enrollment(
                     model.StudentId,
-                    model.CourseId,
-                    model.Student.ToEntity(),
-                    model.Course.ToEntity());
+                    model.CourseId);
         }
 
         public static EnrollmentModel ToModel(this Enrollment entity)

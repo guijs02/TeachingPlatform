@@ -16,6 +16,7 @@
             CourseId = courseId;
             CreatedAt = DateTime.UtcNow;
         }
+     
         public Guid StudentId { get; private set; }
         public User Student { get; private set; } = null!;
         public Guid CourseId { get; private set; }

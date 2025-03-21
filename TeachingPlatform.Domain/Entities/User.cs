@@ -10,8 +10,9 @@
 
             Validate();
         }
-        public User(string userName, string password, List<Enrollment> enrollments, EUserRole role)
+        public User(Guid id, string userName, string password, List<Enrollment> enrollments, EUserRole role)
         {
+            Id = id;
             UserName = userName;
             Password = password;
             TypeOfUser = role;

@@ -1,9 +1,11 @@
-﻿namespace TeachingPlatform.Application.InputModels
+﻿using System.Text.Json.Serialization;
+
+namespace TeachingPlatform.Application.InputModels
 {
     public class EnrollmentInputModel
     {
-        public Guid Id { get; set; }
         public Guid CourseId { get; set; }
+        [JsonIgnore]
         public Guid StudentId { get; set; }
     }
 }

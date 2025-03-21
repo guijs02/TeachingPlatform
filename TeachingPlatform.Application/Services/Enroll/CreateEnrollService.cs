@@ -14,15 +14,16 @@ public class CreateEnrollService(IEnrollmentRepository enrollmentRepository) : I
         if (enrollInputModel == null)
             return new Response<EnrollCreateResponse>(null, (int)HttpStatusCode.BadRequest);
 
-        var result = await _enrollmentRepository.Create(enrollInputModel.ToEntity());
+        var courseId = await _enrollmentRepository.Create(enrollInputModel.ToEntity());
+
+        var name = await _enrollmentRepository.GetNameByCourseStudentAsync(courseId, enrollInputModel.StudentId);
 
         var response =
             new EnrollCreateResponse(
-                result?.Course.Name,
-                result?.Student.UserName,
-                result.CreatedAt);
+                name,
+                DateTime.UtcNow);
 
-        return new Response<EnrollCreateResponse>(response);
+        return new Response<EnrollCreateResponse>(response, message: $"Matriculado no courso {response.course}");
 
 
     }

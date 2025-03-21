@@ -53,7 +53,7 @@ namespace TeachingPlatform.Api.Common
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(
-                                "fjdik4343493ADFJFAK933432FDxxs&$#33444fsjdbabaii(9%22"
+                                "+R5dWfidTTU>/?@/43*29e8!'d'4ç9y3q81hfdhajfh@43488*,,|4|&#8/*!nndn"
                             )
                         ),
                         ValidateAudience = false,

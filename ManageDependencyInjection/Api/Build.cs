@@ -29,6 +29,9 @@ namespace ManageDependencyInjection.Api
             service.AddScoped<ICreateCourseService, CreateCourseService>();
             service.AddScoped<IUserRepository, UserRepository>();
             service.AddScoped<ICourseRepository, CourseRepository>();
+            service.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+            service.AddScoped<IEnrollCreateService, CreateEnrollService>();
+
             return service;
         }
         public static IdentityBuilder AddIdentityRole(this IServiceCollection service)

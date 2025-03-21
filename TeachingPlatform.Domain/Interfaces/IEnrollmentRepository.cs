@@ -4,6 +4,7 @@ namespace TeachingPlatform.Domain.Interfaces
 {
     public interface IEnrollmentRepository
     {
-        Task<Enrollment?> Create(Enrollment enrollment);
+        Task<Guid> Create(Enrollment enrollment);
+        Task<string> GetNameByCourseStudentAsync(Guid courseId, Guid studentId);
     }
 }

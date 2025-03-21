@@ -43,6 +43,8 @@ namespace TeachingPlatform.Infra.Repositories
                 user => user.NormalizedUserName == loginUser.UserName.ToUpper()
             );
 
+            loginUser.Id = user.Id;
+
             return result.Succeeded;
         }
     }

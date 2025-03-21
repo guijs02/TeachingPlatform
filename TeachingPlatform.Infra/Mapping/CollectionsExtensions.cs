@@ -8,8 +8,6 @@ namespace TeachingPlatform.Infra.Mapping
         #region Enrollment
         public static List<Enrollment> ToEntity(this List<EnrollmentModel> model)
         {
-
-
             var enrollments = new List<Enrollment>();
 
             foreach (var entity in model)

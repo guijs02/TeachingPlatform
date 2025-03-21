@@ -9,7 +9,7 @@ builder.Services.AddIdentityRole();
 builder.Services.AddControllers();
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("user", policy => policy.RequireRole("TEACHER"));
+    .AddPolicy("user", policy => policy.RequireRole("TEACHER", "STUDENT"));
 
 builder.Services.AddContext(builder.Configuration);
 builder.Services.AddDependencies();

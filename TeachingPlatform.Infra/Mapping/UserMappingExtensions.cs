@@ -8,9 +8,10 @@ namespace TeachingPlatform.Infra.Mapping
         public static User ToEntity(this UserModel model)
         {
             return new User(
+                model.Id,
                 model?.UserName,
                 model.Password,
-                model.Enrollments.ToEntity(),
+                new List<Enrollment>(),
                 (Domain.Entities.EUserRole)model.TypeOfUser);
         }
 

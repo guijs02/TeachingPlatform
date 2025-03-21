@@ -8,17 +8,32 @@ namespace TeachingPlatform.Infra.Repositories
 {
     public class EnrollmentRepository(TeachingContext context) : IEnrollmentRepository
     {
-        public async Task<Enrollment?> Create(Enrollment enrollment)
+        public async Task<Guid> Create(Enrollment enrollment)
         {
-            var model = enrollment.ToModel();
-            context.Enrollment.Add(model);
-            await context.SaveChangesAsync();
+            try
+            {
 
-            return context.Enrollment
-                                     .Include(i => i.Course)
-                                     .Include(i => i.Student)
-                                     ?.FirstOrDefault()
-                                     ?.ToEntity();
+                var model = enrollment.ToModel();
+                context.Enrollment.Add(model);
+                await context.SaveChangesAsync();
+
+                return enrollment.CourseId;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<string> GetNameByCourseStudentAsync(Guid courseId, Guid studentId)
+        {
+            var courseName = await context.Enrollment
+                            .Where(e => e.CourseId == courseId && e.StudentId == studentId)
+                            .Select(s => s.Course.Name)
+                            .FirstOrDefaultAsync();
+
+            return courseName;
 
         }
     }
