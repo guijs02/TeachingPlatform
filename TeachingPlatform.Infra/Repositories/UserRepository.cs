@@ -14,8 +14,7 @@ namespace TeachingPlatform.Infra.Repositories
         private SignInManager<UserModel> _signInManager;
         public UserRepository(UserManager<UserModel> userManager,
                              RoleManager<IdentityRole<Guid>> roleManager,
-                             SignInManager<UserModel> signInManager,
-                             ITokenService tokenService)
+                             SignInManager<UserModel> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -40,7 +39,7 @@ namespace TeachingPlatform.Infra.Repositories
             );
 
             var user = _signInManager.UserManager.Users.FirstOrDefault(
-                user => user.NormalizedUserName == loginUser.UserName.ToUpper()
+                u => u.NormalizedUserName == loginUser.UserName.ToUpper()
             );
 
             loginUser.Id = user.Id;

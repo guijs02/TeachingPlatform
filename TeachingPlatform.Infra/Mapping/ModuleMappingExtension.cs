@@ -8,18 +8,16 @@ namespace TeachingPlatform.Infra.Mapping
         {
             return new Domain.Entities.Module
                  (
-                    model.Course.ToEntity(),
-                    model.CourseId,
-                    model.Lessons.ToEntity());
+                    model.Name,
+                    model.CourseId);
         }
 
         public static ModuleModel ToModel(this Domain.Entities.Module model)
         {
             return new ModuleModel
             {
-                Course = model.Course.ToModel(),
-                CourseId = model.Course.Id,
-                Lessons = model.Lessons.ToModel(),
+                CourseId = model.CourseId,
+                Name = model.Name
             };
         }
     }

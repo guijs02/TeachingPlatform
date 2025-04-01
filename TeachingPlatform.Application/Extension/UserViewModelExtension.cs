@@ -12,10 +12,10 @@ namespace TeachingPlatform.Application.Extension
 
             foreach (var item in viewModel.Mudeles)
             {
-                modules.Add(new Module(item.Name, ToEntity(item.Lessons)));
+                modules.Add(new Module(item.Name, Guid.NewGuid()));
             }
 
-            return new Course(viewModel.Name, viewModel.Description, viewModel.TeacherId, modules);
+            return new Course(viewModel.Name, viewModel.Description, viewModel.TeacherId);
         }
         public static List<Lesson> ToEntity(List<LessonInputModel> lessons)
         {
@@ -31,12 +31,15 @@ namespace TeachingPlatform.Application.Extension
             return lessonsEntity;
         }
         public static User ToEntity(this UserCreateInputModel viewModel) =>
-            new(viewModel.UserName,
+            new(
+                Guid.NewGuid(),
+                viewModel.UserName,
                 viewModel.Password,
                 viewModel.TypeOfUser);
 
         public static User ToEntity(this UserLoginInputModel viewModel) =>
-             new(viewModel.UserName,
+             new(Guid.NewGuid(),
+                 viewModel.UserName,
                 viewModel.Password,
                 viewModel.TypeOfUser);
 

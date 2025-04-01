@@ -2,6 +2,7 @@
 using TeachingPlatform.Application.Responses;
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Application.Services.User.Login;
+using TeachingPlatform.Domain.Exceptions;
 using TeachingPlatform.Domain.Interfaces;
 
 namespace TeachingPlatform.Test.ServicesTest.User
@@ -18,29 +19,38 @@ namespace TeachingPlatform.Test.ServicesTest.User
             _service = new(_userRepository.Object, _tokenService.Object);
         }
 
-        //[Fact]
-        //public async Task LoginWithSuccess()
-        //{
-        //    string expectedToken = "TOKEN_TESTE";
+        [Fact]
+        public async Task LoginShouldGiveOK_WhenReturnsToken()
+        {
+            string expectedToken = "TOKEN_TESTE";
 
-        //    var user = new UserLoginInputModel { UserName = "gui", Password = "123", TypeOfUser = Domain.Entities.EUserRole.TEACHER };
+            var user = new UserLoginInputModel { UserName = "gui", Password = "123", TypeOfUser = Domain.Entities.EUserRole.TEACHER };
 
-        //    _tokenService.Setup(t => t.GenerateToken(It.IsAny<Domain.Entities.User>())).Returns(expectedToken);
-        //    _userRepository.Setup(s => s.Login(It.IsAny<Domain.Entities.User>())).ReturnsAsync(new Guid());
+            _tokenService.Setup(t => t.GenerateToken(It.IsAny<Domain.Entities.User>())).Returns(expectedToken);
+            _userRepository.Setup(s => s.Login(It.IsAny<Domain.Entities.User>())).ReturnsAsync(true);
 
-        //    var result = await _service.Login(user);
+            var result = await _service.Login(user);
 
-        //    Assert.Equal(expectedToken, result.Data);
-        //    _userRepository.Verify(repo => repo.Login(It.IsAny<Domain.Entities.User>()), Times.Once);
-        //}
+            Assert.Equal(expectedToken, result.Data);
+            _userRepository.Verify(repo => repo.Login(It.IsAny<Domain.Entities.User>()), Times.Once);
+        }
 
         [Fact]
-        public async Task LoginReturnAnError()
+        public async Task LoginShouldGiveWrong_WhenLoginFailure()
         {
-            var user = new UserLoginInputModel { UserName = "gui", Password = "123" };
+            string expectedMessage = "Dados inválidos ou incorretos!";
 
-            await Assert.ThrowsAsync<InvalidOperationException>(async () => await _service.Login(user));
+            var user = new UserLoginInputModel { UserName = "gui", Password = "123", TypeOfUser = Domain.Entities.EUserRole.TEACHER };
 
+            _userRepository.Setup(s => s.Login(It.IsAny<Domain.Entities.User>())).ReturnsAsync(false);
+
+            var result = await _service.Login(user);
+
+            Assert.Null(result.Data);
+            Assert.False(result.IsSuccess);
+            Assert.Equal(expectedMessage, result.Message);
+            _userRepository.Verify(repo => repo.Login(It.IsAny<Domain.Entities.User>()), Times.Once);
         }
+
     }
 }

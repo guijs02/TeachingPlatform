@@ -11,7 +11,6 @@ namespace TeachingPlatform.Infra.Mapping
                 model.Id,
                 model?.UserName,
                 model.Password,
-                new List<Enrollment>(),
                 (Domain.Entities.EUserRole)model.TypeOfUser);
         }
 

@@ -16,7 +16,12 @@ namespace TeachingPlatform.Application.Services.User.Create
             if (userCreateViewModel == null)
                 return new Response<UserCreateResponse>(null, (int)HttpStatusCode.BadRequest);
 
-            var result = await _userRepository.Create(userCreateViewModel.ToEntity());
+            var entity = userCreateViewModel.ToEntity();
+
+            if (entity.notification.HasErrors())
+                return new Response<UserCreateResponse>(null, (int)HttpStatusCode.BadRequest, entity.notification.GetMessages(nameof(User)));
+
+            var result = await _userRepository.Create(entity);
 
             var response =
                 new UserCreateResponse(

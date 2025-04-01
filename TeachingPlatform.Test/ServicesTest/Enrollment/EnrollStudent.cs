@@ -26,21 +26,19 @@ namespace TeachingPlatform.Test.ServicesTest.Enrollment
 
             var entity = new Domain.Entities.Enrollment(
                 Guid.NewGuid(),
-                Guid.NewGuid(),
-                new Domain.Entities.User("Gui", "Senha", Domain.Entities.EUserRole.TEACHER),
-                new Domain.Entities.Course("API REST", "http", Guid.NewGuid(), []));
+                Guid.NewGuid());
 
-
+            string courseName = "APi Rest";
             _repository.Setup(s => s.Create(It.IsAny<Domain.Entities.Enrollment>()))
                                             .ReturnsAsync(enroll.CourseId);
-            
+
             _repository.Setup(s => s.GetNameByCourseStudentAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
-                                            .ReturnsAsync(entity.Course.Name);
+                                            .ReturnsAsync(courseName);
 
             var result = await _service.Create(enroll);
 
-            Assert.Equal(entity.Course.Name, result?.Data?.course);
-            
+            Assert.Equal(courseName, result?.Data?.course);
+
         }
 
         [Fact]

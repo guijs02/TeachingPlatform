@@ -1,26 +1,21 @@
-﻿namespace TeachingPlatform.Domain.Entities
-{
-    public class User
-    {
-        public User(string userName, string password, EUserRole role)
-        {
-            UserName = userName;
-            Password = password;
-            TypeOfUser = role;
+﻿using TeachingPlatform.Domain.Exceptions;
+using TeachingPlatform.Domain.Factory;
+using TeachingPlatform.Domain.Validators;
 
-            Validate();
-        }
-        public User(Guid id, string userName, string password, List<Enrollment> enrollments, EUserRole role)
+namespace TeachingPlatform.Domain.Entities
+{
+    public class User : Entity
+    {
+        public User(Guid id, string userName, string password, EUserRole role)
         {
             Id = id;
             UserName = userName;
             Password = password;
             TypeOfUser = role;
-            Enrollments = enrollments;
 
             Validate();
         }
-
+     
         public Guid Id { get; set; }
         public string Password { get; set; } = null!;
         public string UserName { get; set; } = null!;
@@ -31,10 +26,7 @@
         private void Validate()
         {
             //TODO - Aplicar Notification Pattern em breve
-            if (!Enum.IsDefined(TypeOfUser))
-            {
-                throw new InvalidOperationException();
-            }
+            ValidationFactory.Validate(this, new UserValidator());
         }
     }
     public enum EUserRole

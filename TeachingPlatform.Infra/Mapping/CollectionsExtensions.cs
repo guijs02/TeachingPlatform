@@ -14,9 +14,7 @@ namespace TeachingPlatform.Infra.Mapping
             {
                 enrollments.Add(new Enrollment(
                     entity.StudentId,
-                    entity.CourseId,
-                    entity.Student.ToEntity(),
-                    entity.Course.ToEntity())
+                    entity.CourseId)
                 );
             }
             return enrollments;
@@ -30,7 +28,6 @@ namespace TeachingPlatform.Infra.Mapping
                 enrollments.Add(new EnrollmentModel
                 {
                     CourseId = entity.CourseId,
-                    Course = entity.Course.ToModel(),
                     CreatedAt = entity.CreatedAt,
                     StudentId = entity.StudentId,
                 });
@@ -47,25 +44,18 @@ namespace TeachingPlatform.Infra.Mapping
 
             foreach (var entity in model)
             {
-                lessons.Add(new Lesson(entity.Name, entity.Module.ToEntity()));
+                lessons.Add(new Lesson(entity.Name));
             }
 
             return lessons;
         }
 
-        public static List<LessonModel> ToModel(this List<Lesson> model)
+        public static LessonModel ToModel(this Lesson model)
         {
-            var lessons = new List<LessonModel>();
-
-            foreach (var entity in model)
+            return new LessonModel
             {
-                lessons.Add(new LessonModel
-                {
-                    Module = entity.Module.ToModel(),
-                    Name = entity.Name,
-                });
-            }
-            return lessons;
+                Name = model.Name,
+            };
         }
         #endregion
 
@@ -77,28 +67,20 @@ namespace TeachingPlatform.Infra.Mapping
             foreach (var entity in model)
             {
                 modules.Add(new Module(
-                    entity.Course.ToEntity(),
-                    entity.CourseId,
-                    entity.Lessons.ToEntity()));
+                    entity.Name,
+                    entity.CourseId));
             }
             return modules;
 
         }
 
-        public static List<ModuleModel> ToModel(this List<Module> model)
-        {
-            var modules = new List<ModuleModel>();
-
-            foreach (var entity in model)
-            {
-                modules.Add(new ModuleModel
-                {
-                    Course = entity.Course.ToModel(),
-                    CourseId = entity.Course.Id,
-                    Lessons = entity.Lessons.ToModel()
-                });
-            }
-            return modules;
-        }
+        //public static ModuleModel ToModel(this Module model)
+        //{
+        //    return new ModuleModel
+        //    {
+        //        CourseId = model.CourseId,
+        //        Lessons = model.Lessons.Select(s => s.ToModel()).ToList(),
+        //    };
+        //}
     }
 }

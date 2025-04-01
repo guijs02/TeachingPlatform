@@ -10,8 +10,7 @@ namespace TeachingPlatform.Infra.Mapping
             return new Course(
                 model.Name,
                 model.Description,
-                model.TeacherId,
-                model.Mudules.ToEntity());
+                model.TeacherId);
         }
 
         public static CourseModel ToModel(this Course model)
@@ -21,7 +20,7 @@ namespace TeachingPlatform.Infra.Mapping
                 Name = model?.Name,
                 Enrollments = [],
                 Description = model.Description,
-                Mudules = model.Mudules.ToModel(),
+                Mudules = model.Mudules.Select(s => s.ToModel()).ToList(),
                 TeacherId = model.TeacherId,
             };
         }
