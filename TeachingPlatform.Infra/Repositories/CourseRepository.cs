@@ -23,7 +23,6 @@ namespace TeachingPlatform.Infra.Repositories
             }
             catch (Exception e)
             {
-
                 throw;
             }
 

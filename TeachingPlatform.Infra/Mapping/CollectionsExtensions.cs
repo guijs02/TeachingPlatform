@@ -44,7 +44,7 @@ namespace TeachingPlatform.Infra.Mapping
 
             foreach (var entity in model)
             {
-                lessons.Add(new Lesson(entity.Name));
+                lessons.Add(new Lesson(entity.Name, entity.ModuleId));
             }
 
             return lessons;

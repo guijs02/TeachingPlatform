@@ -2,7 +2,7 @@
 {
     public class Enrollment : Entity
     {
-        public Enrollment(Guid studentId, Guid courseId)
+        public Enrollment(Guid studentId, Guid courseId) : base()
         {
             StudentId = studentId;
             CourseId = courseId;

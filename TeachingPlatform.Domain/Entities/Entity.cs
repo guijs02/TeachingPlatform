@@ -13,6 +13,7 @@ namespace TeachingPlatform.Domain.Entities
         protected Entity()
         {
             notification = new();
+            Id = Guid.NewGuid();
         }
         public Guid Id { get; set; }
     }

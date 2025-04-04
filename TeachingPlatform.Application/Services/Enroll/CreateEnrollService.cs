@@ -24,7 +24,5 @@ public class CreateEnrollService(IEnrollmentRepository enrollmentRepository) : I
                 DateTime.UtcNow);
 
         return new Response<EnrollCreateResponse>(response, message: $"Matriculado no courso {response.course}");
-
-
     }
 }

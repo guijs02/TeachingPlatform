@@ -38,7 +38,6 @@ namespace TeachingPlatform.Test.ServicesTest.Enrollment
             var result = await _service.Create(enroll);
 
             Assert.Equal(courseName, result?.Data?.course);
-
         }
 
         [Fact]

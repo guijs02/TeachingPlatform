@@ -2,7 +2,7 @@
 {
     public class Module : Entity
     {
-        public Module(string name, Guid courseId)
+        public Module(string name, Guid courseId) : base()
         {
             Name = name;
             CourseId = courseId;

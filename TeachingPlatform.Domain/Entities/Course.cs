@@ -4,9 +4,8 @@
     {
         public Course(string name,
             string description,
-            Guid teacherId)
+            Guid teacherId) : base()
         {
-            Id = Guid.NewGuid();
             Name = name;
             Description = description;
             TeacherId = teacherId;

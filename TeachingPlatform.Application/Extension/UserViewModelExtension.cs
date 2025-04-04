@@ -8,28 +8,22 @@ namespace TeachingPlatform.Application.Extension
     {
         public static Course ToEntity(this CourseInputModel viewModel)
         {
-            var modules = new List<Module>();
-
-            foreach (var item in viewModel.Mudeles)
+            var course = new Course(viewModel.Name, viewModel.Description, viewModel.TeacherId);
+            viewModel.Mudeles.ForEach(module =>
             {
-                modules.Add(new Module(item.Name, Guid.NewGuid()));
-            }
+                var moduleEntity = new Module(module.Name, course.Id);
 
-            return new Course(viewModel.Name, viewModel.Description, viewModel.TeacherId);
-        }
-        public static List<Lesson> ToEntity(List<LessonInputModel> lessons)
-        {
-            List<Lesson> lessonsEntity = new List<Lesson>();
-            foreach (var item in lessons)
-            {
-                lessonsEntity = new List<Lesson>()
+                module.Lessons.ForEach(lesson =>
                 {
-                   new (item.Description)
-                };
-            }
+                    moduleEntity.AddLesson(new Lesson(lesson.Description, moduleEntity.Id));
+                });
 
-            return lessonsEntity;
+                course.AddModule(moduleEntity);
+            });
+
+            return course;
         }
+        
         public static User ToEntity(this UserCreateInputModel viewModel) =>
             new(
                 Guid.NewGuid(),

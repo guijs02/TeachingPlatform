@@ -37,12 +37,27 @@ namespace TeachingPlatform.Test.ServicesTest.Course
             };
 
             var courseExpected = courseInput.ToEntity();
-            var resultExpected = _repository.Setup(s => s.Create(It.IsAny<Domain.Entities.Course>())).ReturnsAsync(courseExpected);
+            _repository.Setup(s => s.Create(It.IsAny<Domain.Entities.Course>())).ReturnsAsync(courseExpected);
 
             var result = await _service.Create(courseInput, Guid.NewGuid());
 
+            var lessons = courseExpected.Mudules.SelectMany(sm => sm.Lessons);
+
             Assert.Equal(courseExpected.Name, result?.Data?.name);
             Assert.Equal(courseExpected.Description, result?.Data?.description);
+            Assert.NotEmpty(courseExpected.Mudules);
+
+            Assert.NotEmpty(courseExpected.Mudules.First().Name);
+            Assert.NotNull(courseExpected.Mudules.First().Name);
+            Assert.NotEqual(Guid.Empty, courseExpected.Mudules.First().CourseId);
+            Assert.NotEqual(Guid.Empty, courseExpected.Mudules.First().Id);
+
+            Assert.NotEmpty(lessons);
+            Assert.NotEmpty(lessons.First().Name);
+            Assert.NotNull(lessons.First().Name);
+            Assert.NotEqual(Guid.Empty, lessons.First().Id);
+            Assert.NotEqual(Guid.Empty, lessons.First().ModuleId);
+
         }
     }
 }

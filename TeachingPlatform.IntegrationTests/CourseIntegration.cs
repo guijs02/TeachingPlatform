@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Common;
 using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
 using TeachingPlatform.Infra.Context;
@@ -29,12 +24,9 @@ namespace TeachingPlatform.IntegrationTests
                 "Test",
                 "Test",
                 Guid.NewGuid());
-
+            
             course.AddModule(new Module("Test", Guid.NewGuid()));
-
-            course.AddEnrollment(new Enrollment(
-                Guid.NewGuid(),
-                Guid.NewGuid()));
+            course.Mudules.First().AddLesson(new Lesson("LessonA", Guid.NewGuid()));
 
             var result = await _courseRepository.Create(course);
 
@@ -42,8 +34,15 @@ namespace TeachingPlatform.IntegrationTests
             Assert.Equal(course.Name, result.Name);
             Assert.Equal(course.Description, result.Description);
             Assert.Equal(course.TeacherId, result.TeacherId);
+
             Assert.Equal(course.Mudules.First().Name, result.Mudules.First().Name);
             Assert.Equal(course.Mudules.First().CourseId, result.Mudules.First().CourseId);
+            Assert.Equal(course.Mudules.First().Id, result.Mudules.First().Id);
+
+            Assert.NotEmpty(result.Mudules.First().Lessons);
+            Assert.Equal(course.Mudules.First().Lessons.First().Name, result.Mudules.First().Lessons.First().Name);
+            Assert.Equal(course.Mudules.First().Lessons.First().Id, result.Mudules.First().Lessons.First().Id);
+            Assert.Equal(course.Mudules.First().Lessons.First().ModuleId, result.Mudules.First().Lessons.First().ModuleId);
         }
 
         public void Dispose()
