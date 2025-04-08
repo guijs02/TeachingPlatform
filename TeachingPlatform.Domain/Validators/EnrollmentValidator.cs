@@ -8,11 +8,12 @@ namespace TeachingPlatform.Domain.Validators
         public EnrollmentValidator()
         {
             RuleFor(s => s.CourseId)
-           .NotEmpty().WithMessage("courseId must not be empty")
-           .NotNull().WithMessage("username is required");
-
+           .NotNull().WithMessage("courseId is required")
+           .Must(id => id != Guid.Empty).WithMessage("courseId must be a valid GUID");
+            
             RuleFor(s => s.StudentId)
-           .IsInEnum().WithMessage("type of user is required");
+           .NotNull().WithMessage("studentId is required")
+           .Must(id => id != Guid.Empty).WithMessage("studentId must be a valid GUID");
 
         }
     }

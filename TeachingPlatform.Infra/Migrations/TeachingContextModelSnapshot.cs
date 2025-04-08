@@ -153,7 +153,7 @@ namespace TeachingPlatform.Infra.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TeachingPlatform.Domain.Models.Course", b =>
+            modelBuilder.Entity("TeachingPlatform.Infra.Models.CourseModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -175,7 +175,7 @@ namespace TeachingPlatform.Infra.Migrations
                     b.ToTable("Course");
                 });
 
-            modelBuilder.Entity("TeachingPlatform.Domain.Models.Enrollment", b =>
+            modelBuilder.Entity("TeachingPlatform.Infra.Models.EnrollmentModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -199,7 +199,7 @@ namespace TeachingPlatform.Infra.Migrations
                     b.ToTable("Enrollment");
                 });
 
-            modelBuilder.Entity("TeachingPlatform.Domain.Models.Lesson", b =>
+            modelBuilder.Entity("TeachingPlatform.Infra.Models.LessonModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -221,7 +221,7 @@ namespace TeachingPlatform.Infra.Migrations
                     b.ToTable("Lesson");
                 });
 
-            modelBuilder.Entity("TeachingPlatform.Domain.Models.Module", b =>
+            modelBuilder.Entity("TeachingPlatform.Infra.Models.ModuleModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -241,7 +241,7 @@ namespace TeachingPlatform.Infra.Migrations
                     b.ToTable("Module");
                 });
 
-            modelBuilder.Entity("TeachingPlatform.Domain.Models.User", b =>
+            modelBuilder.Entity("TeachingPlatform.Infra.Models.UserModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -325,7 +325,7 @@ namespace TeachingPlatform.Infra.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("TeachingPlatform.Domain.Models.User", null)
+                    b.HasOne("TeachingPlatform.Infra.Models.UserModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -334,7 +334,7 @@ namespace TeachingPlatform.Infra.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("TeachingPlatform.Domain.Models.User", null)
+                    b.HasOne("TeachingPlatform.Infra.Models.UserModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -349,7 +349,7 @@ namespace TeachingPlatform.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TeachingPlatform.Domain.Models.User", null)
+                    b.HasOne("TeachingPlatform.Infra.Models.UserModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -358,22 +358,22 @@ namespace TeachingPlatform.Infra.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("TeachingPlatform.Domain.Models.User", null)
+                    b.HasOne("TeachingPlatform.Infra.Models.UserModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TeachingPlatform.Domain.Models.Enrollment", b =>
+            modelBuilder.Entity("TeachingPlatform.Infra.Models.EnrollmentModel", b =>
                 {
-                    b.HasOne("TeachingPlatform.Domain.Models.Course", "Course")
+                    b.HasOne("TeachingPlatform.Infra.Models.CourseModel", "Course")
                         .WithMany("Enrollments")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TeachingPlatform.Domain.Models.User", "Student")
+                    b.HasOne("TeachingPlatform.Infra.Models.UserModel", "Student")
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -384,9 +384,9 @@ namespace TeachingPlatform.Infra.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("TeachingPlatform.Domain.Models.Lesson", b =>
+            modelBuilder.Entity("TeachingPlatform.Infra.Models.LessonModel", b =>
                 {
-                    b.HasOne("TeachingPlatform.Domain.Models.Module", "Module")
+                    b.HasOne("TeachingPlatform.Infra.Models.ModuleModel", "Module")
                         .WithMany("Lessons")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -395,9 +395,9 @@ namespace TeachingPlatform.Infra.Migrations
                     b.Navigation("Module");
                 });
 
-            modelBuilder.Entity("TeachingPlatform.Domain.Models.Module", b =>
+            modelBuilder.Entity("TeachingPlatform.Infra.Models.ModuleModel", b =>
                 {
-                    b.HasOne("TeachingPlatform.Domain.Models.Course", "Course")
+                    b.HasOne("TeachingPlatform.Infra.Models.CourseModel", "Course")
                         .WithMany("Mudules")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -406,19 +406,19 @@ namespace TeachingPlatform.Infra.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("TeachingPlatform.Domain.Models.Course", b =>
+            modelBuilder.Entity("TeachingPlatform.Infra.Models.CourseModel", b =>
                 {
                     b.Navigation("Enrollments");
 
                     b.Navigation("Mudules");
                 });
 
-            modelBuilder.Entity("TeachingPlatform.Domain.Models.Module", b =>
+            modelBuilder.Entity("TeachingPlatform.Infra.Models.ModuleModel", b =>
                 {
                     b.Navigation("Lessons");
                 });
 
-            modelBuilder.Entity("TeachingPlatform.Domain.Models.User", b =>
+            modelBuilder.Entity("TeachingPlatform.Infra.Models.UserModel", b =>
                 {
                     b.Navigation("Enrollments");
                 });

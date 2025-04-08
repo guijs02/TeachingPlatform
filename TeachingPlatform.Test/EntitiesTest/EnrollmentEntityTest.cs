@@ -9,51 +9,40 @@ namespace TeachingPlatform.UnitTests.EntitiesTest
 {
     public class EnrollmentEntityTest
     {
-        //[Fact]
-        //public void ShouldNotAcceptForValidation()
-        //{
-        //    var user = new Enrollment(Guid.NewGuid(), Guid.Empty);
-        //        );
+        [Fact]
+        public void ShouldNotAcceptForValidation()
+        {
+            var enroll = new Enrollment(Guid.NewGuid(), Guid.Empty);
 
-        //    var messages = user.notification.GetMessages(nameof(User));
+            var messages = enroll.notification.GetMessages(nameof(Enrollment));
 
-        //    Assert.NotEmpty(messages);
-        //    Assert.Equal("User: password must not be empty, ", messages);
+            Assert.NotEmpty(messages);
+            Assert.Equal("Enrollment: courseId must be a valid GUID, ", messages);
 
-        //    var user2 = new User(
-        //        Guid.NewGuid(),
-        //        string.Empty,
-        //        "Test",
-        //        EUserRole.TEACHER);
+            var enroll2 = new Enrollment(Guid.Empty, Guid.NewGuid());
 
-        //    var messages2 = user2.notification.GetMessages(nameof(User));
-        //    Assert.NotEmpty(messages2);
-        //    Assert.Equal("User: username must not be empty, ", messages2);
+            var messages2 = enroll2.notification.GetMessages(nameof(Enrollment));
+            Assert.NotEmpty(messages2);
+            Assert.Equal("Enrollment: studentId must be a valid GUID, ", messages2);
 
-        //    var user3 = new User(
-        //        Guid.NewGuid(),
-        //        string.Empty,
-        //        "Test",
-        //        0);
+            var enroll3 = new Enrollment(Guid.Empty, Guid.Empty);
+            var messages3 = enroll3.notification.GetMessages(nameof(Enrollment));
 
-        //    var messages3 = user3.notification.GetMessages(nameof(User));
-        //    Assert.NotEmpty(messages3);
-        //    Assert.Equal("User: username must not be empty, User: type of user is required, ", messages3);
+            Assert.NotEmpty(messages3);
+            Assert.Equal("Enrollment: courseId must be a valid GUID, Enrollment: studentId must be a valid GUID, ", messages3);
 
-        //}
+        }
 
-        //[Fact]
-        //public void ShouldAcceptForValidation()
-        //{
-        //    var user = new User(
-        //        Guid.NewGuid(),
-        //        "Test",
-        //        "Test",
-        //        EUserRole.TEACHER);
+        [Fact]
+        public void ShouldAcceptForValidation()
+        {
+            var user = new Enrollment(
+                Guid.NewGuid(),
+                Guid.NewGuid());
 
-        //    var messages = user.notification.GetMessages(nameof(User));
+            var messages = user.notification.GetMessages(nameof(Enrollment));
 
-        //    Assert.Empty(messages);
-        //}
+            Assert.Empty(messages);
+        }
     }
 }

@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ManageDependencyInjection\ManageDependencyInjection.csproj" />
     <ProjectReference Include="..\TeachingPlatform.Api\TeachingPlatform.Api.csproj" />
     <ProjectReference Include="..\TeachingPlatform.Application\TeachingPlatform.Application.csproj" />
     <ProjectReference Include="..\TeachingPlatform.Domain\TeachingPlatform.Domain.csproj" />

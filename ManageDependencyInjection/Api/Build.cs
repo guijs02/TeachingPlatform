@@ -16,30 +16,30 @@ namespace ManageDependencyInjection.Api
 {
     public static class Build
     {
-        public static IServiceCollection AddContext(this IServiceCollection service, IConfiguration configuration)
-        {
-            service.AddDbContext<TeachingContext>(opts => opts.UseSqlServer(configuration.GetConnectionString("Database")));
-            return service;
-        }
-        public static IServiceCollection AddDependencies(this IServiceCollection service)
-        {
-            service.AddScoped<IUserCreateService, CreateUserService>();
-            service.AddScoped<IUserLoginService, LoginUserService>();
-            service.AddScoped<ITokenService, TokenService>();
-            service.AddScoped<ICreateCourseService, CreateCourseService>();
-            service.AddScoped<IUserRepository, UserRepository>();
-            service.AddScoped<ICourseRepository, CourseRepository>();
-            service.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
-            service.AddScoped<IEnrollCreateService, CreateEnrollService>();
+        //public static IServiceCollection AddContext(this IServiceCollection service, IConfiguration configuration)
+        //{
+        //    service.AddDbContext<TeachingContext>(opts => opts.UseSqlServer(configuration.GetConnectionString("Database")));
+        //    return service;
+        //}
+        //public static IServiceCollection AddDependencies(this IServiceCollection service)
+        //{
+        //    service.AddScoped<IUserCreateService, CreateUserService>();
+        //    service.AddScoped<IUserLoginService, LoginUserService>();
+        //    service.AddScoped<ITokenService, TokenService>();
+        //    service.AddScoped<ICreateCourseService, CreateCourseService>();
+        //    service.AddScoped<IUserRepository, UserRepository>();
+        //    service.AddScoped<ICourseRepository, CourseRepository>();
+        //    service.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+        //    service.AddScoped<IEnrollCreateService, CreateEnrollService>();
 
-            return service;
-        }
-        public static IdentityBuilder AddIdentityRole(this IServiceCollection service)
-        {
-            return service
-                .AddIdentity<UserModel, IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<TeachingContext>()
-                .AddDefaultTokenProviders();
-        }
+        //    return service;
+        //}
+        //public static IdentityBuilder AddIdentityRole(this IServiceCollection service)
+        //{
+        //    return service
+        //        .AddIdentity<UserModel, IdentityRole<Guid>>()
+        //        .AddEntityFrameworkStores<TeachingContext>()
+        //        .AddDefaultTokenProviders();
+        //}
     }
 }

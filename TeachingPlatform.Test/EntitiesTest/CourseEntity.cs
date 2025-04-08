@@ -7,7 +7,7 @@ using TeachingPlatform.Domain.Entities;
 
 namespace TeachingPlatform.UnitTests.EntitiesTest
 {
-    public class CourseEntityTest
+    public class CourseEntity
     {
         [Fact]
         public void ShouldNotAcceptForValidation()

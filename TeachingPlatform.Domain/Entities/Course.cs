@@ -1,4 +1,7 @@
-﻿namespace TeachingPlatform.Domain.Entities
+﻿using TeachingPlatform.Domain.Factory;
+using TeachingPlatform.Domain.Validators;
+
+namespace TeachingPlatform.Domain.Entities
 {
     public class Course : Entity
     {
@@ -9,8 +12,10 @@
             Name = name;
             Description = description;
             TeacherId = teacherId;
-            Mudules = new();
-            Enrollments = new();
+            Mudules = [];
+            Enrollments = [];
+
+            Validate();
         }
 
         public string Name { get; private set; } = null!;
@@ -18,14 +23,14 @@
         public Guid TeacherId { get; private set; }
         public List<Module> Mudules { get; private set; } = null!;
         public List<Enrollment> Enrollments { get; private set; } = null!;
-
         public void AddModule(Module module)
         {
             Mudules.Add(module);
         }
-        public void AddEnrollment(Enrollment enrollment)
+        private void Validate()
         {
-            Enrollments.Add(enrollment);
+            //TODO - Aplicar Notification Pattern em breve
+            ValidationFactory.Validate(this, new CourseValidator());
         }
     }
 }
