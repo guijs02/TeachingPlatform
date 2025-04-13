@@ -45,7 +45,20 @@ namespace TeachingPlatform.Api.Controllers
             {
                 return StatusCode(500, e.Message.ToString());
             }
-        }
+        }  
 
+        //[HttpPost("logout")]
+        //public async Task<IActionResult> Logout()
+        //{
+        //    try
+        //    {
+        //        User.Identity.lo
+        //        return Ok(token);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return StatusCode(500, e.Message.ToString());
+        //    }
+        //}
     }
 }

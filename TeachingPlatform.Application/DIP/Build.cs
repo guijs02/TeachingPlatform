@@ -22,6 +22,7 @@ namespace TeachingPlatform.Application.DIP
             service.AddScoped<ITokenService, TokenService>();
             service.AddScoped<ICreateCourseService, CreateCourseService>();
             service.AddScoped<IEnrollCreateService, CreateEnrollService>();
+            service.AddScoped<IGetAllCoursesService, GetAllCourseService>();
 
             return service;
         }

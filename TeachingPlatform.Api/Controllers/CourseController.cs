@@ -12,9 +12,11 @@ namespace TeachingPlatform.Api.Controllers
     public class CourseController : ControllerBase
     {
         public readonly ICreateCourseService _courseService;
-        public CourseController(ICreateCourseService courseService)
+        public readonly IGetAllCoursesService _getAllCourses;
+        public CourseController(ICreateCourseService courseService, IGetAllCoursesService getAllCourses)
         {
             _courseService = courseService;
+            _getAllCourses = getAllCourses;
         }
 
         [HttpPost(Endpoints.CreateCourse)]
@@ -24,7 +26,23 @@ namespace TeachingPlatform.Api.Controllers
             try
             {
                 var userId = User.FindFirstValue("id");
-                var result = await _courseService.Create(courseViewModel, Guid.Parse(userId));
+                var result = await _courseService.CreateAsync(courseViewModel, Guid.Parse(userId));
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message.ToString());
+            }
+        } 
+        
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAll([FromQuery] PagedRequest pagedRequest)
+        {
+            try
+            {
+                var userId = User.FindFirstValue("id");
+                var result = await _getAllCourses.GetAllCoursesAsync(pagedRequest, Guid.Parse(userId));
                 return Ok(result);
             }
             catch (Exception e)

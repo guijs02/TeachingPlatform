@@ -28,12 +28,12 @@ namespace TeachingPlatform.IntegrationTests
             course.AddModule(new Module("Test", Guid.NewGuid()));
             course.Mudules.First().AddLesson(new Lesson("LessonA", Guid.NewGuid()));
 
-            var result = await _courseRepository.Create(course);
+            var result = await _courseRepository.CreateAsync(course);
 
             Assert.NotNull(result);
             Assert.Equal(course.Name, result.Name);
             Assert.Equal(course.Description, result.Description);
-            Assert.Equal(course.TeacherId, result.TeacherId);
+            Assert.Equal(course.UserId, result.UserId);
 
             Assert.Equal(course.Mudules.First().Name, result.Mudules.First().Name);
             Assert.Equal(course.Mudules.First().CourseId, result.Mudules.First().CourseId);

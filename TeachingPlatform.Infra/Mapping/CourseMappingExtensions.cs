@@ -21,7 +21,7 @@ namespace TeachingPlatform.Infra.Mapping
                 Enrollments = [],
                 Description = model.Description,
                 Mudules = model.Mudules.Select(s => s.ToModel()).ToList(),
-                TeacherId = model.TeacherId,
+                TeacherId = model.UserId,
             };
         }
     }

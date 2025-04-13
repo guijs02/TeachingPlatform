@@ -36,6 +36,35 @@ namespace TeachingPlatform.E2ETests
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal("application/json", response.Content?.Headers?.ContentType?.MediaType);
+        }
+
+        [Fact]
+        public async Task Should_Get_All_Courses_From_Teacher()
+        {
+            var course = new CourseInputModel
+            {
+                Name = "Curso de Teste",
+                Description = "Curso de Teste",
+                Mudeles = [new ModuleInputModel { Name = "Modulo 1", Lessons = new List<LessonInputModel> { new LessonInputModel { Description = "teste" } } }],
+                TeacherId = Guid.NewGuid()
+            };
+
+
+            var login = await LoginUser();
+
+            // Buscar os cursos cadastrados
+
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", login?.Data?.ToString());
+
+            await _client.PostAsJsonAsync("/api/v1/course/create-course", course);
+
+            // Buscar os cursos cadastrados
+            var response = await _client.GetAsync("/api/v1/course");
+            var obj = await response.Content.ReadFromJsonAsync<PagedResponse<List<CourseGetAllResponse>>>();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(1, obj?.TotalCount);
+            Assert.Equal("application/json", response.Content?.Headers?.ContentType?.MediaType);
         }   
         
         [Fact]
@@ -55,7 +84,6 @@ namespace TeachingPlatform.E2ETests
             var response = await _client.PostAsJsonAsync("/api/v1/course/create-course", course);
 
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
-            //Assert.Equal("application/json", response.Content?.Headers?.ContentType?.MediaType);
         }
        
         public async Task<UserCreateInputModel> CreateUser(EUserRole role = EUserRole.TEACHER)
@@ -68,7 +96,7 @@ namespace TeachingPlatform.E2ETests
                 TypeOfUser = role
             };
             // Buscar os cursos cadastrados
-            var response = await _client.PostAsJsonAsync("/api/v1/user/register", user);
+            await _client.PostAsJsonAsync("/api/v1/user/register", user);
 
             return user;
         }

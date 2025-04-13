@@ -15,9 +15,9 @@ namespace TeachingPlatform.Domain.Validators
            .NotEmpty().WithMessage("description must not be empty")
            .NotNull().WithMessage("description is required");
 
-            RuleFor(s => s.TeacherId)
-            .NotNull().WithMessage("teacherId is required")
-            .Must(id => id != Guid.Empty).WithMessage("teacherId must be a valid GUID");
+            RuleFor(s => s.UserId)
+            .NotNull().WithMessage("userId is required")
+            .Must(id => id != Guid.Empty).WithMessage("userId must be a valid GUID");
 
         }
     }

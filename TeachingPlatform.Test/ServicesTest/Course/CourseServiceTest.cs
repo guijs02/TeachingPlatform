@@ -37,9 +37,9 @@ namespace TeachingPlatform.Test.ServicesTest.Course
             };
 
             var courseExpected = courseInput.ToEntity();
-            _repository.Setup(s => s.Create(It.IsAny<Domain.Entities.Course>())).ReturnsAsync(courseExpected);
+            _repository.Setup(s => s.CreateAsync(It.IsAny<Domain.Entities.Course>())).ReturnsAsync(courseExpected);
 
-            var result = await _service.Create(courseInput, Guid.NewGuid());
+            var result = await _service.CreateAsync(courseInput, Guid.NewGuid());
 
             var lessons = courseExpected.Mudules.SelectMany(sm => sm.Lessons);
 
