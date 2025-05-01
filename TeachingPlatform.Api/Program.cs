@@ -1,4 +1,3 @@
-using ManageDependencyInjection.Api;
 using TeachingPlatform.Api.Common;
 using TeachingPlatform.Application.DIP;
 using TeachingPlatform.Infra.DIP;

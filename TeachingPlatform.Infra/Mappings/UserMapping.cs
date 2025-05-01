@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TeachingPlatform.Infra.Models;
 
-namespace TeachingPlatform.Api.Mappings
+namespace TeachingPlatform.Infra.Mappings
 {
     public class UserMapping : IEntityTypeConfiguration<UserModel>
     {

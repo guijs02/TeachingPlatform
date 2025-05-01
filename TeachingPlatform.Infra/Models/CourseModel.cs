@@ -9,7 +9,8 @@ namespace TeachingPlatform.Infra.Models
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public Guid TeacherId { get; set; }
-        public List<ModuleModel> Mudules { get; set; } = null!;
+        public List<ModuleModel> Modules { get; set; } = null!;
         public List<EnrollmentModel> Enrollments { get; set; } = null!;
+        public string Progress { get; set; } = null!;
     }
 }

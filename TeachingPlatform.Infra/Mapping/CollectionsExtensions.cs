@@ -1,4 +1,5 @@
 ﻿using TeachingPlatform.Domain.Entities;
+using TeachingPlatform.Domain.Factories;
 using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Infra.Mapping
@@ -8,79 +9,58 @@ namespace TeachingPlatform.Infra.Mapping
         #region Enrollment
         public static List<Enrollment> ToEntity(this List<EnrollmentModel> model)
         {
-            var enrollments = new List<Enrollment>();
-
-            foreach (var entity in model)
-            {
-                enrollments.Add(new Enrollment(
+            return model.Select(entity =>
+                EnrollmentFactory.Create(
                     entity.StudentId,
-                    entity.CourseId)
-                );
-            }
-            return enrollments;
+                    entity.CourseId
+                )).ToList();
         }
+
         public static List<EnrollmentModel> ToModel(this List<Enrollment> model)
         {
-            var enrollments = new List<EnrollmentModel>();
-
-            foreach (var entity in model)
+            return model.Select(entity => new EnrollmentModel
             {
-                enrollments.Add(new EnrollmentModel
-                {
-                    CourseId = entity.CourseId,
-                    CreatedAt = entity.CreatedAt,
-                    StudentId = entity.StudentId,
-                });
-            }
-            return enrollments;
+                CourseId = entity.CourseId,
+                CreatedAt = entity.CreatedAt,
+                StudentId = entity.StudentId,
+            }).ToList();
         }
         #endregion
 
         #region Lesson
 
-        public static List<Lesson> ToEntity(this List<LessonModel> model)
-        {
-            var lessons = new List<Lesson>();
-
-            foreach (var entity in model)
-            {
-                lessons.Add(new Lesson(entity.Name, entity.ModuleId));
-            }
-
-            return lessons;
-        }
+        //public static List<Lesson> ToEntity(this List<LessonModel> model)
+        //{
+        //    return model.Select(s =>
+        //        new Module(
+        //            s.Id
+        //            s.Name,
+        //            s.ModuleId,
+        //        )).ToList();
+        //}
 
         public static LessonModel ToModel(this Lesson model)
         {
             return new LessonModel
             {
                 Name = model.Name,
+                ModuleId = model.ModuleId
             };
         }
         #endregion
 
+        #region Module
 
-        public static List<Module> ToEntity(this List<ModuleModel> model)
-        {
-            var modules = new List<Module>();
-
-            foreach (var entity in model)
-            {
-                modules.Add(new Module(
-                    entity.Name,
-                    entity.CourseId));
-            }
-            return modules;
-
-        }
-
-        //public static ModuleModel ToModel(this Module model)
+        //public static List<Module> ToEntity(this List<ModuleModel> model)
         //{
-        //    return new ModuleModel
-        //    {
-        //        CourseId = model.CourseId,
-        //        Lessons = model.Lessons.Select(s => s.ToModel()).ToList(),
-        //    };
+        //    return model.Select(s =>
+        //        ModuleFactory.Create(
+        //            s.Name,
+        //            s.CourseId,
+        //            s.Lessons.Select(l => l.Name).ToList()
+        //        )).ToList();
         //}
+
+        #endregion
     }
 }

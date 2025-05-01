@@ -1,11 +1,11 @@
-﻿using TeachingPlatform.Domain.Factory;
+﻿using TeachingPlatform.Domain.Factories;
 using TeachingPlatform.Domain.Validators;
 
 namespace TeachingPlatform.Domain.Entities
 {
     public class Enrollment : Entity
     {
-        public Enrollment(Guid studentId, Guid courseId) : base()
+        public Enrollment(Guid id, Guid studentId, Guid courseId) : base(id)
         {
             StudentId = studentId;
             CourseId = courseId;

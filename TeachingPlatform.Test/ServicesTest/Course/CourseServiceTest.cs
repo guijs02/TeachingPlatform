@@ -3,6 +3,7 @@ using TeachingPlatform.Application.Extension;
 using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Services.Course;
 using TeachingPlatform.Domain.Interfaces;
+using TeachingPlatform.Domain.Repositories;
 
 namespace TeachingPlatform.Test.ServicesTest.Course
 {
@@ -23,7 +24,7 @@ namespace TeachingPlatform.Test.ServicesTest.Course
             {
                 Description = "Test",
                 Name = "Test",
-                Mudeles = new List<ModuleInputModel>
+                Modules = new List<ModuleInputModel>
                 {
                     new ModuleInputModel
                     {
@@ -41,23 +42,38 @@ namespace TeachingPlatform.Test.ServicesTest.Course
 
             var result = await _service.CreateAsync(courseInput, Guid.NewGuid());
 
-            var lessons = courseExpected.Mudules.SelectMany(sm => sm.Lessons);
+            var lessons = courseExpected.Modules.SelectMany(sm => sm.Lessons);
 
             Assert.Equal(courseExpected.Name, result?.Data?.name);
             Assert.Equal(courseExpected.Description, result?.Data?.description);
-            Assert.NotEmpty(courseExpected.Mudules);
+            Assert.NotEmpty(courseExpected.Modules);
 
-            Assert.NotEmpty(courseExpected.Mudules.First().Name);
-            Assert.NotNull(courseExpected.Mudules.First().Name);
-            Assert.NotEqual(Guid.Empty, courseExpected.Mudules.First().CourseId);
-            Assert.NotEqual(Guid.Empty, courseExpected.Mudules.First().Id);
+            Assert.NotEmpty(courseExpected.Modules.First().Name);
+            Assert.NotNull(courseExpected.Modules.First().Name);
+            Assert.NotEqual(Guid.Empty, courseExpected.Modules.First().CourseId);
+            Assert.NotEqual(Guid.Empty, courseExpected.Modules.First().Id);
 
             Assert.NotEmpty(lessons);
             Assert.NotEmpty(lessons.First().Name);
             Assert.NotNull(lessons.First().Name);
             Assert.NotEqual(Guid.Empty, lessons.First().Id);
-            Assert.NotEqual(Guid.Empty, lessons.First().ModuleId);
+            //Assert.NotEqual(Guid.Empty, lessons.First().ModuleId);
 
         }
+
+        [Fact]
+        public void SholudFinishLessonsWithSuccess()
+        {
+            var input = new
+            {
+                CourseId = Guid.NewGuid(),
+                ModuleId = Guid.NewGuid(),
+                LessonId = Guid.NewGuid()
+            };
+
+            var course = new Domain.Entities.Course(Guid.NewGuid(),"Test", "Test", Guid.NewGuid(), []);
+        }
+
+     
     }
 }

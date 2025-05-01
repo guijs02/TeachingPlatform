@@ -1,5 +1,5 @@
 ﻿using TeachingPlatform.Domain.Entities;
-
+using TeachingPlatform.Domain.Factories;
 using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Infra.Mapping
@@ -8,9 +8,9 @@ namespace TeachingPlatform.Infra.Mapping
     {
         public static Enrollment ToEntity(this EnrollmentModel model)
         {
-            return new Enrollment(
-                    model.StudentId,
-                    model.CourseId);
+            return EnrollmentFactory.Create(
+                model.StudentId,
+                model.CourseId);
         }
 
         public static EnrollmentModel ToModel(this Enrollment entity)

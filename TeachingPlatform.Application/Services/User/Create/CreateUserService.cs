@@ -4,6 +4,7 @@ using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Responses;
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Domain.Interfaces;
+using TeachingPlatform.Domain.Repositories;
 
 namespace TeachingPlatform.Application.Services.User.Create
 {

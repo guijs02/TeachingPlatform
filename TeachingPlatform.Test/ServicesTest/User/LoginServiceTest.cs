@@ -4,6 +4,7 @@ using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Application.Services.User.Login;
 using TeachingPlatform.Domain.Exceptions;
 using TeachingPlatform.Domain.Interfaces;
+using TeachingPlatform.Domain.Repositories;
 
 namespace TeachingPlatform.Test.ServicesTest.User
 {
@@ -50,6 +51,17 @@ namespace TeachingPlatform.Test.ServicesTest.User
             Assert.False(result.IsSuccess);
             Assert.Equal(expectedMessage, result.Message);
             _userRepository.Verify(repo => repo.Login(It.IsAny<Domain.Entities.User>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task Should_Logout_With_Success()
+        {
+            _userRepository.Setup(s => s.LogoutAsync());
+
+            var result = await _service.LogoutAsync();
+            Assert.True(result.IsSuccess);
+            Assert.Equal("Logout feito com sucesso", result.Message);
+            _userRepository.Verify(repo => repo.LogoutAsync(), Times.Once);
         }
 
     }

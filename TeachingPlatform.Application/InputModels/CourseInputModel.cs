@@ -9,6 +9,6 @@ namespace TeachingPlatform.Application.InputModels
         public string Description { get; set; } = null!;
         [JsonIgnore]
         public Guid TeacherId { get; set; }
-        public List<ModuleInputModel> Mudeles { get; set; } = null!;
+        public List<ModuleInputModel> Modules { get; set; } = null!;
     }
 }

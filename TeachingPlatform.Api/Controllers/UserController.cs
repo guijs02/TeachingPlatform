@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TeachingPlatform.Api.Common;
 using TeachingPlatform.Application.InputModels;
@@ -45,20 +46,21 @@ namespace TeachingPlatform.Api.Controllers
             {
                 return StatusCode(500, e.Message.ToString());
             }
-        }  
+        }
 
-        //[HttpPost("logout")]
-        //public async Task<IActionResult> Logout()
-        //{
-        //    try
-        //    {
-        //        User.Identity.lo
-        //        return Ok(token);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return StatusCode(500, e.Message.ToString());
-        //    }
-        //}
+        [HttpDelete("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            try
+            {
+                await _userLoginService.LogoutAsync();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message.ToString());
+            }
+        }
     }
 }

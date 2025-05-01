@@ -3,17 +3,13 @@ using System.Net.Http.Json;
 using TeachingPlatform.Application;
 using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Responses;
+using TeachingPlatform.Domain.Entities;
 
 namespace TeachingPlatform.E2ETests
 {
-    public class CourseTest : IClassFixture<CustomWebApplicationFactory<Program>>
+    public class UserTest(CustomWebApplicationFactory<Program> factory) : IClassFixture<CustomWebApplicationFactory<Program>>
     {
-        private readonly HttpClient _client;
-
-        public CourseTest(CustomWebApplicationFactory<Program> factory)
-        {
-            _client = factory.CreateClient();
-        }
+        private readonly HttpClient _client = factory.CreateClient();
 
         [Fact]
         public async Task Should_Register_User()
@@ -41,7 +37,7 @@ namespace TeachingPlatform.E2ETests
                 UserName = "gui",
                 ConfirmPassword = "123",
                 Password = "1232",
-                TypeOfUser = Domain.Entities.EUserRole.TEACHER
+                TypeOfUser = EUserRole.TEACHER
             };
 
             // Buscar os cursos cadastrados
@@ -49,6 +45,29 @@ namespace TeachingPlatform.E2ETests
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.Equal("application/problem+json", response.Content?.Headers?.ContentType?.MediaType);
+        }   
+        
+        [Fact]
+        public async Task Should_Logout_User_With_Success()
+        {
+            // Buscar os cursos cadastrados
+            var login = await UserService.CreateLoginUser(_client, EUserRole.STUDENT);
+
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", login?.Data?.ToString());
+
+            //// Buscar os cursos cadastrados
+            var response = await _client.DeleteAsync("/api/v1/user/logout");
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }  
+        
+        [Fact]
+        public async Task Should_Give_Wrong_When_Logout_Not_Authenticated()
+        {
+            //// Buscar os cursos cadastrados
+            var response = await _client.DeleteAsync("/api/v1/user/logout");
+
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
     }
 }

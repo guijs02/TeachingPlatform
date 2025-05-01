@@ -10,6 +10,10 @@ namespace TeachingPlatform.Domain.Validators
             RuleFor(s => s.Name)
           .NotEmpty().WithMessage("name must not be empty")
           .NotNull().WithMessage("name is required");
+            
+            RuleFor(s => s.Lessons)
+          .NotEmpty().WithMessage("lessons must not be empty")
+          .NotNull().WithMessage("lessons is required");
 
             RuleFor(s => s.CourseId)
            .NotNull().WithMessage("courseId is required")

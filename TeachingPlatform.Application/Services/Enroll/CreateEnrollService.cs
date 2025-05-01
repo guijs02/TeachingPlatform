@@ -4,6 +4,7 @@ using TeachingPlatform.Application.Extension;
 using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Responses;
 using TeachingPlatform.Domain.Interfaces;
+using TeachingPlatform.Domain.Repositories;
 
 public class CreateEnrollService(IEnrollmentRepository enrollmentRepository) : IEnrollCreateService
 {

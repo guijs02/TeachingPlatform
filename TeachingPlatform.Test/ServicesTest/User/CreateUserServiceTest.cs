@@ -2,6 +2,7 @@ using Moq;
 using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Services.User.Create;
 using TeachingPlatform.Domain.Interfaces;
+using TeachingPlatform.Domain.Repositories;
 
 namespace TeachingPlatform.Test.ServicesTest.User
 {

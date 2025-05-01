@@ -1,12 +1,12 @@
 ﻿using TeachingPlatform.Domain.Exceptions;
-using TeachingPlatform.Domain.Factory;
+using TeachingPlatform.Domain.Factories;
 using TeachingPlatform.Domain.Validators;
 
 namespace TeachingPlatform.Domain.Entities
 {
     public class User : Entity
     {
-        public User(Guid id, string userName, string password, EUserRole role)
+        public User(Guid id, string userName, string password, EUserRole role) : base(id)
         {
             Id = id;
             UserName = userName;

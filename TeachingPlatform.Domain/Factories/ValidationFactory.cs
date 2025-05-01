@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using TeachingPlatform.Domain.Entities;
 
-namespace TeachingPlatform.Domain.Factory
+namespace TeachingPlatform.Domain.Factories
 {
     public class ValidationFactory
     {

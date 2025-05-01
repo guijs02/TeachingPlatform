@@ -1,6 +1,6 @@
 ﻿using TeachingPlatform.Domain.Entities;
 
-namespace TeachingPlatform.Domain.Interfaces
+namespace TeachingPlatform.Domain.Repositories
 {
     public interface IEnrollmentRepository
     {

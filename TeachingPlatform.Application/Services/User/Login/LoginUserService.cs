@@ -4,6 +4,7 @@ using TeachingPlatform.Application.Responses;
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
+using TeachingPlatform.Domain.Repositories;
 
 namespace TeachingPlatform.Application.Services.User.Login
 {
@@ -36,6 +37,12 @@ namespace TeachingPlatform.Application.Services.User.Login
             var token = _tokenService.GenerateToken(user);
 
             return new Response<string>(token);
+        }
+
+        public async Task<Response<bool>> LogoutAsync()
+        {
+            await _userRepository.LogoutAsync();
+            return new Response<bool>(true, message: "Logout feito com sucesso");
         }
     }
 }

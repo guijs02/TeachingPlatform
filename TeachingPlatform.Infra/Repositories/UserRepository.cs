@@ -2,6 +2,7 @@
 using TeachingPlatform.Application.Services.Interfaces;
 using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
+using TeachingPlatform.Domain.Repositories;
 using TeachingPlatform.Infra.Mapping;
 using TeachingPlatform.Infra.Models;
 
@@ -45,6 +46,11 @@ namespace TeachingPlatform.Infra.Repositories
             loginUser.Id = user.Id;
 
             return result.Succeeded;
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }

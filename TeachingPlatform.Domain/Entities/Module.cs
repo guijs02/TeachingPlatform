@@ -1,15 +1,15 @@
-﻿using TeachingPlatform.Domain.Factory;
+﻿using TeachingPlatform.Domain.Factories;
 using TeachingPlatform.Domain.Validators;
 
 namespace TeachingPlatform.Domain.Entities
 {
     public class Module : Entity
     {
-        public Module(string name, Guid courseId) : base()
+        public Module(Guid id, string name, Guid courseId, List<Lesson> lessons) : base(id)
         {
             Name = name;
             CourseId = courseId;
-            Lessons = new();
+            Lessons = lessons;
             Validate();
         }
 
@@ -22,11 +22,5 @@ namespace TeachingPlatform.Domain.Entities
             //TODO - Aplicar Notification Pattern em breve
             ValidationFactory.Validate(this, new ModuleValidator());
         }
-
-        public void AddLesson(Lesson lesson)
-        {
-            Lessons.Add(lesson);
-        }
-
     }
 }

@@ -14,6 +14,10 @@ namespace TeachingPlatform.Domain.Validators
             RuleFor(s => s.Description)
            .NotEmpty().WithMessage("description must not be empty")
            .NotNull().WithMessage("description is required");
+            
+            RuleFor(s => s.Modules)
+           .NotEmpty().WithMessage("modules must not be empty")
+           .NotNull().WithMessage("modules is required");
 
             RuleFor(s => s.UserId)
             .NotNull().WithMessage("userId is required")

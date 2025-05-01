@@ -13,6 +13,7 @@ using TeachingPlatform.Application.Services.Token;
 using TeachingPlatform.Application.Services.User.Create;
 using TeachingPlatform.Application.Services.User.Login;
 using TeachingPlatform.Domain.Interfaces;
+using TeachingPlatform.Domain.Repositories;
 using TeachingPlatform.Infra.Context;
 using TeachingPlatform.Infra.Models;
 using TeachingPlatform.Infra.Repositories;

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TeachingPlatform.Domain.Shared
+﻿namespace TeachingPlatform.Domain.Shared
 {
     public class NotificationErrorProps(string context, string message)
     {
@@ -21,8 +13,8 @@ namespace TeachingPlatform.Domain.Shared
         public void AddError(string context, string message)
         {
             Errors.Add(new NotificationErrorProps(context, message));
-        }  
-       
+        }
+
         public string GetMessages(string? context)
         {
             string messages = string.Empty;
@@ -34,7 +26,7 @@ namespace TeachingPlatform.Domain.Shared
                     messages += $"{e.Context}: {e.Message}, ";
                 }
             });
-            
+
             return messages;
         }
         public bool HasErrors()

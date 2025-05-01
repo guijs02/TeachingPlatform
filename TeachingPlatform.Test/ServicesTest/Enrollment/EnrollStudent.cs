@@ -2,6 +2,7 @@
 using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
+using TeachingPlatform.Domain.Repositories;
 
 namespace TeachingPlatform.Test.ServicesTest.Enrollment
 {
@@ -25,6 +26,7 @@ namespace TeachingPlatform.Test.ServicesTest.Enrollment
             };
 
             var entity = new Domain.Entities.Enrollment(
+                Guid.NewGuid(),
                 Guid.NewGuid(),
                 Guid.NewGuid());
 

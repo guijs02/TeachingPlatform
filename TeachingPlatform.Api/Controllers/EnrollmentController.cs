@@ -5,6 +5,7 @@ using System.Security.Claims;
 using TeachingPlatform.Api.Common;
 using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Services.Interfaces;
+using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
 
 namespace TeachingPlatform.Api.Controllers

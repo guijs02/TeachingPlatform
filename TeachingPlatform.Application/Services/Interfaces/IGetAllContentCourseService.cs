@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Responses;
-using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Responses;
 
 namespace TeachingPlatform.Application.Services.Interfaces
 {
-    public interface IGetAllCoursesService
+    public interface IGetAllContentCourseService
     {
-        Task<PagedResponse<List<CourseGetAllResponse>>> GetAllCoursesAsync(PagedRequest pagedRequest, Guid userId);
+        Task<Response<IEnumerable<GetAllContentCourseResponse>>> GetAllContentCourseAsync(Guid courseId, Guid userId);
     }
 }

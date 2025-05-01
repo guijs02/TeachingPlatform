@@ -13,10 +13,14 @@ namespace TeachingPlatform.Api.Controllers
     {
         public readonly ICreateCourseService _courseService;
         public readonly IGetAllCoursesService _getAllCourses;
-        public CourseController(ICreateCourseService courseService, IGetAllCoursesService getAllCourses)
+        public readonly IGetAllContentCourseService _getAllContentCourse;
+        public CourseController(ICreateCourseService courseService,
+                                IGetAllCoursesService getAllCourses,
+                                IGetAllContentCourseService getAllContentCourse)
         {
             _courseService = courseService;
             _getAllCourses = getAllCourses;
+            _getAllContentCourse = getAllContentCourse;
         }
 
         [HttpPost(Endpoints.CreateCourse)]
@@ -43,6 +47,22 @@ namespace TeachingPlatform.Api.Controllers
             {
                 var userId = User.FindFirstValue("id");
                 var result = await _getAllCourses.GetAllCoursesAsync(pagedRequest, Guid.Parse(userId));
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message.ToString());
+            }
+        }   
+        
+        [HttpGet("get-all-content/{courseId}")]
+        [Authorize]
+        public async Task<IActionResult> GetAllContentCourse(Guid courseId)
+        {
+            try
+            {
+                var userId = User.FindFirstValue("id");
+                var result = await _getAllContentCourse.GetAllContentCourseAsync(courseId, Guid.Parse(userId));
                 return Ok(result);
             }
             catch (Exception e)

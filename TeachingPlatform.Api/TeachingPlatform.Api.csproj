@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ManageDependencyInjection\ManageDependencyInjection.csproj" />
     <ProjectReference Include="..\TeachingPlatform.Application\TeachingPlatform.Application.csproj" />
+    <ProjectReference Include="..\TeachingPlatform.Infra\TeachingPlatform.Infra.csproj" />
     
   </ItemGroup>
 

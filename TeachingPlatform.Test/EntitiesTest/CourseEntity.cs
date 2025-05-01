@@ -4,59 +4,74 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeachingPlatform.Domain.Entities;
+using TeachingPlatform.Domain.Factories;
 
 namespace TeachingPlatform.UnitTests.EntitiesTest
 {
-    public class CourseEntity
+    public class CourseEntityTest
     {
         [Fact]
         public void ShouldNotAcceptForValidation()
         {
-            var user = new User(
-                Guid.NewGuid(),
-                "Test",
+            // Test case: Course name is empty
+            var courseWithEmptyName = CourseFactory.Create(
                 string.Empty,
-                EUserRole.TEACHER);
-
-            var messages = user.notification.GetMessages(nameof(User));
-            
-            Assert.NotEmpty(messages);
-            Assert.Equal("User: password must not be empty, ", messages);
-
-            var user2 = new User(
+                "Valid Description",
                 Guid.NewGuid(),
-                string.Empty,
-                "Test",
-                EUserRole.TEACHER);
+                ["Lesson 1", "Lesson 2"],
+                ["Module 1"]);
 
-            var messages2 = user2.notification.GetMessages(nameof(User));
-            Assert.NotEmpty(messages2);
-            Assert.Equal("User: username must not be empty, ", messages2);    
-            
-            var user3 = new User(
+            var messagesForEmptyName = courseWithEmptyName.notification.GetMessages(nameof(Course));
+
+            Assert.NotEmpty(messagesForEmptyName);
+            Assert.Equal("Course: name must not be empty, ", messagesForEmptyName);
+
+            // Test case: Course description is empty
+            var courseWithEmptyDescription = CourseFactory.Create(
+                "Valid Name",
+                string.Empty,
                 Guid.NewGuid(),
-                string.Empty,
-                "Test",
-                0);
+                ["Lesson 1", "Lesson 2"],
+                ["Module 1"]);
 
-            var messages3 = user3.notification.GetMessages(nameof(User));
-            Assert.NotEmpty(messages3);
-            Assert.Equal("User: username must not be empty, User: type of user is required, ", messages3);
+            var messagesForEmptyDescription = courseWithEmptyDescription.notification.GetMessages(nameof(Course));
 
+            Assert.NotEmpty(messagesForEmptyDescription);
+            Assert.Equal("Course: description must not be empty, ", messagesForEmptyDescription);
+
+            // Test case: Teacher ID is invalid
+            var courseWithInvalidTeacherId = CourseFactory.Create(
+                "Valid Name",
+                "Valid Description",
+                Guid.Empty,
+                ["Lesson 1", "Lesson 2"],
+                ["Module 1"]);
+
+            var messagesForInvalidTeacherId = courseWithInvalidTeacherId.notification.GetMessages(nameof(Course));
+
+            Assert.NotEmpty(messagesForInvalidTeacherId);
+            Assert.Equal("Course: userId must be a valid GUID, ", messagesForInvalidTeacherId);
         }
 
         [Fact]
         public void ShouldAcceptForValidation()
         {
-            var user = new User(
-                Guid.NewGuid(),
-                "Test",
-                "Test",
-                EUserRole.TEACHER);
+            var userId = Guid.NewGuid();
+            // Test case: Valid course
+            var validCourse = CourseFactory.Create(
+                "Valid Name",
+                "Valid Description",
+                userId,
+                ["Lesson 1", "Lesson 2"],
+                ["Module 1"]);
 
-            var messages = user.notification.GetMessages(nameof(User));
+            var messages = validCourse.notification.GetMessages(nameof(Course));
 
             Assert.Empty(messages);
+            Assert.Equal("Valid Name", validCourse.Name);
+            Assert.Equal("Valid Description", validCourse.Description);
+            Assert.Equal(1, validCourse?.Modules.Count);
+            Assert.Equal(userId, validCourse?.UserId);
         }
     }
 }

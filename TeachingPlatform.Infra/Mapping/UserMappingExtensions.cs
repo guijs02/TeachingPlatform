@@ -1,4 +1,5 @@
 ﻿using TeachingPlatform.Domain.Entities;
+using TeachingPlatform.Domain.Factories;
 using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Infra.Mapping
@@ -7,8 +8,7 @@ namespace TeachingPlatform.Infra.Mapping
     {
         public static User ToEntity(this UserModel model)
         {
-            return new User(
-                model.Id,
+            return UserFactory.Create(
                 model?.UserName,
                 model.Password,
                 (Domain.Entities.EUserRole)model.TypeOfUser);

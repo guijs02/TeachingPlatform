@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
+using TeachingPlatform.Domain.Repositories;
 using TeachingPlatform.Infra.Context;
 using TeachingPlatform.Infra.Mapping;
 

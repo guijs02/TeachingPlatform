@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
+using TeachingPlatform.Domain.Repositories;
 
 namespace TeachingPlatform.IntegrationTests
 {
@@ -56,6 +57,23 @@ namespace TeachingPlatform.IntegrationTests
 
             Assert.True(resultCreate);
             Assert.True(resultLogin);
+        }
+
+        [Fact]
+        public async Task LogoutUserWithSuccess()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+
+            var user = new User(id, "GUI", "123", Domain.Entities.EUserRole.TEACHER);
+
+            await _repository.Create(user);
+
+            await _repository.Login(user);
+
+            var result = _repository.LogoutAsync().IsCompletedSuccessfully;
+
+            Assert.True(result);
         }
 
         private UserManager<UserModel> CreateUserManager()

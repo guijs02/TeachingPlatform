@@ -7,14 +7,9 @@ using TeachingPlatform.Domain.Shared;
 
 namespace TeachingPlatform.Domain.Entities
 {
-    public abstract class Entity
+    public abstract class Entity(Guid id)
     {
-        public readonly Notification notification;
-        protected Entity()
-        {
-            notification = new();
-            Id = Guid.NewGuid();
-        }
-        public Guid Id { get; set; }
+        public readonly Notification notification = new();
+        public Guid Id { get; private set; } = id;
     }
 }
