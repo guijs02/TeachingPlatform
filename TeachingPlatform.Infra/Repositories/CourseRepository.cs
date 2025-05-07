@@ -43,7 +43,7 @@ namespace TeachingPlatform.Infra.Repositories
             return courses;
 
         }
-        public async Task<List<GetAllContentCourseResponse>> GetAllContentCourseAsync(Guid courseId, Guid userId)
+        public async Task<GetAllContentCourseResponse?> GetAllContentCourseAsync(Guid courseId, Guid userId)
         {
             var query = _context.Course
                 .AsNoTracking()
@@ -58,7 +58,7 @@ namespace TeachingPlatform.Infra.Repositories
                     m.Name,
                     m.Lessons.Select(l => new CourseLessonResponse(l.Name, l.Id))
                 ))
-            )).ToListAsync();
+            )).FirstOrDefaultAsync();
         }
 
         //public async Task<Course> GetLessonByModuleCourse()

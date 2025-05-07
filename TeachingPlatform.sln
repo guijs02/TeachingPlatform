@@ -18,6 +18,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{49A459F7-BC04-4480-B31F-A21D5D5BD9A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{25DB1A02-9CF8-4FF5-85A6-9F51D2C1D2C9}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C79AA7F9-434F-4A0A-B3AC-BC7ABC12B1A5}"
 EndProject

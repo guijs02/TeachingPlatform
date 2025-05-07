@@ -24,7 +24,9 @@ namespace TeachingPlatform.Infra.DIP
     {
         public static IServiceCollection AddContext(this IServiceCollection service, IConfiguration configuration)
         {
-            service.AddDbContext<TeachingContext>(opts => opts.UseSqlServer(configuration.GetConnectionString("Database")));
+            var connectionString = configuration.GetConnectionString("Database");
+
+            service.AddDbContext<TeachingContext>(opts => opts.UseNpgsql(connectionString));
             return service;
         }
         public static IdentityBuilder AddIdentityRole(this IServiceCollection service)
@@ -43,5 +45,6 @@ namespace TeachingPlatform.Infra.DIP
 
             return service;
         }
+    
     }
 }

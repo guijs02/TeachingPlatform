@@ -47,6 +47,33 @@ namespace TeachingPlatform.IntegrationTests
 
         }
 
+        [Fact]
+        public async Task GetAllContentWithSuccess()
+        {
+            var course = CourseFactory.Create("Curso de Teste",
+                                        "Curso de teste para integração", 
+                                        Guid.NewGuid(),
+                                        ["module 1"], 
+                                        ["lesson 2"]);
+
+            await _courseRepository.CreateAsync(course);
+
+            var result = await _courseRepository.GetAllContentCourseAsync(course.Id, course.UserId);
+            Assert.NotNull(result);
+            Assert.NotEmpty(result.module);
+            Assert.NotEmpty(result.module.First().lessons);
+
+
+            Assert.Equal(course.Name, result.name);
+
+            Assert.Equal(course.Modules.First().Name, result.module.First().name);
+            //Assert.Equal(course.Modules.First().Id, result.module.First().id);
+
+            Assert.Equal(course.Modules.First().Lessons.First().Name, result.module.First().lessons.First().name);
+            //Assert.Equal(course.Modules.First().Lessons.First().Id, result.module.First().lessons.First().id);
+
+        }
+
         public void Dispose()
         {
             _context.Context.Dispose();

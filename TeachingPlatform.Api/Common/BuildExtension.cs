@@ -38,8 +38,10 @@ namespace TeachingPlatform.Api.Common
             service.AddEndpointsApiExplorer();
             return service;
         }
-        public static AuthenticationBuilder ConfigJwtBearer(this IServiceCollection services)
+        public static AuthenticationBuilder ConfigJwtBearer(this IServiceCollection services, IConfiguration configuration)
         {
+            var secretKey = configuration["JwtSettings:SecretKey"] ?? string.Empty;
+
             return services
                 .AddAuthentication(x =>
                 {
@@ -52,9 +54,7 @@ namespace TeachingPlatform.Api.Common
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(
-                                "+R5dWfidTTU>/?@/43*29e8!'d'4ç9y3q81hfdhajfh@43488*,,|4|&#8/*!nndn"
-                            )
+                            Encoding.UTF8.GetBytes(secretKey)
                         ),
                         ValidateAudience = false,
                         ValidateIssuer = false,
@@ -73,6 +73,13 @@ namespace TeachingPlatform.Api.Common
                 options.Password.RequiredLength = 3;
             });
         }
-
+        public static IServiceCollection AddCustomPolicy(this IServiceCollection service)
+        {
+            service.AddAuthorizationBuilder()
+                .AddPolicy("user",
+                policy =>
+                policy.RequireRole("TEACHER", "STUDENT"));
+            return service;
+        }
     }
 }

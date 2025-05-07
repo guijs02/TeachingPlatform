@@ -21,6 +21,7 @@ namespace TeachingPlatform.Infra.Mapping
             return new CourseModel
             {
                 Name = model?.Name,
+                Id = model.Id,
                 Enrollments = [],
                 Description = model.Description,
                 Progress = "0",

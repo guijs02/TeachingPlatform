@@ -10,11 +10,11 @@ namespace TeachingPlatform.Application.Services.Course
     {
         private readonly ICourseRepository _courseRepository = courseRepository;
 
-        public async Task<Response<IEnumerable<GetAllContentCourseResponse>>> GetAllContentCourseAsync(Guid courseId, Guid userId)
+        public async Task<Response<GetAllContentCourseResponse?>> GetAllContentCourseAsync(Guid courseId, Guid userId)
         {
             var contents = await _courseRepository.GetAllContentCourseAsync(courseId, userId);
 
-            return new Response<IEnumerable<GetAllContentCourseResponse>>(contents);
+            return new Response<GetAllContentCourseResponse?>(contents);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace TeachingPlatform.Application.Responses
 {
-    public record CourseCreateResponse(string name, string description)
+    public record CourseCreateResponse(Guid id, string name, string description)
     {
     }
 }

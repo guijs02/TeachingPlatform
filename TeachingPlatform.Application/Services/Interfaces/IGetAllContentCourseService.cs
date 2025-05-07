@@ -11,6 +11,6 @@ namespace TeachingPlatform.Application.Services.Interfaces
 {
     public interface IGetAllContentCourseService
     {
-        Task<Response<IEnumerable<GetAllContentCourseResponse>>> GetAllContentCourseAsync(Guid courseId, Guid userId);
+        Task<Response<GetAllContentCourseResponse?>> GetAllContentCourseAsync(Guid courseId, Guid userId);
     }
 }

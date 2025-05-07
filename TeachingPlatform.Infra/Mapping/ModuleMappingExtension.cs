@@ -18,6 +18,7 @@ namespace TeachingPlatform.Infra.Mapping
             return new ModuleModel
             {
                 CourseId = model.CourseId,
+                Lessons = model.Lessons.Select(s => s.ToModel()).ToList(),
                 Name = model.Name
             };
         }

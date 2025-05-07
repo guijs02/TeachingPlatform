@@ -1,7 +1,9 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 using TeachingPlatform.Application;
 using TeachingPlatform.Application.InputModels;
+using TeachingPlatform.Application.Services.Course;
 using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Responses;
 
@@ -80,15 +82,26 @@ namespace TeachingPlatform.E2ETests
 
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", login?.Data?.ToString());
 
-            await _client.PostAsJsonAsync("/api/v1/course/create-course", course);
+            var courseResponse = await _client.PostAsJsonAsync("/api/v1/course/create-course", course);
+
+            var responseContent = await courseResponse.Content.ReadAsStringAsync();
+
+            // Parse the JSON response
+            using var jsonDocument = JsonDocument.Parse(responseContent);
+
+            // Access the "Data" property and then the "Id" property
+            var dataElement = jsonDocument.RootElement.GetProperty("data");
+            var id = dataElement.GetProperty("id").GetGuid();
 
             // Buscar os cursos cadastrados
-            //var response = await _client.GetAsync($"/api/v1/course/get-all-content/{course}");
-            //var obj = await response.Content.ReadFromJsonAsync<PagedResponse<List<CourseGetAllResponse>>>();
+            var response = await _client.GetAsync($"/api/v1/course/get-all-content/{id}");
 
-            //Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            //Assert.Equal(1, obj?.TotalCount);
-            //Assert.Equal("application/json", response.Content?.Headers?.ContentType?.MediaType);
+            var obj = await response.Content.ReadFromJsonAsync<Response<GetAllContentCourseResponse>>();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(1, obj?.Data?.module.Count());
+            Assert.Equal(1, obj?.Data?.module.First().lessons.Count());
+            Assert.Equal("application/json", response.Content?.Headers?.ContentType?.MediaType);
         }
 
         [Fact]

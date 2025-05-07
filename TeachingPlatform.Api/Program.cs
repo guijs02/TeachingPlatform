@@ -9,8 +9,7 @@ builder.Services.AddIdentityRole();
 
 builder.Services.AddControllers().AddXmlSerializerFormatters();
 builder.Services.AddAuthentication();
-builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("user", policy => policy.RequireRole("TEACHER", "STUDENT"));
+builder.Services.AddCustomPolicy();
 
 builder.Services.AddContext(builder.Configuration);
 builder.Services.AddInfraDependencies();
@@ -19,7 +18,7 @@ builder.Services.AddApplicationDependencies();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerDocumentation();
 
-builder.Services.ConfigJwtBearer();
+builder.Services.ConfigJwtBearer(builder.Configuration);
 builder.Services.ConfigIdentityOptions();
 
 var app = builder.Build();

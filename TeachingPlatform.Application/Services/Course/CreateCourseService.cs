@@ -21,7 +21,7 @@ namespace TeachingPlatform.Application.Services.Course
 
             await _courseRepository.CreateAsync(course);
 
-            var response = new CourseCreateResponse(course.Name, course.Description);
+            var response = new CourseCreateResponse(course.Id, course.Name, course.Description);
 
             return new Response<CourseCreateResponse>(response);
         }

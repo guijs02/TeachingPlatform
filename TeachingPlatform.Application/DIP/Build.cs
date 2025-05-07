@@ -15,6 +15,7 @@ namespace TeachingPlatform.Application.DIP
 {
     public static class Build
     {
+        
         public static IServiceCollection AddApplicationDependencies(this IServiceCollection service)
         {
             service.AddScoped<IUserCreateService, CreateUserService>();
