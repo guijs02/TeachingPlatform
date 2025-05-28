@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TeachingPlatform.Application;
 using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
 using TeachingPlatform.Domain.Repositories;
@@ -13,6 +14,19 @@ namespace TeachingPlatform.Infra.Repositories
         {
             try
             {
+                var existCourse = await context.Course
+                        .AsNoTracking()
+                        .AnyAsync(a => a.Id == enrollment.CourseId);
+                
+                var isEnrolment = await context.Enrollment
+                        .AsNoTracking()
+                        .AnyAsync(a => a.CourseId == enrollment.CourseId && a.StudentId == enrollment.StudentId);
+
+                if (!existCourse)
+                    return Guid.Empty;
+                
+                if (isEnrolment)
+                    return Guid.Empty;
 
                 var model = enrollment.ToModel();
                 context.Enrollment.Add(model);

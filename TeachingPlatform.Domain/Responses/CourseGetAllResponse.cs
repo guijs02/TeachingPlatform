@@ -1,6 +1,6 @@
 ﻿namespace TeachingPlatform.Domain.Responses
 {
-    public record CourseGetAllResponse(string name, string description)
+    public sealed record CourseGetAllResponse(Guid id, string name, string description, string progress)
     {
     }
 }

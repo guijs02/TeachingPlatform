@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Repositories;
 using TeachingPlatform.Domain.Responses;
 using TeachingPlatform.Infra.Context;
 using TeachingPlatform.Infra.Mapping;
+using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Infra.Repositories
 {
@@ -33,21 +35,21 @@ namespace TeachingPlatform.Infra.Repositories
         public async Task<List<CourseGetAllResponse>> GetAllCourses(int pageSize, int pageNumber, Guid userId)
         {
 
-            var courses = await _context.Course
-                       .Where(c => c.TeacherId == userId)
+            return await _context.Course
+                       .Where(c => c.TeacherId == userId || c.Enrollments.Any(a => a.StudentId == userId))
                        .Skip((pageNumber - 1) * pageSize)
                        .Take(pageSize)
-                       .Select(c => new CourseGetAllResponse(c.Name, c.Description))
+                       .Select(c => new CourseGetAllResponse(c.Id, c.Name, c.Description, c.Progress))
                        .ToListAsync();
-
-            return courses;
 
         }
         public async Task<GetAllContentCourseResponse?> GetAllContentCourseAsync(Guid courseId, Guid userId)
         {
             var query = _context.Course
                 .AsNoTracking()
-                .Where(c => c.TeacherId == userId && c.Id == courseId)
+                .Where(c => (c.TeacherId == userId || 
+                        c.Enrollments.Any(a => a.StudentId == userId)) 
+                        && c.Id == courseId)
                 .Include(c => c.Modules)
                 .ThenInclude(m => m.Lessons);
 
@@ -61,27 +63,80 @@ namespace TeachingPlatform.Infra.Repositories
             )).FirstOrDefaultAsync();
         }
 
-        //public async Task<Course> GetLessonByModuleCourse()
-        //{
-        //    var input = new
-        //    {
-        //        CourseId = Guid.NewGuid(),
-        //        UserId = Guid.NewGuid(),
-        //        ModuleId = Guid.NewGuid(),
-        //        LessonId = Guid.NewGuid()
-        //    };
+        public async Task<bool> FinishLessonAsync(Guid courseId, Guid moduleId, Guid lessonId, Guid studentId)
+        {
+            try
+            {
 
-        //    var query = _context.Course
-        //        .Where(c => c.Id == input.CourseId && c.TeacherId == input.UserId &&
-        //                c.Modules.Any(m => m.Id == input.ModuleId && m.Lessons.Any(l => l.Id == input.LessonId)))
-        //        .Include(c => c.Modules)
-        //        .ThenInclude(m => m.Lessons)
-        //        .FirstOrDefault();
+                var lesson = await GetLessonsByModuleCourse(courseId, moduleId, lessonId);
 
+                if (lesson is not null)
+                {
+                    lesson.IsCompleted = true;
 
-        //    return query?.ToEntity();
+                    await _context.SaveChangesAsync();
 
+                    return true;
+                }
 
-        //}
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public async Task<bool> ChangeProgressAsync(Course course)
+        {
+            try
+            {
+                var model = await _context.Course.FindAsync(course.Id);
+
+                if (model is null)
+                    return false;
+
+                model.Progress = $"{Math.Round(course.Progress, 2)}%";
+
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        private async Task<LessonModel?> GetLessonsByModuleCourse(Guid courseId, Guid moduleId, Guid lessonId)
+        {
+            return await _context.Course
+                     .Where(c => c.Id == courseId && c.Modules.Any(m => m.Id == moduleId))
+                     .Select(s => s.Modules
+                         .SelectMany(m => m.Lessons)
+                         .FirstOrDefault(l => l.Id == lessonId))
+                     .FirstOrDefaultAsync();
+        }
+
+        public async Task<Course?> GetCourseWithLessonCompleted(Guid courseId, Guid userId, Guid moduleId, Guid lessonId)
+        {
+            var query = await _context.Course
+                .AsNoTracking()
+                .Where(c => c.Enrollments.Any(e => e.CourseId == courseId && e.StudentId == userId) &&
+                        c.Modules.Any(m => m.Id == moduleId &&
+                        m.Lessons.Any(l => l.Id == lessonId && l.IsCompleted)))
+                .Include(i => i.Modules)
+                .ThenInclude(i => i.Lessons)
+                .FirstOrDefaultAsync();
+
+            return query?.ToEntity();
+        }
+
+        public async Task<bool> VerifyEnrollmentStudentActive(Guid courseId, Guid studentId)
+        {
+            return await _context.Enrollment
+                .AsNoTracking()
+                .AnyAsync(e => e.CourseId == courseId && e.StudentId == studentId);
+
+        }
     }
 }

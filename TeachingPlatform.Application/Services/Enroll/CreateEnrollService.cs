@@ -15,7 +15,11 @@ public class CreateEnrollService(IEnrollmentRepository enrollmentRepository) : I
         if (enrollInputModel == null)
             return new Response<EnrollCreateResponse>(null, (int)HttpStatusCode.BadRequest);
 
+
         var courseId = await _enrollmentRepository.Create(enrollInputModel.ToEntity());
+
+        if (courseId == Guid.Empty)
+            return new Response<EnrollCreateResponse>(null, (int)HttpStatusCode.NotFound, "Course Not Found");
 
         var name = await _enrollmentRepository.GetNameByCourseStudentAsync(courseId, enrollInputModel.StudentId);
 

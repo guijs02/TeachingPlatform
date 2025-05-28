@@ -23,10 +23,10 @@ namespace TeachingPlatform.IntegrationTests
         public async Task CreateCourseWithSuccess()
         {
             var course = CourseFactory.Create("Curso de Teste",
-                                        "Curso de teste para integração", 
+                                        "Curso de teste para integração",
                                         Guid.NewGuid(),
-                                        ["module 1"], 
-                                        ["lesosn 2"]);
+                                        ["module 1"],
+                                        [new LessonDto("lesson1", false)] );
 
             var result = await _courseRepository.CreateAsync(course);
 
@@ -48,13 +48,34 @@ namespace TeachingPlatform.IntegrationTests
         }
 
         [Fact]
+        public async Task FinishLessonWithSuccess()
+        {
+            var course = CourseFactory.Create("Curso de Teste",
+                                        "Curso de teste para integração",
+                                        Guid.NewGuid(),
+                                        ["module 1"],
+                                        [new LessonDto("lesson1", false)]);
+
+            await _courseRepository.CreateAsync(course);
+
+            var result = await _courseRepository.FinishLessonAsync(course.Id, 
+                                              course.Modules.First().Id, 
+                                              course.Modules.First().Lessons.First().Id,
+                                              course.UserId);
+
+
+            Assert.True(_context.Context.Lesson.Any(s => s.IsCompleted));
+            Assert.True(result);
+        }
+
+        [Fact]
         public async Task GetAllContentWithSuccess()
         {
             var course = CourseFactory.Create("Curso de Teste",
                                         "Curso de teste para integração", 
                                         Guid.NewGuid(),
-                                        ["module 1"], 
-                                        ["lesson 2"]);
+                                        ["module 1"],
+                                        [new LessonDto("lesson1", false)]);
 
             await _courseRepository.CreateAsync(course);
 

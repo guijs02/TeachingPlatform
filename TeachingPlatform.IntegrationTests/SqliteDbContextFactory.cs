@@ -7,8 +7,8 @@ namespace TeachingPlatform.Test
 {
     public class SqliteDbContextFactory
     {
-        private TeachingContext _context;
-        private DbConnection _connection;
+        private TeachingContext _context = null!;
+        private DbConnection _connection = null!;
 
         public (TeachingContext Context, DbConnection connection) CreateContext()
         {

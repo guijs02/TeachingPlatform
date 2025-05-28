@@ -12,8 +12,8 @@ namespace TeachingPlatform.Application.Extension
                 viewModel.Name,
                 viewModel.Description,
                 viewModel.TeacherId,
-                viewModel.Modules.SelectMany(m => m.Lessons).Select(l => l.Description),
-                viewModel.Modules.Select(m => m.Name));
+                viewModel.Modules.Select(m => m.Name),
+                viewModel.Modules.SelectMany(m => m.Lessons).Select(l => new LessonDto(l.Description, false)));
 
         public static User ToEntity(this UserCreateInputModel viewModel) =>
             UserFactory.Create(viewModel.UserName, viewModel.Password, viewModel.TypeOfUser);

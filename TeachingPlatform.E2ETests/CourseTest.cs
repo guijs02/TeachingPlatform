@@ -121,6 +121,55 @@ namespace TeachingPlatform.E2ETests
             var response = await _client.PostAsJsonAsync("/api/v1/course/create-course", course);
 
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+        }  
+        
+        [Fact]
+        public async Task Should_Be_Finish_Lesson_Increment_Progress()
+        {
+            var courseCreate = new CourseInputModel
+            {
+                Name = "Curso de Teste",
+                Description = "Curso de Teste",
+                Modules = [new ModuleInputModel { Name = "Modulo 1", Lessons = new List<LessonInputModel> { new LessonInputModel { Description = "teste" } } }],
+                TeacherId = Guid.NewGuid()
+            };
+
+            var course = new FinishLessonInputModel();
+
+            var enrollment = new EnrollmentInputModel();
+
+            var login = await UserService.CreateLoginUser(_client);
+
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", login?.Data?.ToString());
+
+            var createCourseResponse = await _client.PostAsJsonAsync("/api/v1/course/create-course", courseCreate);
+
+            var content = await createCourseResponse.Content.ReadAsStringAsync();
+
+            using var jsonDocument = JsonDocument.Parse(content);
+
+            enrollment.CourseId = jsonDocument.RootElement.GetProperty("data").GetProperty("id").GetGuid();
+
+            await _client.DeleteAsync("/api/v1/user/logout");
+
+            var loginStudent = await UserService.CreateLoginUser(_client, EUserRole.STUDENT);
+
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", loginStudent?.Data?.ToString());
+
+            await _client.PostAsJsonAsync("/api/v1/enrollment/create-enrollment", enrollment);
+            // Buscar os cursos cadastrados
+            course.CourseId = enrollment.CourseId;
+
+            var responseGetAllContent = await _client.GetAsync($"/api/v1/course/get-all-content/{course.CourseId}");
+
+            var obj = await responseGetAllContent.Content.ReadFromJsonAsync<Response<GetAllContentCourseResponse>>();
+
+            course.ModuleId = obj.Data.module.First().id;
+            course.LessonId = obj.Data.module.First().lessons.First().id;
+
+            var responseFinishClass = await _client.PostAsJsonAsync("/api/v1/course/finish-class", course);
+
+            Assert.Equal(HttpStatusCode.OK, responseFinishClass.StatusCode);
         }
 
     }

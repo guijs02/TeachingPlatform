@@ -25,15 +25,17 @@ namespace TeachingPlatform.Domain.Entities
         public List<Module> Modules { get; private set; } = null!;
         public decimal Progress { get; private set; }
 
-        public decimal IncrementProgress()
+        public void IncrementProgress()
         {
             var totalLessons = Modules.SelectMany(s => s.Lessons).Count();
             var lessons = Modules.SelectMany(s => s.Lessons);
 
-            if (totalLessons == 0) return 0;
+            if (totalLessons == 0) return;
 
             var completedLessons = lessons.Count(x => x.IsCompleted);
-            return ((completedLessons / totalLessons) * 100);
+            var value = ((decimal)completedLessons / totalLessons) * 100;
+
+            Progress = Math.Round(value, 2);
         }
   
         private void Validate()

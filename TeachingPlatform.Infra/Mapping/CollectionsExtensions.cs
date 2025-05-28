@@ -43,6 +43,7 @@ namespace TeachingPlatform.Infra.Mapping
         {
             return new LessonModel
             {
+                Id = model.Id,
                 Name = model.Name,
                 ModuleId = model.ModuleId
             };

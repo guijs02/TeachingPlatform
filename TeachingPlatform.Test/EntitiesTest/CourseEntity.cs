@@ -18,8 +18,8 @@ namespace TeachingPlatform.UnitTests.EntitiesTest
                 string.Empty,
                 "Valid Description",
                 Guid.NewGuid(),
-                ["Lesson 1", "Lesson 2"],
-                ["Module 1"]);
+                ["Module 1", "Module 2"],
+                [new LessonDto("lesson1", false)]);
 
             var messagesForEmptyName = courseWithEmptyName.notification.GetMessages(nameof(Course));
 
@@ -31,8 +31,8 @@ namespace TeachingPlatform.UnitTests.EntitiesTest
                 "Valid Name",
                 string.Empty,
                 Guid.NewGuid(),
-                ["Lesson 1", "Lesson 2"],
-                ["Module 1"]);
+                ["Module 1", "Module 2"],
+                [new LessonDto("lesson1", false)]);
 
             var messagesForEmptyDescription = courseWithEmptyDescription.notification.GetMessages(nameof(Course));
 
@@ -44,8 +44,8 @@ namespace TeachingPlatform.UnitTests.EntitiesTest
                 "Valid Name",
                 "Valid Description",
                 Guid.Empty,
-                ["Lesson 1", "Lesson 2"],
-                ["Module 1"]);
+                ["Module 1", "Module 2"],
+                [new LessonDto("lesson1", false)]);
 
             var messagesForInvalidTeacherId = courseWithInvalidTeacherId.notification.GetMessages(nameof(Course));
 
@@ -62,8 +62,8 @@ namespace TeachingPlatform.UnitTests.EntitiesTest
                 "Valid Name",
                 "Valid Description",
                 userId,
-                ["Lesson 1", "Lesson 2"],
-                ["Module 1"]);
+                ["Module 1"],
+                [new LessonDto("lesson1", false)]);
 
             var messages = validCourse.notification.GetMessages(nameof(Course));
 

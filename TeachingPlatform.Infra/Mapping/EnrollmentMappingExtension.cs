@@ -18,7 +18,7 @@ namespace TeachingPlatform.Infra.Mapping
             return new EnrollmentModel
             {
                 CourseId = entity.CourseId,
-                CreatedAt = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
                 StudentId = entity.StudentId,
             };
         }

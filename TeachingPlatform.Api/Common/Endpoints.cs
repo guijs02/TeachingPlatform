@@ -9,6 +9,7 @@
 
         #region Course
         public const string CreateCourse = "create-course";
+        public const string FinishClass = "finish-class";
         #endregion
 
         #region Enrollment

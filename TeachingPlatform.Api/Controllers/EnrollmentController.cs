@@ -27,8 +27,8 @@ namespace TeachingPlatform.Api.Controllers
         {
             try
             {
-                var userId = User.FindFirstValue("id");
-                enrollViewModel.StudentId = Guid.Parse(userId);
+                var userId = UserInput.GetUserId(User);
+                enrollViewModel.StudentId = userId;
 
                 var result = await _enrollService.Create(enrollViewModel);
                 return Ok(result);

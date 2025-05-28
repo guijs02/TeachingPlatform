@@ -5,10 +5,11 @@ namespace TeachingPlatform.Domain.Entities
 {
     public class Lesson : Entity
     {
-        public Lesson(Guid id, string name, Guid moduleId) : base(id)
+        public Lesson(Guid id, string name, Guid moduleId, bool isCompleted = false) : base(id)
         {
             Name = name;
             ModuleId = moduleId;
+            IsCompleted = isCompleted;
             Validate();
         }
         public string Name { get; private set; } = null!;

@@ -24,6 +24,9 @@ namespace TeachingPlatform.Application
 
         [JsonIgnore]
         public bool IsSuccess => _code is >= 200 and <= 299;
+
+        [JsonIgnore]
+        public int StatusCode => _code;
     }
 
     public static class Configuration

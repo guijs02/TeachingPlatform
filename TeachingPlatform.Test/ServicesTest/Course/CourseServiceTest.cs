@@ -1,7 +1,9 @@
 ﻿using Moq;
+using TeachingPlatform.Application;
 using TeachingPlatform.Application.Extension;
 using TeachingPlatform.Application.InputModels;
 using TeachingPlatform.Application.Services.Course;
+using TeachingPlatform.Domain.Factories;
 using TeachingPlatform.Domain.Interfaces;
 using TeachingPlatform.Domain.Repositories;
 
@@ -10,11 +12,13 @@ namespace TeachingPlatform.Test.ServicesTest.Course
     public class CourseServiceTest
     {
         private readonly CreateCourseService _service;
+        private readonly CompletedLessonService _completedLessonService;
         private readonly Mock<ICourseRepository> _repository;
         public CourseServiceTest()
         {
             _repository = new Mock<ICourseRepository>();
             _service = new(_repository.Object);
+            _completedLessonService = new(_repository.Object);
         }
 
         [Fact]
@@ -57,12 +61,11 @@ namespace TeachingPlatform.Test.ServicesTest.Course
             Assert.NotEmpty(lessons.First().Name);
             Assert.NotNull(lessons.First().Name);
             Assert.NotEqual(Guid.Empty, lessons.First().Id);
-            //Assert.NotEqual(Guid.Empty, lessons.First().ModuleId);
 
         }
 
         [Fact]
-        public void SholudFinishLessonsWithSuccess()
+        public async Task SholudFinishLessonsWithSuccess()
         {
             var input = new
             {
@@ -71,9 +74,40 @@ namespace TeachingPlatform.Test.ServicesTest.Course
                 LessonId = Guid.NewGuid()
             };
 
-            var course = new Domain.Entities.Course(Guid.NewGuid(),"Test", "Test", Guid.NewGuid(), []);
-        }
+            var course = CourseFactory.Create("course 1", 
+                                    "a", 
+                                    Guid.NewGuid(), 
+                                    ["module 1"],
+                                    [new LessonDto("lesson1", false), 
+                                     new LessonDto("lesson2", false),
+                                     new LessonDto("lesson3", false)
+                                    ]);
 
+            course.Modules.First().Lessons.First().FinishLesson();
+
+            _repository.Setup(s =>
+                s.FinishLessonAsync(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>()))
+                .ReturnsAsync(true);
+
+            _repository.Setup(s =>
+                 s.GetCourseWithLessonCompleted(It.IsAny<Guid>(),
+                 It.IsAny<Guid>(),
+                 It.IsAny<Guid>(),
+                 It.IsAny<Guid>()))
+                .ReturnsAsync(course);
+
+            _repository.Setup(s => s.VerifyEnrollmentStudentActive(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(true);
+
+            var result = await _completedLessonService.FinishLessonAsync(new FinishLessonInputModel
+            {
+                CourseId = input.CourseId,
+                ModuleId = input.ModuleId,
+                LessonId = input.LessonId
+            }, Guid.NewGuid());
+
+            Assert.True(result.Data);
+            Assert.Equal(33.33m, course.Progress);
+        }
      
     }
 }
