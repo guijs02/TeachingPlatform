@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeachingPlatform.Application.InputModels
 {
-    public class PagedRequest
+    public sealed record PagedRequest
     {
         public int PageSize { get; set; } = Configuration.DefaultPageSize;
         public int PageNumber { get; set; } = Configuration.DefaultPageNumber;

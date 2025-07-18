@@ -1,3 +1,4 @@
+using TeachingPlatform.Api;
 using TeachingPlatform.Api.Common;
 using TeachingPlatform.Application.DIP;
 using TeachingPlatform.Infra.DIP;
@@ -35,6 +36,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.Run();
 

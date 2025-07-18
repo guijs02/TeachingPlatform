@@ -4,53 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeachingPlatform.Domain.Entities;
+using TeachingPlatform.Domain.Exceptions;
 using TeachingPlatform.Domain.Factories;
 
 namespace TeachingPlatform.UnitTests.EntitiesTest
 {
     public class CourseEntityTest
     {
-        [Fact]
-        public void ShouldNotAcceptForValidation()
+        private static readonly List<string> ValidModules = ["Module 1", "Module 2"];
+        private static readonly List<LessonDto> ValidLessons = [new("lesson1", false)];
+
+        [Theory]
+        [InlineData("", "Valid Description", "b2c1b437-6ae0-4a5e-9ad1-2cfd5939cafa")] // Nome inválido
+        [InlineData("Valid Name", "", "b2c1b437-6ae0-4a5e-9ad1-2cfd5939cafa")]     // Descrição inválida
+        [InlineData("Valid Name", "Valid Description", "00000000-0000-0000-0000-000000000000")] // TeacherId inválido
+        public void ShouldThrowDomainExceptionForInvalidCourseInput(string name, string description, string teacherIdStr)
         {
-            // Test case: Course name is empty
-            var courseWithEmptyName = CourseFactory.Create(
-                string.Empty,
-                "Valid Description",
-                Guid.NewGuid(),
-                ["Module 1", "Module 2"],
-                [new LessonDto("lesson1", false)]);
+            // Arrange
+            var teacherId = Guid.Parse(teacherIdStr);
 
-            var messagesForEmptyName = courseWithEmptyName.notification.GetMessages(nameof(Course));
+            // Act
+            var act = () => CourseFactory.Create(name, description, teacherId, ValidModules, ValidLessons);
 
-            Assert.NotEmpty(messagesForEmptyName);
-            Assert.Equal("Course: name must not be empty, ", messagesForEmptyName);
-
-            // Test case: Course description is empty
-            var courseWithEmptyDescription = CourseFactory.Create(
-                "Valid Name",
-                string.Empty,
-                Guid.NewGuid(),
-                ["Module 1", "Module 2"],
-                [new LessonDto("lesson1", false)]);
-
-            var messagesForEmptyDescription = courseWithEmptyDescription.notification.GetMessages(nameof(Course));
-
-            Assert.NotEmpty(messagesForEmptyDescription);
-            Assert.Equal("Course: description must not be empty, ", messagesForEmptyDescription);
-
-            // Test case: Teacher ID is invalid
-            var courseWithInvalidTeacherId = CourseFactory.Create(
-                "Valid Name",
-                "Valid Description",
-                Guid.Empty,
-                ["Module 1", "Module 2"],
-                [new LessonDto("lesson1", false)]);
-
-            var messagesForInvalidTeacherId = courseWithInvalidTeacherId.notification.GetMessages(nameof(Course));
-
-            Assert.NotEmpty(messagesForInvalidTeacherId);
-            Assert.Equal("Course: userId must be a valid GUID, ", messagesForInvalidTeacherId);
+            // Assert
+            Assert.Throws<DomainException>(act);
         }
 
         [Fact]
@@ -65,7 +42,7 @@ namespace TeachingPlatform.UnitTests.EntitiesTest
                 ["Module 1"],
                 [new LessonDto("lesson1", false)]);
 
-            var messages = validCourse.notification.GetMessages(nameof(Course));
+            var messages = validCourse.Notification.GetMessages(nameof(Course));
 
             Assert.Empty(messages);
             Assert.Equal("Valid Name", validCourse.Name);

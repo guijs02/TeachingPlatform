@@ -20,9 +20,9 @@ namespace TeachingPlatform.Infra.Mapping
         {
             return model.Select(entity => new EnrollmentModel
             {
-                CourseId = entity.CourseId,
+                CourseId = entity.CourseId.Value,
                 CreatedAt = entity.CreatedAt,
-                StudentId = entity.StudentId,
+                StudentId = entity.StudentId.Value,
             }).ToList();
         }
         #endregion
@@ -45,7 +45,7 @@ namespace TeachingPlatform.Infra.Mapping
             {
                 Id = model.Id,
                 Name = model.Name,
-                ModuleId = model.ModuleId
+                ModuleId = model.ModuleId.Value
             };
         }
         #endregion

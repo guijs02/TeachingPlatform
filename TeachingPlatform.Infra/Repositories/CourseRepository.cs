@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
 using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Repositories;
 using TeachingPlatform.Domain.Responses;
@@ -47,8 +46,8 @@ namespace TeachingPlatform.Infra.Repositories
         {
             var query = _context.Course
                 .AsNoTracking()
-                .Where(c => (c.TeacherId == userId || 
-                        c.Enrollments.Any(a => a.StudentId == userId)) 
+                .Where(c => (c.TeacherId == userId ||
+                        c.Enrollments.Any(a => a.StudentId == userId))
                         && c.Id == courseId)
                 .Include(c => c.Modules)
                 .ThenInclude(m => m.Lessons);

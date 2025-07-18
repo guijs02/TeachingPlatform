@@ -2,7 +2,7 @@
 
 namespace TeachingPlatform.Application.InputModels
 {
-    public class FinishLessonInputModel
+    public sealed record FinishLessonInputModel
     {
         [Required]
         public Guid CourseId { get; set; }

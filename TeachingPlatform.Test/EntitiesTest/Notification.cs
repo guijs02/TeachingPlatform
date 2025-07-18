@@ -19,6 +19,7 @@ namespace TeachingPlatform.Test.EntitiesTest
             notification.AddError("user", "Erro 2");
 
             Assert.Equal(2, notification.GetErrors().Count);
+            Assert.True(notification.HasErrors());
 
             Assert.Equal(error, notification.GetMessages("user"));
         }

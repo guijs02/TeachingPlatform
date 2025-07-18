@@ -8,7 +8,6 @@ namespace TeachingPlatform.Domain.Entities
     {
         public User(Guid id, string userName, string password, EUserRole role) : base(id)
         {
-            Id = id;
             UserName = userName;
             Password = password;
             TypeOfUser = role;
@@ -16,7 +15,6 @@ namespace TeachingPlatform.Domain.Entities
             Validate();
         }
      
-        public Guid Id { get; set; }
         public string Password { get; set; } = null!;
         public string UserName { get; set; } = null!;
         public EUserRole TypeOfUser { get; set; }
@@ -27,6 +25,11 @@ namespace TeachingPlatform.Domain.Entities
         {
             //TODO - Aplicar Notification Pattern em breve
             ValidationFactory.Validate(this, new UserValidator());
+
+            if (Notification.HasErrors())
+            {
+                throw new DomainException(Notification.GetErrors());
+            }
         }
     }
     public enum EUserRole

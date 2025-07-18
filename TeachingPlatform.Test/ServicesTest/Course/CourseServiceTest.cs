@@ -24,10 +24,12 @@ namespace TeachingPlatform.Test.ServicesTest.Course
         [Fact]
         public async Task CreateCourseWithSuccess()
         {
+
             var courseInput = new CourseInputModel
             {
                 Description = "Test",
                 Name = "Test",
+                TeacherId = Guid.NewGuid(),
                 Modules = new List<ModuleInputModel>
                 {
                     new ModuleInputModel
@@ -54,7 +56,8 @@ namespace TeachingPlatform.Test.ServicesTest.Course
 
             Assert.NotEmpty(courseExpected.Modules.First().Name);
             Assert.NotNull(courseExpected.Modules.First().Name);
-            Assert.NotEqual(Guid.Empty, courseExpected.Modules.First().CourseId);
+            Assert.NotNull(courseExpected.Modules.First().CourseId);
+            Assert.NotEqual(Guid.Empty, courseExpected.Modules.First().CourseId.Value);
             Assert.NotEqual(Guid.Empty, courseExpected.Modules.First().Id);
 
             Assert.NotEmpty(lessons);
@@ -78,7 +81,7 @@ namespace TeachingPlatform.Test.ServicesTest.Course
                                     "a", 
                                     Guid.NewGuid(), 
                                     ["module 1"],
-                                    [new LessonDto("lesson1", false), 
+                                    [new LessonDto("lesson1", true), 
                                      new LessonDto("lesson2", false),
                                      new LessonDto("lesson3", false)
                                     ]);
@@ -97,6 +100,8 @@ namespace TeachingPlatform.Test.ServicesTest.Course
                 .ReturnsAsync(course);
 
             _repository.Setup(s => s.VerifyEnrollmentStudentActive(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(true);
+
+            _repository.Setup(s => s.ChangeProgressAsync(It.IsAny<Domain.Entities.Course>())).ReturnsAsync(true);
 
             var result = await _completedLessonService.FinishLessonAsync(new FinishLessonInputModel
             {

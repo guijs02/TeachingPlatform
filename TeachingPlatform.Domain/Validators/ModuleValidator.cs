@@ -15,10 +15,6 @@ namespace TeachingPlatform.Domain.Validators
           .NotEmpty().WithMessage("lessons must not be empty")
           .NotNull().WithMessage("lessons is required");
 
-            RuleFor(s => s.CourseId)
-           .NotNull().WithMessage("courseId is required")
-           .Must(id => id != Guid.Empty).WithMessage("moduleId must be a valid GUID");
-
         }
     }
 }

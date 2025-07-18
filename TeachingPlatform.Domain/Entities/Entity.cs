@@ -9,7 +9,7 @@ namespace TeachingPlatform.Domain.Entities
 {
     public abstract class Entity(Guid id)
     {
-        public readonly Notification notification = new();
-        public Guid Id { get; private set; } = id;
+        public readonly Notification Notification = new();
+        public Guid Id { get; set; } = id;
     }
 }

@@ -1,5 +1,7 @@
-﻿using TeachingPlatform.Domain.Factories;
+﻿using TeachingPlatform.Domain.Exceptions;
+using TeachingPlatform.Domain.Factories;
 using TeachingPlatform.Domain.Validators;
+using TeachingPlatform.Domain.ValueObjects;
 
 namespace TeachingPlatform.Domain.Entities
 {
@@ -14,13 +16,18 @@ namespace TeachingPlatform.Domain.Entities
         }
 
         public string Name { get; private set; } = null!;
-        public Guid CourseId { get; private set; }
+        public CourseId CourseId { get; private set; } = null!;
         public List<Lesson> Lessons { get; private set; } = null!;
 
         private void Validate()
         {
             //TODO - Aplicar Notification Pattern em breve
             ValidationFactory.Validate(this, new ModuleValidator());
+
+            if (Notification.HasErrors())
+            {
+                throw new DomainException(Notification.GetErrors());
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace TeachingPlatform.Application.InputModels
 {
-    public class EnrollmentInputModel
+    public sealed record EnrollmentInputModel
     {
         public Guid CourseId { get; set; }
         [JsonIgnore]

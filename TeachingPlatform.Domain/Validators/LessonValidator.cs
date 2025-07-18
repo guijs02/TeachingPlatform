@@ -11,6 +11,10 @@ namespace TeachingPlatform.Domain.Validators
            .NotEmpty().WithMessage("name must not be empty")
            .NotNull().WithMessage("name is required");
 
+            RuleFor(s => s.ModuleId)
+                .NotEmpty().WithMessage("moduleId must not be empty")
+                .NotNull().WithMessage("moduleId is required");
+
         }
     }
 }

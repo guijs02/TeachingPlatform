@@ -24,10 +24,19 @@ namespace TeachingPlatform.Infra.Repositories
 
         public async Task<bool> Create(User user)
         {
-            var model = user.ToModel();
-            var result = await _userManager.CreateAsync(model, model.Password);
+            try
+            {
 
-            return result.Succeeded;
+                var model = user.ToModel();
+                var result = await _userManager.CreateAsync(model, model.Password);
+
+                return result.Succeeded;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
 
         public async Task<bool> Login(User loginUser)

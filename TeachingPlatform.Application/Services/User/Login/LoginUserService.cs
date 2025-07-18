@@ -19,11 +19,11 @@ namespace TeachingPlatform.Application.Services.User.Login
 
             var user = userLoginViewModel.ToEntity();
 
-            if (user.notification.HasErrors())
+            if (user.Notification.HasErrors())
             {
                 return new Response<string>(null,
                                     (int)HttpStatusCode.BadRequest,
-                                    user.notification.GetMessages(nameof(User)));
+                                    user.Notification.GetMessages(nameof(User)));
             }
 
             var result = await _userRepository.Login(user);

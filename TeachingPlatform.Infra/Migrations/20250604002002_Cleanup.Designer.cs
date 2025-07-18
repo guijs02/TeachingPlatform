@@ -12,8 +12,8 @@ using TeachingPlatform.Infra.Context;
 namespace TeachingPlatform.Infra.Migrations
 {
     [DbContext(typeof(TeachingContext))]
-    [Migration("20250506014254_init")]
-    partial class init
+    [Migration("20250604002002_Cleanup")]
+    partial class Cleanup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

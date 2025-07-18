@@ -14,7 +14,7 @@ namespace TeachingPlatform.Domain.Factories
             {
                 foreach (var item in result.Errors)
                 {
-                    entity.notification.AddError(entity.GetType().Name, item.ErrorMessage);
+                    entity.Notification.AddError(entity.GetType().Name, item.ErrorMessage);
                 }
             }
         }

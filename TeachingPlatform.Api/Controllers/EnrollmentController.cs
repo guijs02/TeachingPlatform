@@ -25,18 +25,11 @@ namespace TeachingPlatform.Api.Controllers
         [Authorize(Roles = "STUDENT")]
         public async Task<IActionResult> Create(EnrollmentInputModel enrollViewModel)
         {
-            try
-            {
-                var userId = UserInput.GetUserId(User);
-                enrollViewModel.StudentId = userId;
+            var userId = UserInput.GetUserId(User);
+            enrollViewModel.StudentId = userId;
 
-                var result = await _enrollService.Create(enrollViewModel);
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message.ToString());
-            }
+            var result = await _enrollService.Create(enrollViewModel);
+            return Ok(result);
         }
 
     }

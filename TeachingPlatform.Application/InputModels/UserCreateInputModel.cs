@@ -3,7 +3,7 @@ using TeachingPlatform.Domain.Entities;
 
 namespace TeachingPlatform.Application.InputModels
 {
-    public class UserCreateInputModel
+    public sealed record UserCreateInputModel
     {
         [Required]
         public string UserName { get; set; } = null!;

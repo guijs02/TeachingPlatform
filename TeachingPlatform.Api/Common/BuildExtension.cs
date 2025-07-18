@@ -79,6 +79,7 @@ namespace TeachingPlatform.Api.Common
                 .AddPolicy("user",
                 policy =>
                 policy.RequireRole("TEACHER", "STUDENT"));
+
             return service;
         }
     }

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace TeachingPlatform.Application.InputModels
 {
-    public class CourseInputModel
+    public sealed record CourseInputModel
     {
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;

@@ -22,45 +22,23 @@ namespace TeachingPlatform.Api.Controllers
         [HttpPost(Endpoints.CreateUser)]
         public async Task<IActionResult> CreateUser(UserCreateInputModel userCreateViewModel)
         {
-            try
-            {
-
-                var result = await _userCreateService.Create(userCreateViewModel);
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message.ToString());
-            }
+            var result = await _userCreateService.Create(userCreateViewModel);
+            return StatusCode(result.StatusCode, result);
         }
 
         [HttpPost(Endpoints.LoginUser)]
         public async Task<IActionResult> Login(UserLoginInputModel userLoginViewModel)
         {
-            try
-            {
-                var token = await _userLoginService.Login(userLoginViewModel);
-                return Ok(token);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message.ToString());
-            }
+            var token = await _userLoginService.Login(userLoginViewModel);
+            return StatusCode(token.StatusCode, token);
         }
 
         [HttpDelete("logout")]
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            try
-            {
-                await _userLoginService.LogoutAsync();
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message.ToString());
-            }
+            await _userLoginService.LogoutAsync();
+            return Ok();
         }
     }
 }

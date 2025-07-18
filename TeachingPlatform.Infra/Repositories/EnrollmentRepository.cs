@@ -32,7 +32,7 @@ namespace TeachingPlatform.Infra.Repositories
                 context.Enrollment.Add(model);
                 await context.SaveChangesAsync();
 
-                return enrollment.CourseId;
+                return enrollment.CourseId.Value;
             }
             catch (Exception e)
             {

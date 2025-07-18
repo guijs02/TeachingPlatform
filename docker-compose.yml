@@ -1,11 +1,11 @@
 version: '3.8'
 services:
   postgres:
-    image: postgres:15-alpine
+    image: postgres:13-alpine3.22
     container_name: postgres-db
     environment:
-      POSTGRES_USER: gui
-      POSTGRES_PASSWORD: Senha@123
+      POSTGRES_USER: guilherme
+      POSTGRES_PASSWORD: Senha080302
       POSTGRES_DB: TeachDb
     ports:
       - "5432:5432"

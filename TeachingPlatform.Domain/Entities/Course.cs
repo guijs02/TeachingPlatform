@@ -1,4 +1,5 @@
-﻿using TeachingPlatform.Domain.Factories;
+﻿using TeachingPlatform.Domain.Exceptions;
+using TeachingPlatform.Domain.Factories;
 using TeachingPlatform.Domain.Validators;
 
 namespace TeachingPlatform.Domain.Entities
@@ -42,6 +43,11 @@ namespace TeachingPlatform.Domain.Entities
         {
             //TODO - Aplicar Notification Pattern em breve
             ValidationFactory.Validate(this, new CourseValidator());
+
+            if (Notification.HasErrors())
+            {
+                throw new DomainException(Notification.GetErrors());
+            }
         }
     }
 }

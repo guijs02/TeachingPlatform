@@ -2,7 +2,7 @@
 
 namespace TeachingPlatform.Application.InputModels
 {
-    public class ModuleInputModel
+    public sealed record ModuleInputModel
     {
         [Required]
         public string Name { get; set; } = null!;

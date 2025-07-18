@@ -158,6 +158,7 @@ namespace TeachingPlatform.E2ETests
 
             await _client.PostAsJsonAsync("/api/v1/enrollment/create-enrollment", enrollment);
             // Buscar os cursos cadastrados
+
             course.CourseId = enrollment.CourseId;
 
             var responseGetAllContent = await _client.GetAsync($"/api/v1/course/get-all-content/{course.CourseId}");
