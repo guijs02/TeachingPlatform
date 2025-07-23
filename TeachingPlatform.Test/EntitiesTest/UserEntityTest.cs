@@ -23,9 +23,7 @@ namespace TeachingPlatform.UnitTests.EntitiesTest
         [Fact]
         public void ShouldAcceptForValidation()
         {
-            var user = UserFactory.Create("Test",
-                "Test",
-                EUserRole.TEACHER);
+            var user = UserFactory.Create("Test", "Test", EUserRole.TEACHER);
 
             var messages = user.Notification.GetMessages(nameof(User));
 

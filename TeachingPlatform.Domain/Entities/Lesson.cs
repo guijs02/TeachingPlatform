@@ -24,7 +24,6 @@ namespace TeachingPlatform.Domain.Entities
         }
         private void Validate()
         {
-            //TODO - Aplicar Notification Pattern em breve
             ValidationFactory.Validate(this, new LessonValidator());
 
             if (Notification.HasErrors()) { 
