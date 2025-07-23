@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <UserSecretsId>f602cc29-9c7c-43d3-a6b4-d1bcc74d842a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,12 +18,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ManageDependencyInjection\ManageDependencyInjection.csproj" />
     <ProjectReference Include="..\TeachingPlatform.Application\TeachingPlatform.Application.csproj" />
+    <ProjectReference Include="..\TeachingPlatform.Infra\TeachingPlatform.Infra.csproj" />
     
   </ItemGroup>
 

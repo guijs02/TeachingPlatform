@@ -1,43 +1,45 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeachingPlatform.Application.Services;
+using TeachingPlatform.Application.Services.Interfaces;
+using TeachingPlatform.Domain.Entities;
 using TeachingPlatform.Domain.Interfaces;
-using TeachingPlatform.Domain.Models;
+using TeachingPlatform.Domain.Repositories;
+using TeachingPlatform.Infra.Mapping;
+using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Infra.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private SignInManager<User> _signInManager;
-        private readonly ITokenService _tokenService;
-        public UserRepository(UserManager<User> userManager,
-                             RoleManager<IdentityRole> roleManager,
-                             SignInManager<User> signInManager,
-                             ITokenService tokenService)
+        private UserManager<UserModel> _userManager;
+        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
+        private SignInManager<UserModel> _signInManager;
+        public UserRepository(UserManager<UserModel> userManager,
+                             RoleManager<IdentityRole<Guid>> roleManager,
+                             SignInManager<UserModel> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
-            _tokenService = tokenService;
         }
 
-        public async Task<bool> Create(User createUser)
+        public async Task<bool> Create(User user)
         {
-            IdentityResult result = await _userManager.CreateAsync(createUser, createUser.Password);
+            try
+            {
 
-            if (!result.Succeeded)
-                throw new ApplicationException("Falha ao cadastrar o usúario");
+                var model = user.ToModel();
+                var result = await _userManager.CreateAsync(model, model.Password);
 
-            return result.Succeeded;
+                return result.Succeeded;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
 
-        public async Task<string> Login(User loginUser)
+        public async Task<bool> Login(User loginUser)
         {
             var result = await _signInManager.PasswordSignInAsync(
               loginUser.UserName,
@@ -46,19 +48,22 @@ namespace TeachingPlatform.Infra.Repositories
               false
             );
 
-
             var user = _signInManager.UserManager.Users.FirstOrDefault(
-                user => user.NormalizedUserName == loginUser.UserName.ToUpper()
+                u => u.NormalizedUserName == loginUser.UserName.ToUpper()
             );
 
-            if (!result.Succeeded)
-            {
-                throw new ApplicationException("Usuario não autenticado");
-            }
+            if (user is null)
+                return false;
 
-            var token = _tokenService.GenerateToken(user);
+            loginUser.Id = user.Id;
 
-            return token;
+            return result.Succeeded;
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }
+

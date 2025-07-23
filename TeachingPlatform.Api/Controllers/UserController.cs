@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TeachingPlatform.Application.Services;
-using TeachingPlatform.Application.ViewModels;
+using TeachingPlatform.Api.Common;
+using TeachingPlatform.Application.InputModels;
+using TeachingPlatform.Application.Responses;
+using TeachingPlatform.Application.Services.Interfaces;
 
 namespace TeachingPlatform.Api.Controllers
 {
@@ -8,40 +11,34 @@ namespace TeachingPlatform.Api.Controllers
     [Route("api/v1/[controller]")]
     public class UserController : ControllerBase
     {
-        public IUserService _usuarioService;
-
-        public UserController(IUserService userService)
+        public IUserCreateService _userCreateService;
+        public IUserLoginService _userLoginService;
+        public UserController(IUserCreateService userCreateService, IUserLoginService userLoginService)
         {
-            _usuarioService = userService;
+            _userCreateService = userCreateService;
+            _userLoginService = userLoginService;
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateUser(UserCreateViewModel userCreateViewModel)
+        [HttpPost(Endpoints.CreateUser)]
+        public async Task<IActionResult> CreateUser(UserCreateInputModel userCreateViewModel)
         {
-            try
-            {
-                await _usuarioService.Create(userCreateViewModel);
-                return Ok("Cadastrado com sucesso");
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message.ToString());
-            }
+            var result = await _userCreateService.Create(userCreateViewModel);
+            return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(UserLoginViewModel userLoginViewModel)
+        [HttpPost(Endpoints.LoginUser)]
+        public async Task<IActionResult> Login(UserLoginInputModel userLoginViewModel)
         {
-            try
-            {
-                string token = await _usuarioService.Login(userLoginViewModel);
-                return Ok(token);
-            }
-            catch (Exception e)
-            {
-                return BadRequest("Usuario não encontrado");
-            }
+            var token = await _userLoginService.Login(userLoginViewModel);
+            return StatusCode(token.StatusCode, token);
         }
 
+        [HttpDelete("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _userLoginService.LogoutAsync();
+            return Ok();
+        }
     }
 }

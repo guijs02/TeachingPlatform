@@ -1,19 +1,22 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TeachingPlatform.Domain.Models;
+using System.Reflection;
+using TeachingPlatform.Infra.Models;
 
 namespace TeachingPlatform.Infra.Context
 {
-    public class TeachingContext(DbContextOptions<TeachingContext> options) : IdentityDbContext<User>(options)
+    public class TeachingContext(DbContextOptions<TeachingContext> options) 
+                                    : IdentityDbContext<UserModel, IdentityRole<Guid>, Guid>(options)
     {
-        public DbSet<Lesson> Lesson { get; set; } = null!;
-        public DbSet<Module> Module { get; set; } = null!;
-        public DbSet<Student> Student { get; set; } = null!;
-        public DbSet<Teacher> Teacher { get; set; } = null!;
-        public DbSet<Course> Course { get; set; } = null!;
+        public DbSet<LessonModel> Lesson { get; set; } = null!;
+        public DbSet<ModuleModel> Module { get; set; } = null!;
+        public DbSet<CourseModel> Course { get; set; } = null!;
+        public DbSet<EnrollmentModel> Enrollment { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetCallingAssembly());
             base.OnModelCreating(builder);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
