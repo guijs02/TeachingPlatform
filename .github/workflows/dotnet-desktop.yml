@@ -26,7 +26,7 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Testes de unidade
-      run: dotnet test TeachingPlatform.UnitTest
+      run: dotnet test TeachingPlatform.Test
 
     - name: Geração de artefatos
       run: dotnet publish -c Release -o output
