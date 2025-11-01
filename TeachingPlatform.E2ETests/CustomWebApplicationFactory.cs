@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using DotNet.Testcontainers.Builders;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +22,8 @@ namespace TeachingPlatform.E2ETests
             .WithDatabase("TeachDb")
             .WithUsername("guilherme34891hdab")
             .WithPassword("Senha080302")
-            .WithImage("postgres:13.22")
+            .WithImage("postgres:13")
+            .WithCleanUp(true)
             .Build();
 
         public TeachingContext Context { get; set; }
