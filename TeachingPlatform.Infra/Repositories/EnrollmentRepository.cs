@@ -23,6 +23,7 @@ namespace TeachingPlatform.Infra.Repositories
                         .AsNoTracking()
                         .AnyAsync(a => a.CourseId == enrollment.CourseId.Value && a.StudentId == enrollment.StudentId.Value);
 
+
                 if (!existCourse)
                     return Guid.Empty;
                 
