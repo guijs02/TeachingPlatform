@@ -27,7 +27,10 @@ jobs:
 
     - name: Testes de unidade
       run: dotnet test TeachingPlatform.Test
-
+      
+    - name: Testes de Integração
+      run: dotnet test TeachingPlatform.E2ETests
+    
     - name: Geração de artefatos
       run: dotnet publish -c Release -o output
 
