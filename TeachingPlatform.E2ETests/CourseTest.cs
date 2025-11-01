@@ -25,7 +25,7 @@ namespace TeachingPlatform.E2ETests
             };
 
             var login = await UserService.CreateLoginUser(_client);
-
+            
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", login?.Data?.ToString());
 
             // Buscar os cursos cadastrados

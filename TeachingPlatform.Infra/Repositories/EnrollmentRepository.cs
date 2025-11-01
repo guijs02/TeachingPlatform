@@ -14,13 +14,14 @@ namespace TeachingPlatform.Infra.Repositories
         {
             try
             {
+                // Usar o Guid interno do Value Object antes de enviar para EF/Npgsql
                 var existCourse = await context.Course
                         .AsNoTracking()
-                        .AnyAsync(a => a.Id == enrollment.CourseId);
+                        .AnyAsync(a => a.Id == enrollment.CourseId.Value);
                 
                 var isEnrolment = await context.Enrollment
                         .AsNoTracking()
-                        .AnyAsync(a => a.CourseId == enrollment.CourseId && a.StudentId == enrollment.StudentId);
+                        .AnyAsync(a => a.CourseId == enrollment.CourseId.Value && a.StudentId == enrollment.StudentId.Value);
 
                 if (!existCourse)
                     return Guid.Empty;
